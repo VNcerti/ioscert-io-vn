@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESign & Cert | P12 Certificate</title>
+
+  <link rel="icon" href="https://i.imgur.com/BIbDCrO.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="modal.css">
+  <style>
+    /* Premium dual-color brand */
+    .premium-brand-dual {
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 1px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Inter', 'SF Mono', monospace;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+      background: transparent;
+      padding: 6px 12px;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+    }
+    .premium-brand-dual:hover {
+      background: rgba(255, 140, 66, 0.15);
+      transform: scale(1.02);
+    }
+    .brand-text {
+      background: linear-gradient(135deg, #FFD966, #FF8C42, #D64531);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
+      text-shadow: 0 0 6px rgba(255,140,66,0.3);
+    }
+    .brand-icon {
+      color: #FF8C42;
+      font-size: 1.1rem;
+      filter: drop-shadow(0 0 4px #FF8C42);
+    }
+    
+    /* Header title styles - không animation */
+    .main-title {
+      font-size: 52px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #6c5ce7, #00cec9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+    .sub-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #FF8C42;
+      letter-spacing: 1px;
+      margin-top: 0;
+      opacity: 0.9;
+      margin-top: -15px;
+    }
+    .title-container {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    @media (max-width: 768px) {
+      .main-title { font-size: 38px; }
+      .sub-title { font-size: 15px; }
+      .premium-brand-dual { font-size: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .main-title { font-size: 28px; }
+      .sub-title { font-size: 13px; }
+      .premium-brand-dual { font-size: 0.85rem; padding: 4px 8px; }
+    }
+    
+    header h1 {
+      display: none;
+    }
+    .typing-container {
+      display: none;
+    }
+
+    /* Premium Alert Styles */
+    .mods-download-alert-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 10002;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      animation: fadeIn 0.2s ease;
+    }
+    .mods-download-alert-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      border-radius: 32px;
+      max-width: 360px;
+      width: 90%;
+      padding: 28px 24px 24px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: slideUpAlert 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    [data-theme="dark"] .mods-download-alert-card {
+      background: rgba(28, 28, 30, 0.95);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    [data-theme="light"] .mods-download-alert-card {
+      background: rgba(255, 255, 255, 0.98);
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+    }
+    @keyframes slideUpAlert {
+      from { opacity: 0; transform: translateY(30px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .mods-download-alert-card .alert-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, rgba(255, 140, 66, 0.2), rgba(214, 69, 49, 0.2));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .mods-download-alert-card .alert-icon i {
+      font-size: 32px;
+      background: linear-gradient(135deg, #FF8C42, #D64531);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .mods-download-alert-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #FFD966, #FF8C42, #D64531);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .mods-download-alert-card p {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+    .alert-highlight {
+      font-weight: 700;
+      color: #FF8C42;
+      background: rgba(255, 140, 66, 0.15);
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin: 4px 0;
+    }
+    .alert-buttons-mod-download {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .alert-btn-primary-mod-download {
+      background: linear-gradient(135deg, #FF8C42, #D64531);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(214, 69, 49, 0.3);
+    }
+    .alert-btn-primary-mod-download:hover {
+      transform: scale(0.98);
+      opacity: 0.95;
+    }
+    .alert-btn-secondary-mod-download {
+      background: transparent;
+      color: var(--gray);
+      border: 1px solid var(--button-border);
+      padding: 12px;
+      border-radius: 999px;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .alert-btn-secondary-mod-download:hover {
+      background: rgba(128, 128, 128, 0.1);
+    }
+    .feature-tag-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 140, 66, 0.1);
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 500;
+      margin: 8px 4px 0;
+      color: #FF8C42;
+    }
+
+    /* Tab Alert Overlay */
+    .mods-tab-alert-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 10001;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      animation: fadeIn 0.2s ease;
+    }
+    .mods-tab-alert-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      border-radius: 32px;
+      max-width: 360px;
+      width: 90%;
+      padding: 28px 24px 24px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: slideUpAlert 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    [data-theme="dark"] .mods-tab-alert-card {
+      background: rgba(28, 28, 30, 0.95);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    [data-theme="light"] .mods-tab-alert-card {
+      background: rgba(255, 255, 255, 0.98);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+    .mods-tab-alert-card .alert-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, rgba(255, 140, 66, 0.2), rgba(214, 69, 49, 0.2));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .mods-tab-alert-card .alert-icon i {
+      font-size: 32px;
+      background: linear-gradient(135deg, #FF8C42, #D64531);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .mods-tab-alert-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #FFD966, #FF8C42, #D64531);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .mods-tab-alert-card p {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .alert-buttons-tab {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .alert-btn-primary-tab {
+      background: linear-gradient(135deg, #FF8C42, #D64531);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    .alert-btn-secondary-tab {
+      background: transparent;
+      color: var(--gray);
+      border: 1px solid var(--button-border);
+      padding: 12px;
+      border-radius: 999px;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+  
+  <div class="container">
+    <!-- Top Header -->
+    <div class="top-header">
+      <a href="https://ioscert.site/" class="home-link" style="background: transparent; width: auto; padding: 0;">
+        <span class="premium-brand-dual">
+          <i class="fas fa-shield-haltered brand-icon"></i>
+          <span class="brand-text">Apple Inc.</span>
+        </span>
+      </a>
+      <div class="header-controls">
+        <button class="lang-btn active" data-lang="vi">
+          <i class="fas fa-language"></i> VI
+        </button>
+        <button class="lang-btn" data-lang="en">
+          <i class="fas fa-language"></i> EN
+        </button>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+      <img src="https://i.imgur.com/gyJ5hF1.png" alt="VIET NAM CERT Logo" class="logo">
+      <div class="title-container">
+        <div class="main-title">APPLE CERTIFICATE.</div>
+        <div class="sub-title">Vietnam Signing Authority</div>
+      </div>
+      <p class="subtitle" data-i18n="subtitle">Website for Esign/Certificate on iPhone/iPad With Anti-Revoke</p>
+
+      <!-- DROPDOWN MENU MỚI - SÁT NHAU, ICON MÀU CAM -->
+      <div class="links-container">
+        <!-- MỤC 1: Liên Hệ Hỗ Trợ 24/7 -->
+        <div class="dropdown-group">
+          <button class="dropdown-main-btn" data-dropdown="supportDropdown">
+            <span class="btn-left"><i class="fas fa-headset" style="color: #FF8C42;"></i> <span data-i18n="support">Liên Hệ Hỗ Trợ 24/7</span></span>
+            <i class="fas fa-chevron-down chevron-icon"></i>
+          </button>
+          <div id="supportDropdown" class="dropdown-submenu">
+            <a href="https://t.me/m/8QBiXPz3Yzg1" target="_blank" class="submenu-item"><i class="fab fa-telegram" style="color: #0088cc;"></i> Nhắn tin hỗ trợ cài đặt</a>
+            <a href="https://t.me/m/8QBiXPz3Yzg1" target="_blank" class="submenu-item"><i class="fas fa-book-open" style="color: #34B7F1;"></i> Hướng dẫn cài đặt chi tiết</a>
+            <a href="https://t.me/m/8QBiXPz3Yzg1" target="_blank" class="submenu-item"><i class="fas fa-bug" style="color: #FF6B6B;"></i> Báo lỗi & yêu cầu hỗ trợ</a>
+          </div>
+        </div>
+
+        <!-- MỤC 2: Cộng đồng chính thức -->
+        <div class="dropdown-group">
+          <button class="dropdown-main-btn" data-dropdown="communityDropdown">
+            <span class="btn-left"><i class="fas fa-users" style="color: #FF8C42;"></i> <span>Cộng đồng chính thức</span></span>
+            <i class="fas fa-chevron-down chevron-icon"></i>
+          </button>
+          <div id="communityDropdown" class="dropdown-submenu">
+            <a href="https://www.youtube.com/@P12Cert/videos" target="_blank" class="submenu-item"><i class="fab fa-youtube" style="color: #FF0000;"></i> Kênh Youtube chính thức</a>
+            <a href="https://t.me/vietnamcert" target="_blank" class="submenu-item"><i class="fab fa-telegram" style="color: #0088cc;"></i> Kênh thông báo chứng chỉ</a>
+            <a href="https://t.me/p12certvn" target="_blank" class="submenu-item"><i class="fab fa-telegram-plane" style="color: #26A5E4;"></i> Nhóm chat giao lưu hỗ trợ</a>
+          </div>
+        </div>
+
+        <!-- MỤC 3: DNS & Công cụ -->
+        <div class="dropdown-group">
+          <button class="dropdown-main-btn" data-dropdown="toolsDropdown">
+            <span class="btn-left"><i class="fas fa-shield-alt" style="color: #FF8C42;"></i> <span>DNS & Công cụ</span></span>
+            <i class="fas fa-chevron-down chevron-icon"></i>
+          </button>
+          <div id="toolsDropdown" class="dropdown-submenu">
+            <a href="https://download1588.mediafire.com/r75t6sxs2gxg9MbJlCSaTR8_OO0hZA4O0GFUiYvYKKHudakSWBfzp96wgu_7icBr8CiOiNr9G_botiNJhH-jvohRGnTWLqEWJ46_IbIAJOObUz9Xv-BSwtbJVMfAl8Q-BeglNq7W8MHS9zTxnBg_mKijA1EOebiNN1UFEL-G794/rfwgpy8u8rxfkms/DNS+Anti-Revoke%28ioscert%29.mobileconfig" target="_blank" class="submenu-item"><i class="fas fa-globe" style="color: #4CAF50;"></i> DNS Chặn Thu Hồi và Quảng Cáo</a>
+            <a href="https://sign.chungchip12.com" target="_blank" class="submenu-item"><i class="fas fa-signature" style="color: #9C27B0;"></i> Ký file IPA trực tuyến</a>
+            <a href="https://vsacheat.com" target="_blank" class="submenu-item"><i class="fas fa-box-open" style="color: #FF9800;"></i> Kho ứng dụng IPA độc quyền</a>
+          </div>
+        </div>
+
+        <!-- MỤC 4: Website Bán Chứng Chỉ Tự Động -->
+        <div class="dropdown-group">
+          <button class="dropdown-main-btn" data-dropdown="websiteDropdown">
+            <span class="btn-left"><i class="fas fa-globe" style="color: #FF8C42;"></i> <span data-i18n="website">Website Bán Chứng Chỉ Tự Động</span></span>
+            <i class="fas fa-chevron-down chevron-icon"></i>
+          </button>
+          <div id="websiteDropdown" class="dropdown-submenu">
+            <a href="https://chungchip12.com" target="_blank" class="submenu-item"><i class="fas fa-id-card" style="color: #E91E63;"></i> Chứng chỉ cá nhân - 55.000đ/năm</a>
+            <a href="https://chungchip12.com" target="_blank" class="submenu-item"><i class="fas fa-bolt" style="color: #FFC107;"></i> Chứng chỉ cấp ngay 5 giây</a>
+            <a href="https://chungchip12.com" target="_blank" class="submenu-item"><i class="fas fa-clock" style="color: #2196F3;"></i> Cấp chứng chỉ tự động 24/7</a>
+            <a href="https://chungchip12.com" target="_blank" class="submenu-item"><i class="fas fa-shield-alt" style="color: #4CAF50;"></i> Bảo hành đổi mới miễn phí</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tab Container -->
+    <div class="tab-container">
+      <button class="tab-btn active" data-tab="esign">
+        <i class="fas fa-signature"></i> ESign
+      </button>
+      <button class="tab-btn" data-tab="cert">
+        <i class="fas fa-certificate"></i> Cert
+      </button>
+      <button class="tab-btn" data-tab="trollstore">
+        <img src="https://vsacheat.com/img/ioscert/troll-icon.webp" alt="TrollStore" class="tab-icon-img"> TrollX
+      </button>
+      <button class="tab-btn" data-tab="mods">
+        <i class="fas fa-cogs"></i> Mods
+      </button>
+    </div>
+
+    <!-- Search Container -->
+    <div id="search-container" class="search-container hidden">
+      <div class="search-wrapper">
+        <input type="text" id="mods-search" class="search-input" placeholder="Tìm kiếm ứng dụng...">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+    </div>
+
+    <!-- Content Areas -->
+    <div id="esign-list" class="app-grid"></div>
+    <div id="cert-list" class="app-grid hidden"></div>
+    <div id="trollstore-list" class="app-grid hidden"></div>
+    <div id="mods-list" class="app-grid hidden"></div>
+
+    <!-- No Results Message -->
+    <div id="no-results" class="hidden">
+      <i class="fas fa-search"></i>
+      <p data-i18n="no-results">Không tìm thấy ứng dụng</p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p data-i18n="contact">Contact me: <a href="mailto:vncert.site@gmail.com">vncert.site@gmail.com</a></p>
+      <p data-i18n="copyright">Copyright © 2022 CHUNGCHIP12.COM . All rights reserved. Bảo lưu mọi quyền. Design by ioscert.site</p>
+    </footer>
+  </div>
+
+  <!-- App Store Modal -->
+  <div id="app-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <button class="modal-close"><i class="fas fa-times"></i></button>
+      <div class="modal-header">
+        <div class="app-icon-large"><img id="modal-app-icon" src="" alt="App Icon"></div>
+        <div class="app-info">
+          <h2 id="modal-app-title">ESign 5.0.2</h2>
+          <p id="modal-app-company">China Academy of Railway Sciences</p>
+          <button id="modal-get-btn" class="get-btn">NHẬN</button>
+        </div>
+      </div>
+      <div class="modal-rating-stars">
+        <div class="stars" id="modal-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+        <span class="rating-count" id="modal-rating-count">(3,742 đánh giá)</span>
+      </div>
+      <div class="certificate-card">
+        <div class="certificate-title">Certificate</div>
+        <div class="certificate-content" id="modal-certificate-name">Certificate name: China Academy of Railway Sciences</div>
+      </div>
+      <div class="modal-details">
+        <div class="detail-section important-notice">
+          <h3 id="modal-notice-title"><i class="fas fa-exclamation-triangle"></i> Lưu ý quan trọng</h3>
+          <div class="notice-card">
+            <p id="modal-notice-description" class="notice-content">Vì đây là <span class="highlight-esign">ESign</span> được ký bằng chứng chỉ doanh nghiệp nên thời gian dùng không xác định và nếu bạn muốn dùng ổn định và lâu dài hãy tham khảo qua <a href='https://chungchip12.com' class='notice-link' target='_blank'>chứng chỉ cá nhân tại hệ thống CHUNGCHIP12.COM</a></p>
+            <div class="benefits-list">
+              <div class="benefit-item"><i class="fas fa-check-circle"></i><span>Hỗ trợ cài đặt chứng chỉ và ESign, Gbox, Scarlet riêng biệt theo thiết bị</span></div>
+              <div class="benefit-item"><i class="fas fa-clock"></i><span>Thời gian cấp chứng chỉ 15 giây - 5 phút</span></div>
+              <div class="benefit-item"><i class="fas fa-mobile-alt"></i><span>Hỗ trợ tất cả thiết bị không lo Blacklist</span></div>
+              <div class="benefit-item"><i class="fas fa-shield-alt"></i><span>Uy tín - Tự động - Bảo mật</span></div>
+            </div>
+            <div class="notice-cta"><a href="https://chungchip12.com" class="cta-button" target="_blank"><i class="fas fa-gem"></i> Đăng ký ngay - Chỉ từ 69.000đ/năm</a></div>
+          </div>
+        </div>
+        <div class="detail-section">
+          <h3 id="modal-info-details-title">Thông tin</h3>
+          <div class="info-list">
+            <div class="info-row"><span class="info-label">Nhà cung cấp</span><span class="info-value" id="modal-developer">Tung Lam Vu</span></div>
+            <div class="info-row"><span class="info-label">Kích thước</span><span class="info-value" id="modal-size">11.05 MB</span></div>
+            <div class="info-row"><span class="info-label">Danh mục</span><span class="info-value">Công cụ tinh chỉnh iPA</span></div>
+            <div class="info-row"><span class="info-label">Tương thích</span><span class="info-value">iPhone: Yêu cầu iOS 12.0 trở lên<br>iPad: Yêu cầu iPadOS 12.0 trở lên</span></div>
+            <div class="info-row"><span class="info-label">Ngôn ngữ</span><span class="info-value">Tiếng Anh, Tiếng Việt</span></div>
+            <div class="info-row"><span class="info-label">Phiên bản</span><span class="info-value" id="modal-version-text">5.0.2</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="download-note" id="modal-download-note">Sau khi nhấn "NHẬN", ứng dụng sẽ được thêm vào thư viện của bạn</p>
+      <div class="footer-text" id="modal-footer-text">China Academy of Railway Sciences</div>
+    </div>
+  </div>
+
+  <!-- Alert for Mods Tab -->
+  <div id="mods-tab-alert" class="mods-tab-alert-overlay">
+    <div class="mods-tab-alert-card">
+      <div class="alert-icon"><i class="fas fa-crown"></i></div>
+      <h3>🔥 KHO MODS VIP 🔥</h3>
+      <p><span class="alert-highlight">✨ 1.000+ Ứng dụng Mod xịn sò ✨</span><br>Game mod tiền, menu hack, ứng dụng premium, nhân bản, vô hạn tính năng...</p>
+      <p style="font-size: 13px; margin-top: 8px;"><i class="fas fa-bolt" style="color: #FF8C42;"></i> Cập nhật liên tục mỗi ngày<br><i class="fas fa-shield-alt" style="color: #FF8C42;"></i> An toàn, không quảng cáo phiền phức</p>
+      <div><span class="feature-tag-download"><i class="fas fa-gamepad"></i> Game MOD</span><span class="feature-tag-download"><i class="fas fa-video"></i> Premium Unlock</span><span class="feature-tag-download"><i class="fas fa-clone"></i> Clone App</span></div>
+      <div class="alert-buttons-tab"><a href="https://vsacheat.com" target="_blank" class="alert-btn-primary-tab">KHÁM PHÁ NGAY</a><button class="alert-btn-secondary-tab" id="close-tab-alert">Đóng</button></div>
+    </div>
+  </div>
+
+  <!-- Alert for Mods Download Button -->
+  <div id="mods-download-alert" class="mods-download-alert-overlay">
+    <div class="mods-download-alert-card">
+      <div class="alert-icon"><i class="fas fa-crown"></i></div>
+      <h3>🔥 KHO MODS VIP 🔥</h3>
+      <p><span class="alert-highlight">✨ 1.000+ Ứng dụng Mod xịn sò ✨</span><br>Game mod tiền, menu hack, ứng dụng premium, nhân bản, vô hạn tính năng...</p>
+      <p style="font-size: 13px; margin-top: 8px;"><i class="fas fa-bolt" style="color: #FF8C42;"></i> Cập nhật liên tục mỗi ngày<br><i class="fas fa-shield-alt" style="color: #FF8C42;"></i> An toàn, không quảng cáo phiền phức</p>
+      <div><span class="feature-tag-download"><i class="fas fa-gamepad"></i> Game MOD</span><span class="feature-tag-download"><i class="fas fa-video"></i> Premium Unlock</span><span class="feature-tag-download"><i class="fas fa-clone"></i> Clone App</span></div>
+      <div class="alert-buttons-mod-download"><a href="https://vsacheat.com" target="_blank" class="alert-btn-primary-mod-download">🚀 KHÁM PHÁ NGAY 🚀</a><button class="alert-btn-secondary-mod-download" id="close-download-alert">Đóng</button></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7d14d39c4a3e419e80e4c4f718f3a28b"}'></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"></script>
+  
+  <script type="module" src="protect.js"></script>
+  <script type="module" src="bootstrap.bundle.min.js"></script>
+  <script type="module" src="data/esign-data.js"></script>
+  <script type="module" src="data/cert-data.js"></script>
+  <script type="module" src="data/trollstore-data.js"></script>
+  <script type="module" src="data/mods-data.js"></script>
+  <script type="module" src="components/particles-config.js"></script>
+  <script type="module" src="app.js"></script>
+  
+  <script type="module">
+    import { initParticles, updateParticlesTheme } from "./components/particles-config.js";
+    
+    // Dropdown toggle functionality
+    function initDropdowns() {
+      document.querySelectorAll('.dropdown-main-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const targetId = btn.getAttribute('data-dropdown');
+          const sub = document.getElementById(targetId);
+          const parentGroup = btn.closest('.dropdown-group');
+          document.querySelectorAll('.dropdown-submenu').forEach(menu => {
+            if (menu !== sub) {
+              menu.classList.remove('open');
+              menu.closest('.dropdown-group')?.classList.remove('open');
+            }
+          });
+          sub.classList.toggle('open');
+          if (parentGroup) parentGroup.classList.toggle('open', sub.classList.contains('open'));
+        });
+      });
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown-group')) {
+          document.querySelectorAll('.dropdown-submenu').forEach(m => {
+            m.classList.remove('open');
+            m.closest('.dropdown-group')?.classList.remove('open');
+          });
+        }
+      });
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      initDropdowns();
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      const themeIcon = document.querySelector('.theme-toggle i');
+      if (themeIcon) themeIcon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+      
+      // Close alert buttons
+      document.getElementById('close-tab-alert')?.addEventListener('click', () => {
+        document.getElementById('mods-tab-alert').style.display = 'none';
+      });
+      document.getElementById('close-download-alert')?.addEventListener('click', () => {
+        document.getElementById('mods-download-alert').style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
