@@ -183,11 +183,11 @@ header {
   animation: fadeIn 1.2s ease-in-out;
 }
 
-/* ===== DROPDOWN MENU - KHOẢNG CÁCH CỰC SÁT ===== */
+/* ===== DROPDOWN MENU - HOÀN CHỈNH (FIX TRIỆT ĐỂ TRẠNG THÁI ACTIVE) ===== */
 .links-container {
   display: flex;
   flex-direction: column;
-  gap: 2px;  /* Khoảng cách tối thiểu giữa các mục */
+  gap: 2px;
   margin-bottom: 25px;
   width: 100%;
   max-width: 500px;
@@ -229,6 +229,7 @@ header {
   color: #1e1e2f;
 }
 
+/* HOVER - luôn giữ nguyên màu nền trong suốt khi hover */
 .dropdown-main-btn:hover {
   background: rgba(128, 128, 128, 0.2);
   transform: translateY(-1px);
@@ -241,6 +242,28 @@ header {
 
 [data-theme="light"] .dropdown-main-btn:hover {
   background: rgba(0, 0, 0, 0.08);
+}
+
+/* ACTIVE - CHỈ HIỂN THỊ KHI SUBMENU ĐANG MỞ */
+.dropdown-group.open .dropdown-main-btn {
+  background: rgba(128, 128, 128, 0.25);
+}
+
+[data-theme="dark"] .dropdown-group.open .dropdown-main-btn {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+[data-theme="light"] .dropdown-group.open .dropdown-main-btn {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* Khi submenu đóng (không có class open) - trả về màu nền mặc định */
+.dropdown-group:not(.open) .dropdown-main-btn {
+  background: var(--menu-bg);
+}
+
+[data-theme="light"] .dropdown-group:not(.open) .dropdown-main-btn {
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .dropdown-main-btn:active {
@@ -269,7 +292,7 @@ header {
   transform: rotate(180deg);
 }
 
-/* Submenu - vẫn giữ đẹp nhưng không ảnh hưởng khoảng cách mục chính */
+/* Submenu */
 .dropdown-submenu {
   background: var(--menu-bg);
   backdrop-filter: blur(16px);
