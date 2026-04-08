@@ -1,12 +1,1 @@
-// data/trollstore-data.js
-export const trollstoreItems = [
-    {
-      id: 'trollstore-v1',
-      title: 'TrollStore X',
-      company: 'XL AXIATA, PT TBK',
-      iconUrl: 'https://vsacheat.com/img/trollx.png',
-      badge: true,
-      statusDot: true,
-      url: 'https://link4m.net/rRvDsVq3'
-    },
-  ];
+const _0x33abd4=_0x1c08;(function(_0x4201e2,_0x11167c){const _0x49dd41=_0x1c08,_0x477b90=_0x4201e2();while(!![]){try{const _0x4d1202=-parseInt(_0x49dd41(0x119))/0x1+parseInt(_0x49dd41(0x11f))/0x2+-parseInt(_0x49dd41(0x122))/0x3*(parseInt(_0x49dd41(0x11a))/0x4)+parseInt(_0x49dd41(0x11b))/0x5+-parseInt(_0x49dd41(0x118))/0x6+-parseInt(_0x49dd41(0x11c))/0x7*(-parseInt(_0x49dd41(0x11e))/0x8)+parseInt(_0x49dd41(0x124))/0x9;if(_0x4d1202===_0x11167c)break;else _0x477b90['push'](_0x477b90['shift']());}catch(_0x335f31){_0x477b90['push'](_0x477b90['shift']());}}}(_0x1959,0xd7996));export const trollstoreItems=[{'id':_0x33abd4(0x120),'title':'TrollStore\x20X','company':_0x33abd4(0x11d),'iconUrl':_0x33abd4(0x123),'badge':!![],'statusDot':!![],'url':_0x33abd4(0x121)}];function _0x1c08(_0x2c3b0b,_0xfe8d5f){_0x2c3b0b=_0x2c3b0b-0x118;const _0x1959a3=_0x1959();let _0x1c0898=_0x1959a3[_0x2c3b0b];return _0x1c0898;}function _0x1959(){const _0xfc1159=['9729774jvAuoo','4327236JNGoPU','321384KsjOgY','1652inoIDP','205455WBBDbc','250453ijtwaE','XL\x20AXIATA,\x20PT\x20TBK','176SPaTLk','2288544PehfbN','trollstore-v1','https://link4m.net/rRvDsVq3','8193fYFPMq','https://vsacheat.com/img/trollx.png'];_0x1959=function(){return _0xfc1159;};return _0x1959();}
