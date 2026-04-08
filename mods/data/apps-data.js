@@ -1,1 +1,23 @@
-const _0x54d6c7=_0x18dc;(function(_0x480344,_0x1c7c62){const _0xb3b62a=_0x18dc,_0xa84b92=_0x480344();while(!![]){try{const _0x50b031=parseInt(_0xb3b62a(0x99))/0x1+-parseInt(_0xb3b62a(0x90))/0x2*(parseInt(_0xb3b62a(0x9f))/0x3)+-parseInt(_0xb3b62a(0x95))/0x4+-parseInt(_0xb3b62a(0x9d))/0x5*(-parseInt(_0xb3b62a(0x96))/0x6)+parseInt(_0xb3b62a(0xa1))/0x7+-parseInt(_0xb3b62a(0x94))/0x8+-parseInt(_0xb3b62a(0x92))/0x9*(parseInt(_0xb3b62a(0x9b))/0xa);if(_0x50b031===_0x1c7c62)break;else _0xa84b92['push'](_0xa84b92['shift']());}catch(_0xa9eac3){_0xa84b92['push'](_0xa84b92['shift']());}}}(_0x276a,0x2b90a));function _0x18dc(_0x26f8b9,_0x52109f){_0x26f8b9=_0x26f8b9-0x90;const _0x276a07=_0x276a();let _0x18dcd7=_0x276a07[_0x26f8b9];return _0x18dcd7;}function _0x276a(){const _0x5bbf6a=['1408140tZfgkJ','https://i.pinimg.com/736x/af/8a/df/af8adf619e7c9c6c3537a75350d17ab3.jpg','Liên\x20Quân\x20Mobile\x20V1','130733RfClLu','Locket\x20Gold','10ASEJvm','mods-lqm-v1','5fLtHfZ','https://link4m.com/Beevd','3PEldbu','https://i.pinimg.com/736x/98/c0/13/98c013e3c3e4fbce344108fb7b960d76.jpg','2432780vviDRT','169114wixmiF','28/03/2026','2055330fWGRRX','08/04/2026','91152AWGEIP','840800YhTWiA'];_0x276a=function(){return _0x5bbf6a;};return _0x276a();}export const modsItems=[{'id':_0x54d6c7(0x9c),'tieu-de':_0x54d6c7(0x98),'thoi-gian-upload':_0x54d6c7(0x93),'mo-ta':'HÁCH\x20MÁP\x20MENU\x20ỔN\x20ĐỊNH\x20LEO\x20RANK\x20ĐẦU\x20MÙA','logo':_0x54d6c7(0xa0),'badge':![],'link-tai':'https://link4m.com/v7LF0dU'},{'id':'mods-locket','tieu-de':_0x54d6c7(0x9a),'thoi-gian-upload':_0x54d6c7(0x91),'mo-ta':'Locket\x20Gold\x202.9.0\x20|\x20Mở\x20khoá\x20vàng,\x20khung\x20hình\x20độc\x20quyền','logo':_0x54d6c7(0x97),'badge':!![],'link-tai':_0x54d6c7(0x9e)}];
+// data/apps-data.js
+export const modsItems = [
+    {
+        id: 'mods-lqm-v1',
+        "tieu-de": 'Liên Quân Mobile V1',
+        "thoi-gian-upload": '08/04/2026',
+        "mo-ta": 'HÁCH MÁP MENU ỔN ĐỊNH LEO RANK',
+        logo: 'https://i.pinimg.com/736x/98/c0/13/98c013e3c3e4fbce344108fb7b960d76.jpg',
+        badge: false,
+        "link-tai-truc-tiep": 'https://ipas.cc/mpucv6',
+        "link-tai-ipa": 'https://link4m.com/v7LF0dU'
+    },
+    {
+        id: 'mods-locket',
+        "tieu-de": 'Locket Gold',
+        "thoi-gian-upload": '28/03/2026',
+        "mo-ta": 'Mở khoá vàng, khung hình độc quyền',
+        logo: 'https://i.pinimg.com/736x/af/8a/df/af8adf619e7c9c6c3537a75350d17ab3.jpg',
+        badge: true,
+        "link-tai-truc-tiep": '',
+        "link-tai-ipa": 'https://link4m.com/Beevd'
+    }
+];
