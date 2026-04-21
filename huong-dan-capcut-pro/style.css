@@ -1,0 +1,329 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #121212;
+  color: #edf4ff;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Particle Canvas Container */
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-color: #121212;
+}
+
+.guide-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1.5rem 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero + Badge */
+.hero-guide {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.badge-glow {
+  display: inline-block;
+  background: rgba(245, 158, 11, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 100px;
+  padding: 0.3rem 1.2rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+}
+
+h1 {
+  font-size: 2.1rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, #f59e0b 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.subhead {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+
+/* Tribute Card - Trong suốt */
+.tribute-card {
+  background: rgba(15, 23, 42, 0.65);
+  border-radius: 1.5rem;
+  padding: 1.2rem 1.5rem;
+  margin: 1.2rem 0 1.8rem;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+}
+
+.tribute-icon {
+  font-size: 2rem;
+  color: #f59e0b;
+  margin-bottom: 0.5rem;
+}
+
+.tribute-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #f1f5f9;
+}
+
+.tribute-author {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  background: linear-gradient(120deg, #f59e0b, #ea580c);
+  display: inline-block;
+  padding: 0.2rem 1rem;
+  border-radius: 40px;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.reup-by {
+  margin-top: 12px;
+  font-size: 0.7rem;
+  color: #c084fc;
+  border-top: 1px dashed rgba(245, 158, 11, 0.3);
+  padding-top: 8px;
+  display: inline-block;
+  width: auto;
+  font-weight: 600;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.8rem 0 2rem;
+}
+
+.btn-guide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.65);
+  
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 80px;
+  padding: 1rem 1.2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.btn-guide i {
+  font-size: 1.3rem;
+  color: #f59e0b;
+}
+
+.btn-guide:hover {
+  transform: translateY(-3px);
+  border-color: #f59e0b;
+  background: rgba(30, 41, 59, 0.8);
+  box-shadow: 0 12px 22px rgba(245, 158, 11, 0.15);
+}
+
+.btn-copy {
+  background: rgba(15, 23, 42, 0.65);
+}
+
+.btn-copy i {
+  color: #3b82f6;
+}
+
+.btn-copy:hover i {
+  color: #f59e0b;
+}
+
+/* Community Mini Buttons */
+.community-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 1rem 0 1.5rem;
+}
+
+.mini-btn {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 60px;
+  padding: 6px 16px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #e2e8f0;
+}
+
+.mini-btn i {
+  font-size: 0.75rem;
+  color: #f59e0b;
+}
+
+.mini-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(51, 65, 85, 0.8);
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
+.mini-btn.cert i {
+  color: #10b981;
+}
+
+/* Note Card - Trong suốt, căn lề icon chuẩn */
+.note-card {
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  padding: 1.2rem 1.5rem;
+  margin: 1rem 0 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.note-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #f59e0b;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.note-title i {
+  width: 24px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.note-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.note-list li {
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
+.note-list li i {
+  width: 24px;
+  font-size: 0.8rem;
+  text-align: center;
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+
+.note-list li strong {
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.ios-version {
+  background: rgba(245, 158, 11, 0.12);
+  border-radius: 30px;
+  padding: 8px 14px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+/* Footer */
+.footer-credit {
+  text-align: center;
+  font-size: 0.65rem;
+  color: #475569;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-credit i {
+  color: #f59e0b;
+  margin: 0 4px;
+}
+
+/* SweetAlert2 Toast Custom */
+.swal-toast-custom {
+  backdrop-filter: blur(12px);
+  border-radius: 50px !important;
+  background: #0f172a !important;
+  border: 1px solid #f59e0b !important;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Responsive */
+@media (max-width: 560px) {
+  .guide-container {
+      padding: 1rem;
+  }
+  h1 {
+      font-size: 1.6rem;
+  }
+  .btn-guide {
+      padding: 0.85rem 1rem;
+      font-size: 0.9rem;
+  }
+  .tribute-text {
+      font-size: 0.85rem;
+  }
+  .note-list li {
+      font-size: 0.73rem;
+      gap: 8px;
+  }
+  .note-list li i {
+      width: 22px;
+      font-size: 0.7rem;
+  }
+  .mini-btn {
+      padding: 5px 12px;
+      font-size: 0.65rem;
+  }
+}
