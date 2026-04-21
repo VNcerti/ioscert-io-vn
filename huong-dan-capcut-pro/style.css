@@ -129,7 +129,6 @@ h1 {
   justify-content: center;
   gap: 12px;
   background: rgba(15, 23, 42, 0.65);
-  
   border: 1px solid rgba(245, 158, 11, 0.35);
   border-radius: 80px;
   padding: 1rem 1.2rem;
@@ -288,15 +287,6 @@ h1 {
 .footer-credit i {
   color: #f59e0b;
   margin: 0 4px;
-}
-
-/* SweetAlert2 Toast Custom */
-.swal-toast-custom {
-  backdrop-filter: blur(12px);
-  border-radius: 50px !important;
-  background: #0f172a !important;
-  border: 1px solid #f59e0b !important;
-  font-family: 'Inter', sans-serif;
 }
 
 /* Responsive */
