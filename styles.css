@@ -14,8 +14,6 @@
   --button-bg: #f8f9fa;
   --button-border: #e9ecef;
   --menu-bg: rgba(18, 18, 18, 0.7);
-  
-  /* FIX: Khai báo color-scheme để đồng bộ với theme của trình duyệt */
   color-scheme: dark light;
 }
 
@@ -42,7 +40,6 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  /* FIX: Đổi background thành màu thuần để khớp với theme-color */
   background-color: #121212;
   color: var(--text);
   line-height: 1.6;
@@ -65,7 +62,6 @@ body {
   width: 100%;
   height: 100%;
   z-index: -1;
-  /* FIX: Đổi background thành màu thuần để khớp với body */
   background-color: #121212;
   background-size: cover;
 }
@@ -188,7 +184,7 @@ header {
   animation: fadeIn 1.2s ease-in-out;
 }
 
-/* ===== DROPDOWN MENU - HOÀN CHỈNH (FIX TRIỆT ĐỂ TRẠNG THÁI ACTIVE) ===== */
+/* ===== DROPDOWN MENU ===== */
 .links-container {
   display: flex;
   flex-direction: column;
@@ -234,7 +230,6 @@ header {
   color: #1e1e2f;
 }
 
-/* HOVER - luôn giữ nguyên màu nền trong suốt khi hover */
 .dropdown-main-btn:hover {
   background: rgba(128, 128, 128, 0.2);
   transform: translateY(-1px);
@@ -249,7 +244,6 @@ header {
   background: rgba(0, 0, 0, 0.08);
 }
 
-/* ACTIVE - CHỈ HIỂN THỊ KHI SUBMENU ĐANG MỞ */
 .dropdown-group.open .dropdown-main-btn {
   background: rgba(128, 128, 128, 0.25);
 }
@@ -262,7 +256,6 @@ header {
   background: rgba(0, 0, 0, 0.12);
 }
 
-/* Khi submenu đóng (không có class open) - trả về màu nền mặc định */
 .dropdown-group:not(.open) .dropdown-main-btn {
   background: var(--menu-bg);
 }
@@ -671,6 +664,192 @@ footer a:hover {
   display: none !important;
 }
 
+/* ==============================================
+   BẢNG SO SÁNH GỌN NHẸ - 2 CỘT TRÊN 1 DÒNG
+   ============================================== */
+.compare-section {
+  max-width: 500px;
+  margin: 0 auto 18px auto;
+  padding: 0 8px;
+}
+
+.compare-row {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.compare-col {
+  flex: 1;
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  border-radius: 18px;
+  padding: 14px 12px;
+  border: 1px solid var(--button-border);
+  transition: all 0.2s;
+}
+
+[data-theme="dark"] .compare-col {
+  background: rgba(18, 18, 18, 0.6);
+}
+
+.compare-col-premium {
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.05);
+  position: relative;
+}
+
+[data-theme="dark"] .compare-col-premium {
+  background: rgba(245, 158, 11, 0.06);
+}
+
+.compare-label {
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.78rem;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--button-border);
+}
+
+.compare-label-free {
+  color: #94a3b8;
+}
+
+.compare-label-premium {
+  color: #f59e0b;
+}
+
+.compare-simple-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.compare-simple-list li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.7rem;
+  margin-bottom: 7px;
+  color: var(--text);
+  opacity: 0.85;
+  line-height: 1.3;
+}
+
+.compare-simple-list li:last-child {
+  margin-bottom: 0;
+}
+
+.compare-simple-list li i {
+  font-size: 0.7rem;
+  width: 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.compare-simple-list li i.fa-minus-circle {
+  color: #94a3b8;
+}
+
+.compare-simple-list li i.fa-check-circle {
+  color: #10b981;
+}
+
+/* ==============================================
+   FOOTER CONTENT + FAQ ACCORDION
+   ============================================== */
+.footer-content-block {
+  max-width: 800px;
+  margin: 40px auto 20px auto;
+  padding: 0 15px;
+  text-align: left;
+  color: var(--text);
+}
+
+.footer-content-block h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #f59e0b;
+  text-align: center;
+}
+
+.footer-content-block p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.faq-section h3 {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #f59e0b;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--button-border);
+  margin-bottom: 8px;
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 16px 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: inherit;
+  transition: color 0.2s;
+}
+
+.faq-question:hover {
+  color: #f59e0b;
+}
+
+.faq-question i {
+  transition: transform 0.3s ease;
+  font-size: 0.8rem;
+  color: #f59e0b;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding: 0 0;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+.faq-item.open .faq-answer {
+  max-height: 200px;
+  padding-bottom: 16px;
+}
+
+.faq-item.open .faq-question i {
+  transform: rotate(180deg);
+}
+
+.faq-answer a {
+  color: #3b82f6;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.faq-answer a:hover {
+  text-decoration: underline;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -854,5 +1033,24 @@ footer a:hover {
   
   .links-container {
     gap: 2px;
+  }
+
+  /* So sánh mobile */
+  .compare-section {
+    padding: 0 4px;
+  }
+  .compare-row {
+    gap: 6px;
+  }
+  .compare-col {
+    padding: 10px 8px;
+    border-radius: 14px;
+  }
+  .compare-label {
+    font-size: 0.68rem;
+  }
+  .compare-simple-list li {
+    font-size: 0.63rem;
+    gap: 5px;
   }
 }
