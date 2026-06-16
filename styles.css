@@ -14,6 +14,8 @@
   --button-bg: #f8f9fa;
   --button-border: #e9ecef;
   --menu-bg: rgba(18, 18, 18, 0.7);
+  --skeleton-bg: #2a2a2a;
+  --skeleton-shine: #3a3a3a;
   color-scheme: dark light;
 }
 
@@ -26,10 +28,14 @@
   --light-gray: #444444;
   --gray: #a0a0a0;
   --menu-bg: rgba(0, 0, 0, 0.65);
+  --skeleton-bg: #2a2a2a;
+  --skeleton-shine: #3a3a3a;
 }
 
 [data-theme="light"] {
   --menu-bg: rgba(255, 255, 255, 0.75);
+  --skeleton-bg: #e8ecf1;
+  --skeleton-shine: #f0f3f7;
 }
 
 * {
@@ -850,6 +856,196 @@ footer a:hover {
   text-decoration: underline;
 }
 
+/* ==============================================
+   SKELETON LOADING NÂNG CẤP
+   ============================================== */
+.skeleton-card {
+  pointer-events: none;
+  position: relative;
+  overflow: hidden;
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid var(--button-border);
+  opacity: 0;
+  animation: skeletonFadeIn 0.5s ease forwards;
+}
+
+@keyframes skeletonFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.skeleton-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--skeleton-bg);
+}
+
+[data-theme="light"] .skeleton-icon {
+  background: #e8ecf1;
+}
+
+.skeleton-icon-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    var(--skeleton-bg) 25%,
+    var(--skeleton-shine) 50%,
+    var(--skeleton-bg) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.8s ease-in-out infinite;
+}
+
+[data-theme="light"] .skeleton-icon-inner {
+  background: linear-gradient(
+    135deg,
+    #e8ecf1 25%,
+    #f0f3f7 50%,
+    #e8ecf1 75%
+  );
+  background-size: 200% 100%;
+}
+
+.skeleton-title {
+  height: 18px;
+  width: 70%;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: var(--skeleton-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="light"] .skeleton-title {
+  background: #e8ecf1;
+}
+
+.skeleton-meta {
+  height: 13px;
+  width: 45%;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  background: var(--skeleton-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="light"] .skeleton-meta {
+  background: #e8ecf1;
+}
+
+.skeleton-counter {
+  height: 12px;
+  width: 35%;
+  border-radius: 6px;
+  background: var(--skeleton-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="light"] .skeleton-counter {
+  background: #e8ecf1;
+}
+
+.skeleton-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--skeleton-bg);
+  position: relative;
+  overflow: hidden;
+  margin-left: 10px;
+}
+
+[data-theme="light"] .skeleton-btn {
+  background: #e8ecf1;
+}
+
+/* Shimmer Effect */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 70%,
+    transparent 100%
+  );
+  animation: shimmerSlide 2.2s ease-in-out infinite;
+  border-radius: inherit;
+}
+
+[data-theme="light"] .shimmer::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.04) 30%,
+    rgba(0, 0, 0, 0.08) 50%,
+    rgba(0, 0, 0, 0.04) 70%,
+    transparent 100%
+  );
+}
+
+@keyframes shimmerSlide {
+  0% {
+    left: -150%;
+  }
+  50% {
+    left: 50%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-card {
+  animation: skeletonFadeIn 0.5s ease forwards, skeletonPulse 2.5s ease-in-out infinite 0.5s;
+}
+
+@keyframes skeletonPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -956,6 +1152,28 @@ footer a:hover {
   .links-container {
     gap: 2px;
   }
+
+  /* Skeleton responsive */
+  .skeleton-icon {
+    width: 52px;
+    height: 52px;
+  }
+  .skeleton-title {
+    height: 16px;
+    width: 65%;
+  }
+  .skeleton-meta {
+    height: 11px;
+    width: 40%;
+  }
+  .skeleton-counter {
+    height: 10px;
+    width: 30%;
+  }
+  .skeleton-btn {
+    width: 34px;
+    height: 34px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1035,7 +1253,6 @@ footer a:hover {
     gap: 2px;
   }
 
-  /* So sánh mobile */
   .compare-section {
     padding: 0 4px;
   }
@@ -1052,5 +1269,27 @@ footer a:hover {
   .compare-simple-list li {
     font-size: 0.63rem;
     gap: 5px;
+  }
+
+  /* Skeleton responsive mobile */
+  .skeleton-icon {
+    width: 46px;
+    height: 46px;
+  }
+  .skeleton-title {
+    height: 14px;
+    width: 60%;
+  }
+  .skeleton-meta {
+    height: 10px;
+    width: 35%;
+  }
+  .skeleton-counter {
+    height: 9px;
+    width: 25%;
+  }
+  .skeleton-btn {
+    width: 30px;
+    height: 30px;
   }
 }
