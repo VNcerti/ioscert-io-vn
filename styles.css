@@ -383,8 +383,8 @@ body {
 
 @media (max-width: 480px) {
   .brand-logo-img {
-    width: 55px;
-    height: 55px;
+    width: 105px;
+    height: 105px;
     margin-left: -3px;
   }
 }
