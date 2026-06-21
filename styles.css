@@ -360,34 +360,27 @@ body {
   box-shadow: none !important;
 }
 
-/* Ảnh logo - chỉ giữ nguyên ảnh thuần */
+/* Ảnh logo - LUÔN GIỮ KÍCH THƯỚC 125px TRÊN MỌI THIẾT BỊ */
 .brand-logo-img {
-  width: 105px;
-  height: 105px;
-  object-fit: contain;
-  display: block;
-  margin-left: -10px;
+  width: 125px !important;
+  height: 125px !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin-left: -10px !important;
   transition: none !important;
   border: none !important;
   background: transparent !important;
+  flex-shrink: 0 !important;
+  min-width: 125px !important;
+  max-width: 125px !important;
+  min-height: 125px !important;
+  max-height: 125px !important;
 }
 
-/* Responsive logo */
-@media (max-width: 768px) {
-  .brand-logo-img {
-    width: 105px;
-    height: 105px;
-    margin-left: -5px;
-  }
-}
-
-@media (max-width: 480px) {
-  .brand-logo-img {
-    width: 105px;
-    height: 105px;
-    margin-left: -3px;
-  }
-}
+/* ==============================================
+   KHÔNG CÓ MEDIA QUERY NÀO THAY ĐỔI KÍCH THƯỚC LOGO
+   - TẤT CẢ THIẾT BỊ ĐỀU GIỮ NGUYÊN 125px
+   ============================================== */
 
 header {
   text-align: center;
@@ -1305,7 +1298,9 @@ footer a:hover {
   }
 }
 
-/* Responsive */
+/* ==============================================
+   RESPONSIVE - GIỮ NGUYÊN LOGO 125px
+   ============================================== */
 @media (max-width: 768px) {
   .tab-btn {
     padding: 8px 0;
