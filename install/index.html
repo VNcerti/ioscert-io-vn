@@ -11,47 +11,66 @@
                maximum-scale=1,
                viewport-fit=cover">
 
-<meta name="theme-color" content="#f7f9fc">
+<meta name="theme-color" content="#f5f5f7">
 
-<title>ESign</title>
+<title>ESign 5.0.2 - CHỨNG CHỈ P12</title>
+
+<link rel="icon"
+      href="https://i.imgur.com/BIbDCrO.png"
+      type="image/x-icon">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<script
+    src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js"
+    type="module">
+</script>
+
 
 <style>
 
 /* =========================================================
-   BASE
+   RESET
 ========================================================= */
 
 * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-html {
-    min-height: 100%;
-    background: #f7f9fc;
-}
-
-body {
     margin: 0;
-    min-height: 100vh;
+    padding: 0;
+    box-sizing: border-box;
 
     font-family:
         -apple-system,
         BlinkMacSystemFont,
         "SF Pro Display",
         "SF Pro Text",
-        Helvetica,
-        Arial,
+        "Segoe UI",
+        Roboto,
+        Oxygen,
+        Ubuntu,
         sans-serif;
+}
+
+html {
+    min-height: 100%;
+
+    background: #f5f5f7;
+
+    scroll-behavior: smooth;
+}
+
+body {
+
+    min-height: 100vh;
 
     color: #1d1d1f;
 
     background:
         linear-gradient(
             145deg,
-            #f9fbff 0%,
-            #f5f8fd 45%,
-            #f9f9fc 100%
+            #fafbff 0%,
+            #f5f7fb 50%,
+            #fafafd 100%
         );
 
     -webkit-font-smoothing: antialiased;
@@ -61,67 +80,737 @@ body {
 
 
 /* =========================================================
-   BACKGROUND LIGHT
+   SOFT BACKGROUND
 ========================================================= */
 
 body::before {
+
     content: "";
 
     position: fixed;
 
-    width: 400px;
-    height: 400px;
+    width: 430px;
+    height: 430px;
 
-    top: -200px;
-    left: -150px;
+    top: -220px;
+    left: -170px;
 
     border-radius: 50%;
 
     background:
         radial-gradient(
             circle,
-            rgba(0,122,255,.12) 0%,
-            rgba(0,122,255,.04) 40%,
-            transparent 72%
-        );
-
-    filter: blur(20px);
-
-    pointer-events: none;
-}
-
-body::after {
-    content: "";
-
-    position: fixed;
-
-    width: 390px;
-    height: 390px;
-
-    right: -180px;
-    bottom: -180px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(175,82,222,.09) 0%,
-            rgba(88,86,214,.03) 42%,
+            rgba(0,122,255,.10),
+            rgba(0,122,255,.035) 42%,
             transparent 72%
         );
 
     filter: blur(25px);
 
     pointer-events: none;
+
+    z-index: -1;
+}
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    width: 420px;
+    height: 420px;
+
+    right: -190px;
+    bottom: -190px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(175,82,222,.08),
+            rgba(88,86,214,.025) 45%,
+            transparent 72%
+        );
+
+    filter: blur(28px);
+
+    pointer-events: none;
+
+    z-index: -1;
 }
 
 
 /* =========================================================
-   PAGE
+   APPLE NAVBAR
 ========================================================= */
 
-.page {
+.navbar-apple {
+
+    background:
+        rgba(255,255,255,.82);
+
+    backdrop-filter:
+        saturate(180%)
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        saturate(180%)
+        blur(20px);
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    z-index: 1000;
+
+    border-bottom:
+        1px solid rgba(0,0,0,.055);
+
+    box-shadow:
+        0 1px 0
+        rgba(0,0,0,.035);
+
+    transition:
+        transform .4s
+        cubic-bezier(.4,0,.2,1);
+
+    transform: translateY(0);
+}
+
+.navbar-apple.hidden {
+    transform: translateY(-100%);
+}
+
+
+.navbar-container {
+
+    max-width: 1024px;
+
+    margin: 0 auto;
+
+    padding: 0 22px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    height: 48px;
+}
+
+
+/* =========================================================
+   NAVBAR LOGO
+========================================================= */
+
+.navbar-logo {
+
+    display: flex;
+
+    align-items: center;
+
+    text-decoration: none;
+
+    color: #1d1d1f;
+
+    font-weight: 600;
+
+    font-size: 18px;
+
+    letter-spacing: -.2px;
+
+    transition: opacity .2s ease;
+
+    margin-left: -6px;
+}
+
+.navbar-logo:hover {
+    opacity: .8;
+}
+
+
+.logo-lottie {
+
+    width: 32px;
+    height: 32px;
+
+    margin-right: 8px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    position: relative;
+
+    top: -3.5px;
+}
+
+.logo-lottie dotlottie-wc {
+
+    width: 100%;
+    height: 100%;
+
+    transform: scale(1.6);
+}
+
+
+.logo-text {
+
+    margin-left: -3px;
+
+    position: relative;
+
+    top: -1px;
+}
+
+
+/* =========================================================
+   DESKTOP NAV MENU
+========================================================= */
+
+.navbar-menu {
+
+    display: flex;
+
+    list-style: none;
+
+    gap: 28px;
+
+    margin-left: 30px;
+}
+
+.nav-item {
+    position: relative;
+}
+
+
+.nav-link {
+
+    text-decoration: none;
+
+    color: #1d1d1f;
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    letter-spacing: -.01em;
+
+    transition:
+        color .2s ease,
+        opacity .2s ease;
+
+    padding: 16px 0;
+
+    display: inline-block;
+
+    position: relative;
+
+    opacity: .9;
+}
+
+.nav-link:hover {
+
+    color: #000;
+
+    opacity: 1;
+}
+
+
+.nav-link::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 12px;
+
+    left: 0;
+
+    width: 0;
+
+    height: 1px;
+
+    background: #000;
+
+    transition:
+        width .3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+
+/* =========================================================
+   NAV ACTIONS
+========================================================= */
+
+.navbar-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+.action-icon {
+
+    text-decoration: none;
+
+    color: #1d1d1f;
+
+    font-size: 16px;
+
+    transition:
+        color .2s ease,
+        opacity .2s ease;
+
+    position: relative;
+
+    padding: 4px;
+
+    opacity: .9;
+}
+
+.action-icon:hover {
+
+    color: #000;
+
+    opacity: 1;
+}
+
+
+.bag-count {
+
+    position: absolute;
+
+    top: -3px;
+    right: -5px;
+
+    background: #000;
+
+    color: #fff;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   MOBILE TOGGLE
+========================================================= */
+
+.mobile-menu-toggle {
+
+    background: none;
+
+    border: none;
+
+    color: #1d1d1f;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    padding: 8px;
+
+    margin-left: 8px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 8px;
+
+    transition:
+        opacity .2s ease,
+        background .2s ease;
+}
+
+.mobile-menu-toggle:hover {
+
+    opacity: .7;
+
+    background:
+        rgba(0,0,0,.05);
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+.mobile-menu {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        rgba(255,255,255,.97);
+
+    backdrop-filter:
+        blur(25px)
+        saturate(180%);
+
+    -webkit-backdrop-filter:
+        blur(25px)
+        saturate(180%);
+
+    z-index: 2000;
+
+    display: flex;
+
+    flex-direction: column;
+
+    padding:
+        max(20px, env(safe-area-inset-top))
+        0
+        40px;
+
+    transform:
+        translateY(-100%);
+
+    opacity: 0;
+
+    transition:
+        all .4s
+        cubic-bezier(.4,0,.2,1);
+
+    overflow-y: auto;
+}
+
+.mobile-menu.active {
+
+    transform:
+        translateY(0);
+
+    opacity: 1;
+}
+
+
+.mobile-menu-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding:
+        0 22px 20px;
+
+    border-bottom:
+        1px solid rgba(0,0,0,.05);
+
+    margin-bottom: 20px;
+}
+
+
+.mobile-menu-logo {
+
+    display: flex;
+
+    align-items: center;
+
+    color: #1d1d1f;
+
+    font-weight: 600;
+
+    font-size: 20px;
+
+    letter-spacing: -.2px;
+}
+
+
+.mobile-menu-logo .logo-lottie {
+
+    width: 36px;
+    height: 36px;
+
+    margin-right: 10px;
+
+    position: relative;
+
+    top: -2px;
+}
+
+
+.mobile-menu-logo .logo-text {
+
+    position: relative;
+
+    top: -1px;
+}
+
+
+.mobile-menu-close {
+
+    background: none;
+
+    border: none;
+
+    color: #1d1d1f;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    padding: 8px;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+}
+
+
+.mobile-menu-close:hover {
+
+    opacity: .7;
+
+    background:
+        rgba(0,0,0,.05);
+}
+
+
+.mobile-menu-section {
+
+    padding: 0 22px;
+
+    margin-bottom: 30px;
+}
+
+
+.mobile-menu-title {
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #86868b;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+
+    margin-bottom: 12px;
+}
+
+
+.mobile-menu-links {
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.mobile-menu-link {
+
+    text-decoration: none;
+
+    color: #1d1d1f;
+
+    font-size: 20px;
+
+    font-weight: 400;
+
+    padding: 14px 0;
+
+    border-bottom:
+        1px solid rgba(0,0,0,.05);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    transition:
+        color .2s ease;
+}
+
+.mobile-menu-link:hover {
+    color: #000;
+}
+
+.mobile-menu-link i {
+
+    font-size: 16px;
+
+    opacity: .7;
+}
+
+.mobile-menu-link:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   MOBILE BOTTOM BAR
+========================================================= */
+
+.mobile-bottom-bar {
+
+    display: none;
+
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+
+    background:
+        rgba(255,255,255,.86);
+
+    backdrop-filter:
+        saturate(180%)
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        saturate(180%)
+        blur(20px);
+
+    border-top:
+        1px solid rgba(0,0,0,.05);
+
+    z-index: 1000;
+
+    padding:
+        9px 0
+        max(9px, env(safe-area-inset-bottom));
+}
+
+
+.bottom-bar-links {
+
+    display: flex;
+
+    justify-content: space-around;
+
+    align-items: center;
+}
+
+
+.bottom-bar-link {
+
+    text-decoration: none;
+
+    color: #1d1d1f;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    font-size: 10px;
+
+    font-weight: 400;
+
+    transition:
+        color .2s ease;
+
+    flex: 1;
+
+    opacity: .75;
+}
+
+
+.bottom-bar-link:hover {
+
+    color: #000;
+
+    opacity: 1;
+}
+
+
+.bottom-bar-link.active {
+
+    color: #007aff;
+
+    opacity: 1;
+}
+
+
+.bottom-bar-link i {
+
+    font-size: 18px;
+
+    margin-bottom: 4px;
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.overlay {
+
+    display: none;
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        rgba(0,0,0,.35);
+
+    z-index: 1500;
+}
+
+.overlay.active {
+    display: block;
+}
+
+
+/* =========================================================
+   INSTALL CONTENT
+========================================================= */
+
+.install-page {
 
     width: 100%;
 
@@ -136,33 +825,35 @@ body::after {
     justify-content: center;
 
     padding:
-        max(18px, env(safe-area-inset-top))
-        16px
-        max(18px, env(safe-area-inset-bottom))
-        16px;
+        70px 16px
+        45px;
+
+    position: relative;
 }
 
 
 /* =========================================================
-   CARD — NHỎ HƠN
+   INSTALL CARD
 ========================================================= */
 
-.card {
+.install-card {
 
     position: relative;
 
     width: 100%;
-    max-width: 390px;
 
-    padding: 27px 20px 22px;
+    max-width: 370px;
 
-    border-radius: 28px;
+    padding:
+        25px 19px 20px;
+
+    border-radius: 27px;
 
     background:
         rgba(255,255,255,.70);
 
     border:
-        1px solid rgba(255,255,255,.90);
+        1px solid rgba(255,255,255,.92);
 
     backdrop-filter:
         blur(28px)
@@ -175,7 +866,7 @@ body::after {
     box-shadow:
 
         0 25px 55px
-        rgba(31,38,135,.075),
+        rgba(31,38,135,.07),
 
         0 7px 20px
         rgba(0,0,0,.035),
@@ -191,16 +882,18 @@ body::after {
 }
 
 
-.card::before {
+.install-card::before {
 
     content: "";
 
     position: absolute;
 
     top: -80px;
+
     left: 10%;
 
     width: 80%;
+
     height: 130px;
 
     border-radius: 50%;
@@ -218,34 +911,10 @@ body::after {
 }
 
 
-.card::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 8%;
-    right: 8%;
-
-    top: 0;
-
-    height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.95),
-            transparent
-        );
-
-    pointer-events: none;
-}
-
-
 @keyframes cardIn {
 
     from {
+
         opacity: 0;
 
         transform:
@@ -254,6 +923,7 @@ body::after {
     }
 
     to {
+
         opacity: 1;
 
         transform:
@@ -264,24 +934,25 @@ body::after {
 
 
 /* =========================================================
-   APP ICON — NHỎ HƠN
+   E-SIGN ICON
 ========================================================= */
 
 .icon-wrapper {
 
     position: relative;
 
-    width: 88px;
-    height: 88px;
+    width: 84px;
+    height: 84px;
 
-    margin: 0 auto 17px;
+    margin:
+        0 auto 16px;
 
     padding: 4px;
 
-    border-radius: 23px;
+    border-radius: 22px;
 
     background:
-        rgba(255,255,255,.78);
+        rgba(255,255,255,.80);
 
     border:
         1px solid rgba(255,255,255,.95);
@@ -290,9 +961,6 @@ body::after {
 
         0 13px 28px
         rgba(0,0,0,.09),
-
-        0 4px 10px
-        rgba(0,122,255,.05),
 
         inset 0 1px 0
         rgba(255,255,255,1);
@@ -307,7 +975,7 @@ body::after {
 
     inset: -7px;
 
-    border-radius: 28px;
+    border-radius: 27px;
 
     background:
         radial-gradient(
@@ -331,19 +999,15 @@ body::after {
 
     object-fit: cover;
 
-    border-radius: 19px;
-
-    box-shadow:
-        inset 0 0 0 1px
-        rgba(255,255,255,.25);
+    border-radius: 18px;
 }
 
 
 /* =========================================================
-   TITLE
+   APP TITLE
 ========================================================= */
 
-.title {
+.app-title {
 
     margin: 0;
 
@@ -361,7 +1025,7 @@ body::after {
 }
 
 
-.version {
+.app-version {
 
     margin-top: 6px;
 
@@ -369,7 +1033,7 @@ body::after {
 
     color: #86868b;
 
-    font-size: 14px;
+    font-size: 13px;
 
     font-weight: 500;
 }
@@ -381,9 +1045,10 @@ body::after {
 
 .certificate-box {
 
-    margin-top: 20px;
+    margin-top: 19px;
 
-    padding: 14px 14px;
+    padding:
+        13px 13px;
 
     border-radius: 17px;
 
@@ -391,7 +1056,7 @@ body::after {
         rgba(255,255,255,.58);
 
     border:
-        1px solid rgba(255,255,255,.82);
+        1px solid rgba(255,255,255,.84);
 
     box-shadow:
 
@@ -411,9 +1076,9 @@ body::after {
 }
 
 
-.label {
+.certificate-label {
 
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 
     text-align: center;
 
@@ -423,7 +1088,7 @@ body::after {
 
     font-weight: 700;
 
-    letter-spacing: 1.1px;
+    letter-spacing: 1.05px;
 }
 
 
@@ -445,7 +1110,7 @@ body::after {
    INSTALL BUTTON
 ========================================================= */
 
-.install {
+.install-button {
 
     position: relative;
 
@@ -459,7 +1124,7 @@ body::after {
 
     width: 100%;
 
-    margin-top: 17px;
+    margin-top: 16px;
 
     padding: 14px 18px;
 
@@ -468,11 +1133,11 @@ body::after {
     background:
         linear-gradient(
             180deg,
-            #0a84ff 0%,
-            #007aff 100%
+            #0a84ff,
+            #007aff
         );
 
-    color: white;
+    color: #fff;
 
     text-decoration: none;
 
@@ -480,25 +1145,23 @@ body::after {
 
     font-weight: 600;
 
-    letter-spacing: -.1px;
-
     box-shadow:
 
         0 8px 18px
         rgba(0,122,255,.20),
 
         inset 0 1px 0
-        rgba(255,255,255,.32);
-
-    overflow: hidden;
+        rgba(255,255,255,.30);
 
     transition:
         transform .15s ease,
         box-shadow .15s ease;
+
+    overflow: hidden;
 }
 
 
-.install::before {
+.install-button::before {
 
     content: "";
 
@@ -514,22 +1177,23 @@ body::after {
         linear-gradient(
             105deg,
             transparent,
-            rgba(255,255,255,.30),
+            rgba(255,255,255,.28),
             transparent
         );
 
     transform: skewX(-20deg);
 
-    transition: left .65s ease;
+    transition:
+        left .65s ease;
 }
 
 
-.install:hover::before {
+.install-button:hover::before {
     left: 145%;
 }
 
 
-.install:active {
+.install-button:active {
 
     transform: scale(.975);
 
@@ -549,11 +1213,6 @@ body::after {
 
     width: 17px;
     height: 17px;
-
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
 }
 
 
@@ -561,18 +1220,22 @@ body::after {
 
     content: "";
 
+    position: absolute;
+
     width: 7px;
     height: 8px;
 
+    top: 1px;
+    left: 4px;
+
     border-left:
-        2px solid white;
+        2px solid #fff;
 
     border-bottom:
-        2px solid white;
+        2px solid #fff;
 
     transform:
-        rotate(-45deg)
-        translateY(-2px);
+        rotate(-45deg);
 }
 
 
@@ -582,14 +1245,15 @@ body::after {
 
     position: absolute;
 
-    bottom: 0;
-
     width: 13px;
     height: 2px;
 
+    bottom: 1px;
+    left: 2px;
+
     border-radius: 2px;
 
-    background: white;
+    background: #fff;
 }
 
 
@@ -597,9 +1261,9 @@ body::after {
    NOTE
 ========================================================= */
 
-.note {
+.install-note {
 
-    margin-top: 14px;
+    margin-top: 13px;
 
     text-align: center;
 
@@ -619,7 +1283,7 @@ body::after {
 
     gap: 5px;
 
-    margin-top: 9px;
+    margin-top: 8px;
 
     padding: 6px 10px;
 
@@ -630,10 +1294,6 @@ body::after {
 
     border:
         1px solid rgba(255,255,255,.78);
-
-    box-shadow:
-        inset 0 1px 0
-        rgba(255,255,255,.9);
 
     color: #85858b;
 
@@ -651,10 +1311,6 @@ body::after {
     border-radius: 50%;
 
     background: #34c759;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(52,199,89,.09);
 }
 
 
@@ -664,7 +1320,7 @@ body::after {
 
 .footer {
 
-    margin-top: 15px;
+    margin-top: 14px;
 
     text-align: center;
 
@@ -675,8 +1331,6 @@ body::after {
     font-weight: 500;
 
     letter-spacing: .1px;
-
-    opacity: .9;
 }
 
 
@@ -729,7 +1383,7 @@ body::after {
 
 .error p {
 
-    margin: 8px 0 0;
+    margin-top: 8px;
 
     color: #86868b;
 
@@ -740,40 +1394,132 @@ body::after {
 
 
 /* =========================================================
-   SMALL SCREEN
+   RESPONSIVE
 ========================================================= */
 
-@media (max-width: 360px) {
+@media screen and (max-width: 834px) {
 
-    .page {
-        padding-left: 14px;
-        padding-right: 14px;
+    .navbar-menu {
+
+        gap: 20px;
+
+        margin-left: 25px;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .navbar-menu {
+        display: none;
     }
 
-    .card {
-        padding: 24px 17px 20px;
-        border-radius: 25px;
+    .mobile-bottom-bar {
+        display: block;
     }
 
-    .icon-wrapper {
-        width: 80px;
-        height: 80px;
-        border-radius: 21px;
-        margin-bottom: 15px;
+    .navbar-container {
+
+        padding:
+            0 16px;
     }
 
-    .app-icon {
-        border-radius: 17px;
+    .navbar-logo {
+        margin-left: -1px;
     }
 
-    .title {
-        font-size: 25px;
+    .logo-lottie {
+
+        width: 28px;
+        height: 28px;
+
+        margin-right: 6px;
     }
 
-    .certificate-box {
-        margin-top: 18px;
+    .navbar-logo .logo-text {
+
+        font-size: 16px;
     }
 
+    .install-page {
+
+        padding:
+            68px 15px
+            78px;
+    }
+
+    .install-card {
+
+        max-width: 370px;
+    }
+
+    .navbar-actions {
+        gap: 10px;
+    }
+
+    .action-icon {
+        display: none;
+    }
+}
+
+
+@media screen and (min-width: 769px) {
+
+    .mobile-menu-toggle {
+        display: flex;
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+
+    .mobile-menu-link {
+
+        font-size: 18px;
+
+        padding:
+            12px 0;
+    }
+
+    .logo-lottie {
+
+        width: 26px;
+        height: 26px;
+
+        margin-right: 5px;
+    }
+
+    .navbar-logo .logo-text {
+
+        font-size: 15px;
+    }
+
+    .install-card {
+
+        max-width: 365px;
+
+        padding:
+            24px 18px 19px;
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.nav-link:focus,
+.action-icon:focus,
+.mobile-menu-link:focus,
+.bottom-bar-link:focus,
+.mobile-menu-toggle:focus,
+.mobile-menu-close:focus {
+
+    outline:
+        2px solid #007AFF;
+
+    outline-offset: 2px;
 }
 
 
@@ -783,15 +1529,16 @@ body::after {
 
 @media (prefers-reduced-motion: reduce) {
 
-    .card {
+    .install-card {
         animation: none;
     }
 
-    .install,
-    .install::before {
+    .navbar-apple,
+    .mobile-menu,
+    .install-button,
+    .install-button::before {
         transition: none;
     }
-
 }
 
 </style>
@@ -802,12 +1549,384 @@ body::after {
 <body>
 
 
-<div class="page">
+<!-- =======================================================
+     APPLE NAVBAR
+======================================================= -->
+
+<nav class="navbar-apple">
+
+    <div class="navbar-container">
 
 
-    <!-- MAIN CARD -->
+        <a
+            href="https://chungchip12.com/"
+            class="navbar-logo">
 
-    <div class="card" id="card">
+            <div class="logo-lottie">
+
+                <dotlottie-wc
+                    src="https://lottie.host/847eb397-d9de-462d-a031-29be39d1120e/vtO7zCJWPs.lottie"
+                    autoplay
+                    loop>
+                </dotlottie-wc>
+
+            </div>
+
+            <span class="logo-text">
+                CHỨNG CHỈ P12
+            </span>
+
+        </a>
+
+
+        <!-- Desktop Menu -->
+
+        <ul class="navbar-menu">
+
+            <li class="nav-item">
+
+                <a
+                    href="https://chungchip12.com/"
+                    class="nav-link">
+
+                    Trang chủ
+
+                </a>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <a
+                    href="https://chungchip12.com/nhan-hang.html"
+                    class="nav-link">
+
+                    Nhận hàng
+
+                </a>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <a
+                    href="https://vsacheat.com/appstore/index.html"
+                    class="nav-link">
+
+                    Kho ứng dụng
+
+                </a>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <a
+                    href="https://chungchip12.com/bao-hanh"
+                    class="nav-link">
+
+                    Bảo hành
+
+                </a>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <a
+                    href="https://chungchip12.com/api/account"
+                    class="nav-link">
+
+                    Tài khoản
+
+                </a>
+
+            </li>
+
+        </ul>
+
+
+        <!-- Actions -->
+
+        <div class="navbar-actions">
+
+
+            <a
+                href="https://chungchip12.com/api/account"
+                class="action-icon"
+                aria-label="Tài khoản">
+
+                <i class="fas fa-user-circle"></i>
+
+            </a>
+
+
+            <a
+                href="https://chungchip12.com/api/account"
+                class="action-icon bag"
+                aria-label="Giỏ hàng">
+
+                <i class="fas fa-shopping-bag"></i>
+
+                <span class="bag-count">
+                    3
+                </span>
+
+            </a>
+
+
+            <button
+                class="mobile-menu-toggle"
+                aria-label="Mở menu">
+
+                <i class="fas fa-bars"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =======================================================
+     MOBILE MENU
+======================================================= -->
+
+<div class="mobile-menu">
+
+
+    <div class="mobile-menu-header">
+
+
+        <div class="mobile-menu-logo">
+
+            <div class="logo-lottie">
+
+                <dotlottie-wc
+                    src="https://lottie.host/847eb397-d9de-462d-a031-29be39d1120e/vtO7zCJWPs.lottie"
+                    autoplay
+                    loop>
+                </dotlottie-wc>
+
+            </div>
+
+
+            <span class="logo-text">
+                CHỨNG CHỈ P12
+            </span>
+
+        </div>
+
+
+        <button
+            class="mobile-menu-close"
+            aria-label="Đóng menu">
+
+            <i class="fas fa-times"></i>
+
+        </button>
+
+    </div>
+
+
+
+    <div class="mobile-menu-section">
+
+        <div class="mobile-menu-links">
+
+
+            <a
+                href="https://chungchip12.com/"
+                class="mobile-menu-link">
+
+                <span>Trang chủ</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+
+            <a
+                href="https://chungchip12.com/nhan-hang.html"
+                class="mobile-menu-link">
+
+                <span>Nhận hàng</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+
+            <a
+                href="https://vsacheat.com/appstore/index.html"
+                class="mobile-menu-link">
+
+                <span>Kho ứng dụng</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+
+            <a
+                href="https://chungchip12.com/bao-hanh"
+                class="mobile-menu-link">
+
+                <span>Bảo hành đơn hàng</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+
+            <a
+                href="https://chungchip12.com/api/account"
+                class="mobile-menu-link">
+
+                <span>Tài khoản</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="mobile-menu-section">
+
+        <h3 class="mobile-menu-title">
+            Dịch vụ bổ sung
+        </h3>
+
+
+        <div class="mobile-menu-links">
+
+
+            <a
+                href="https://sign.chungchip12.com"
+                class="mobile-menu-link">
+
+                <span>Ký ứng dụng trực tuyến</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+
+            <a
+                href="https://check.chungchip12.com"
+                class="mobile-menu-link">
+
+                <span>Kiểm tra chứng chỉ</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+
+            <a
+                href="https://chungchip12.com/api/account"
+                class="mobile-menu-link">
+
+                <span>Nạp tiền</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+
+            <a
+                href="https://chungchip12.com/api/account"
+                class="mobile-menu-link">
+
+                <span>Danh sách đơn hàng</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="mobile-menu-section">
+
+        <h3 class="mobile-menu-title">
+            Cộng đồng & Hỗ trợ
+        </h3>
+
+
+        <div class="mobile-menu-links">
+
+
+            <a
+                href="https://t.me/m/7gQci19fZmU9"
+                class="mobile-menu-link">
+
+                <span>Liên hệ hỗ trợ</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+
+            <a
+                href="https://t.me/m/7gQci19fZmU9"
+                class="mobile-menu-link">
+
+                <span>Tạo website riêng</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+
+            <a
+                href="https://t.me/vietnamcert"
+                class="mobile-menu-link">
+
+                <span>Kênh thông báo chính thức</span>
+
+                <i class="fas fa-chevron-right"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =======================================================
+     OVERLAY
+======================================================= -->
+
+<div class="overlay"></div>
+
+
+
+<!-- =======================================================
+     INSTALL PAGE
+======================================================= -->
+
+<main class="install-page">
+
+
+    <div class="install-card" id="card">
 
 
         <!-- ESign Logo -->
@@ -822,36 +1941,26 @@ body::after {
         </div>
 
 
-        <!-- APP NAME -->
+        <!-- App Name -->
 
-        <h1
-            class="title"
-            id="appName">
-
+        <h1 class="app-title">
             ESign
-
         </h1>
 
 
-        <!-- VERSION -->
+        <!-- Version -->
 
-        <div
-            class="version"
-            id="version">
-
+        <div class="app-version">
             Version 5.0.2
-
         </div>
 
 
-        <!-- CERTIFICATE -->
+        <!-- Certificate -->
 
         <div class="certificate-box">
 
-            <div class="label">
-
+            <div class="certificate-label">
                 CHỨNG CHỈ KÝ
-
             </div>
 
 
@@ -866,11 +1975,11 @@ body::after {
         </div>
 
 
-        <!-- INSTALL BUTTON -->
+        <!-- Install -->
 
         <a
             id="install"
-            class="install"
+            class="install-button"
             href="#">
 
             <span class="download-icon"></span>
@@ -880,13 +1989,14 @@ body::after {
         </a>
 
 
-        <!-- NOTE -->
+        <!-- Note -->
 
-        <div class="note">
+        <div class="install-note">
 
-            Nhấn nút bên trên để bắt đầu cài đặt ESign.
+            Nhấn nút bên trên để bắt đầu cài đặt.
 
             <br>
+
 
             <span class="safari-note">
 
@@ -898,34 +2008,235 @@ body::after {
 
         </div>
 
-
     </div>
 
 
-    <!-- FOOTER -->
+    <!-- Footer -->
 
-    <div class="footer">
+    <footer class="footer">
 
         © 2026 - CHUNGCHIP12.COM
 
-    </div>
+    </footer>
 
 
-</div>
+</main>
 
 
+
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
 
 <script>
 
+
 /* =========================================================
-   IOSCERT INSTALL LOGIC
+   MOBILE MENU
 ========================================================= */
 
-(function () {
+const mobileMenuToggle =
+    document.querySelector(
+        ".mobile-menu-toggle"
+    );
+
+
+const mobileMenu =
+    document.querySelector(
+        ".mobile-menu"
+    );
+
+
+const mobileMenuClose =
+    document.querySelector(
+        ".mobile-menu-close"
+    );
+
+
+const overlay =
+    document.querySelector(
+        ".overlay"
+    );
+
+
+function openMobileMenu() {
+
+    mobileMenu.classList.add(
+        "active"
+    );
+
+    overlay.classList.add(
+        "active"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+}
+
+
+function closeMobileMenu() {
+
+    mobileMenu.classList.remove(
+        "active"
+    );
+
+    overlay.classList.remove(
+        "active"
+    );
+
+    document.body.style.overflow =
+        "";
+}
+
+
+mobileMenuToggle.addEventListener(
+    "click",
+    openMobileMenu
+);
+
+
+mobileMenuClose.addEventListener(
+    "click",
+    closeMobileMenu
+);
+
+
+overlay.addEventListener(
+    "click",
+    closeMobileMenu
+);
+
+
+document
+    .querySelectorAll(".mobile-menu-link")
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            closeMobileMenu
+        );
+
+    });
+
+
+
+/* =========================================================
+   NAVBAR HIDE / SHOW
+========================================================= */
+
+let lastScrollTop = 0;
+
+const navbar =
+    document.querySelector(
+        ".navbar-apple"
+    );
+
+
+const navbarHeight =
+    navbar.offsetHeight;
+
+
+window.addEventListener(
+    "scroll",
+    function() {
+
+        const scrollTop =
+            window.pageYOffset ||
+            document.documentElement.scrollTop;
+
+
+        if (
+            scrollTop > lastScrollTop &&
+            scrollTop > navbarHeight
+        ) {
+
+            navbar.classList.add(
+                "hidden"
+            );
+
+        } else {
+
+            navbar.classList.remove(
+                "hidden"
+            );
+
+        }
+
+
+        lastScrollTop =
+            scrollTop <= 0
+                ? 0
+                : scrollTop;
+
+    },
+    { passive: true }
+);
+
+
+
+/* =========================================================
+   ACTIVE BOTTOM BAR
+========================================================= */
+
+const bottomBarLinks =
+    document.querySelectorAll(
+        ".bottom-bar-link"
+    );
+
+
+function setActiveBottomBarLink() {
+
+    const currentPath =
+        window.location.pathname;
+
+
+    bottomBarLinks.forEach(
+        function(link) {
+
+            link.classList.remove(
+                "active"
+            );
+
+            try {
+
+                const linkURL =
+                    new URL(
+                        link.href
+                    );
+
+
+                if (
+                    currentPath ===
+                    linkURL.pathname
+                ) {
+
+                    link.classList.add(
+                        "active"
+                    );
+
+                }
+
+            } catch (e) {}
+
+        }
+    );
+
+}
+
+
+setActiveBottomBarLink();
+
+
+
+/* =========================================================
+   INSTALL SYSTEM
+========================================================= */
+
+(function() {
 
 
     /*
-     * Đọc tham số:
+     * Lấy:
      *
      * ?app=esign-hebei-rongkai-network-technology-co-ltd
      */
@@ -956,7 +2267,7 @@ body::after {
 
 
     /*
-     * Tự động tạo đường dẫn:
+     * Manifest:
      *
      * /install/{app}/manifest.plist
      */
@@ -973,7 +2284,7 @@ body::after {
 
 
     /*
-     * Tạo link cài đặt iOS
+     * ITMS Services
      */
 
     const installURL =
@@ -986,16 +2297,17 @@ body::after {
 
 
     /*
-     * Gắn link vào nút cài đặt
+     * Gắn link cài đặt
      */
 
     document
         .getElementById("install")
-        .href = installURL;
+        .href =
+        installURL;
 
 
     /*
-     * Tên chứng chỉ
+     * Certificate names
      */
 
     const certificateNames = {
@@ -1024,7 +2336,7 @@ body::after {
 
     /*
      * Nếu chưa khai báo:
-     * tự chuyển slug thành tên dễ đọc
+     * tự tạo tên từ slug
      */
 
     if (!certificate) {
@@ -1032,20 +2344,17 @@ body::after {
         certificate =
 
             app
-
                 .replace(
                     /^esign-/,
                     ""
                 )
-
                 .replace(
                     /-/g,
                     " "
                 )
-
                 .replace(
                     /\b\w/g,
-                    function (char) {
+                    function(char) {
 
                         return char.toUpperCase();
 
