@@ -18,7 +18,7 @@
                     <string>software-package</string>
 
                     <key>url</key>
-                    <string>https://raw.githubusercontent.com/VNcerti/ioscert-io-vn/main/install/ESign_5.0.2_ola.ipa</string>
+                    <string>https://raw.githubusercontent.com/VNcerti/ioscert-io-vn/main/install/ESign_5.0.2_olacity.ipa</string>
                 </dict>
 
             </array>
@@ -36,7 +36,7 @@
                 <string>software</string>
 
                 <key>title</key>
-                <string>ESign 5.0.2 - Signed chungchip12.com</string>
+                <string>ESign 5.0.2 - Signed chungchip12.com!</string>
 
             </dict>
 
