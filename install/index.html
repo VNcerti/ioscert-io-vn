@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="vi">
 
 <head>
@@ -6,149 +7,488 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width,
-               initial-scale=1,
-               maximum-scale=1,
-               viewport-fit=cover">
+   content="width=device-width,
+            initial-scale=1,
+            maximum-scale=1,
+            viewport-fit=cover">
+
+<meta name="theme-color" content="#f7f9fc">
 
 <title>ESign</title>
 
 <style>
+
+/* =========================================================
+   BASE
+========================================================= */
 
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 }
 
-html,
+html {
+    min-height: 100%;
+    background: #f7f9fc;
+}
+
 body {
     margin: 0;
-    min-height: 100%;
+    min-height: 100vh;
 
     font-family:
         -apple-system,
         BlinkMacSystemFont,
         "SF Pro Display",
         "SF Pro Text",
+        Helvetica,
+        Arial,
         sans-serif;
 
-    background: #f5f5f7;
-    color: #111;
+    color: #1d1d1f;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f9fbff 0%,
+            #f5f8fd 45%,
+            #f9f9fc 100%
+        );
+
+    -webkit-font-smoothing: antialiased;
+
+    overflow-x: hidden;
 }
 
-body {
+
+/* =========================================================
+   SOFT APPLE BACKGROUND LIGHT
+========================================================= */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    width: 430px;
+    height: 430px;
+
+    top: -220px;
+    left: -160px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,122,255,.13) 0%,
+            rgba(0,122,255,.05) 38%,
+            transparent 72%
+        );
+
+    filter: blur(20px);
+
+    pointer-events: none;
+}
+
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    width: 420px;
+    height: 420px;
+
+    right: -180px;
+    bottom: -180px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(175,82,222,.10) 0%,
+            rgba(88,86,214,.04) 42%,
+            transparent 72%
+        );
+
+    filter: blur(25px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+
+    width: 100%;
+
     min-height: 100vh;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     padding:
-        max(20px, env(safe-area-inset-top))
+        max(22px, env(safe-area-inset-top))
         18px
-        max(20px, env(safe-area-inset-bottom));
+        max(22px, env(safe-area-inset-bottom))
+        18px;
 }
 
+
+/* =========================================================
+   APPLE GLASS CARD
+========================================================= */
+
 .card {
+
+    position: relative;
 
     width: 100%;
     max-width: 430px;
 
-    background: rgba(255,255,255,.96);
+    padding: 34px 23px 28px;
 
-    border-radius: 30px;
+    border-radius: 32px;
 
-    padding: 32px 22px;
+    /*
+     * Glass sáng
+     */
 
-    text-align: center;
+    background:
+        rgba(255,255,255,.68);
+
+    border:
+        1px solid rgba(255,255,255,.90);
+
+    backdrop-filter:
+        blur(28px)
+        saturate(180%);
+
+    -webkit-backdrop-filter:
+        blur(28px)
+        saturate(180%);
 
     box-shadow:
-        0 20px 60px rgba(0,0,0,.08);
+
+        0 30px 70px
+        rgba(31,38,135,.08),
+
+        0 8px 25px
+        rgba(0,0,0,.035),
+
+        inset 0 1px 0
+        rgba(255,255,255,.95);
+
+    overflow: hidden;
+
+    animation:
+        cardIn .55s
+        cubic-bezier(.22,.8,.22,1);
 }
 
-.icon {
 
-    width: 92px;
-    height: 92px;
+/*
+ * Kính phản sáng phía trên
+ */
 
-    margin: 0 auto 20px;
+.card::before {
 
-    border-radius: 23px;
+    content: "";
 
-    background: #111;
+    position: absolute;
 
-    display: flex;
+    top: -90px;
+    left: 10%;
 
-    align-items: center;
-    justify-content: center;
+    width: 80%;
+    height: 150px;
 
-    color: white;
+    border-radius: 50%;
 
-    font-size: 34px;
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255,255,255,.9),
+            transparent 70%
+        );
 
-    font-weight: 700;
+    filter: blur(12px);
+
+    pointer-events: none;
 }
+
+
+/*
+ * Đường highlight rất nhẹ
+ */
+
+.card::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 8%;
+    right: 8%;
+
+    top: 0;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.95),
+            transparent
+        );
+
+    pointer-events: none;
+}
+
+
+@keyframes cardIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(18px)
+            scale(.985);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   APP ICON
+========================================================= */
+
+.icon-wrapper {
+
+    position: relative;
+
+    width: 104px;
+    height: 104px;
+
+    margin: 0 auto 22px;
+
+    padding: 5px;
+
+    border-radius: 27px;
+
+    background:
+        rgba(255,255,255,.78);
+
+    border:
+        1px solid rgba(255,255,255,.95);
+
+    box-shadow:
+
+        0 16px 35px
+        rgba(0,0,0,.10),
+
+        0 4px 12px
+        rgba(0,122,255,.06),
+
+        inset 0 1px 0
+        rgba(255,255,255,1);
+}
+
+
+/*
+ * Glow xung quanh icon
+ */
+
+.icon-wrapper::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -8px;
+
+    border-radius: 32px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,122,255,.12),
+            transparent 68%
+        );
+
+    filter: blur(12px);
+
+    z-index: -1;
+}
+
+
+.app-icon {
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 22px;
+
+    box-shadow:
+        inset 0 0 0 1px
+        rgba(255,255,255,.25);
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
 
 .title {
 
     margin: 0;
 
-    font-size: 28px;
+    text-align: center;
+
+    color: #1d1d1f;
+
+    font-size: 30px;
+
+    line-height: 1.12;
 
     font-weight: 700;
+
+    letter-spacing: -.7px;
 }
+
 
 .version {
 
-    margin-top: 7px;
+    margin-top: 8px;
 
-    color: #777;
+    text-align: center;
+
+    color: #86868b;
 
     font-size: 15px;
+
+    font-weight: 500;
+
+    letter-spacing: -.1px;
 }
+
+
+/* =========================================================
+   CERTIFICATE GLASS BOX
+========================================================= */
 
 .certificate-box {
 
-    margin-top: 24px;
+    margin-top: 26px;
 
-    padding: 16px;
+    padding: 17px 16px;
 
-    background: #f5f5f7;
+    border-radius: 19px;
 
-    border-radius: 17px;
+    background:
+        rgba(255,255,255,.58);
+
+    border:
+        1px solid rgba(255,255,255,.82);
+
+    box-shadow:
+
+        inset 0 1px 0
+        rgba(255,255,255,.95),
+
+        0 4px 14px
+        rgba(0,0,0,.025);
+
+    backdrop-filter:
+        blur(18px)
+        saturate(160%);
+
+    -webkit-backdrop-filter:
+        blur(18px)
+        saturate(160%);
 }
+
 
 .label {
 
-    font-size: 12px;
+    margin-bottom: 7px;
 
-    color: #888;
+    text-align: center;
 
-    margin-bottom: 6px;
+    color: #9898a0;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.15px;
 }
+
 
 .certificate {
 
+    text-align: center;
+
+    color: #2c2c2e;
+
     font-size: 14px;
 
-    font-weight: 600;
+    line-height: 1.45;
 
-    line-height: 1.4;
+    font-weight: 600;
 }
+
+
+/* =========================================================
+   INSTALL BUTTON
+========================================================= */
 
 .install {
 
-    display: block;
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
 
     width: 100%;
 
-    margin-top: 22px;
+    margin-top: 21px;
 
     padding: 16px 20px;
 
     border-radius: 16px;
 
-    background: #007aff;
+    background:
+        linear-gradient(
+            180deg,
+            #0a84ff 0%,
+            #007aff 100%
+        );
 
     color: white;
 
@@ -157,31 +497,275 @@ body {
     font-size: 17px;
 
     font-weight: 600;
+
+    letter-spacing: -.1px;
+
+    box-shadow:
+
+        0 9px 22px
+        rgba(0,122,255,.22),
+
+        inset 0 1px 0
+        rgba(255,255,255,.32);
+
+    overflow: hidden;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
 }
+
+
+/*
+ * Hiệu ứng kính chạy ngang nút
+ */
+
+.install::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 65%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            105deg,
+            transparent,
+            rgba(255,255,255,.30),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition:
+        left .65s ease;
+}
+
+
+.install:hover::before {
+
+    left: 145%;
+}
+
 
 .install:active {
 
-    transform: scale(.97);
+    transform: scale(.975);
+
+    box-shadow:
+        0 5px 14px
+        rgba(0,122,255,.18);
 }
+
+
+/* =========================================================
+   DOWNLOAD ICON
+========================================================= */
+
+.download-icon {
+
+    position: relative;
+
+    width: 18px;
+    height: 18px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+.download-icon::before {
+
+    content: "";
+
+    width: 7px;
+    height: 9px;
+
+    border-left:
+        2px solid white;
+
+    border-bottom:
+        2px solid white;
+
+    transform:
+        rotate(-45deg)
+        translateY(-2px);
+}
+
+
+.download-icon::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+
+    width: 14px;
+    height: 2px;
+
+    border-radius: 2px;
+
+    background: white;
+}
+
+
+/* =========================================================
+   NOTE
+========================================================= */
 
 .note {
 
-    margin-top: 18px;
+    margin-top: 17px;
 
-    color: #888;
+    text-align: center;
 
-    font-size: 13px;
+    color: #8e8e93;
+
+    font-size: 12.5px;
+
+    line-height: 1.55;
+}
+
+
+.safari-note {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 12px;
+
+    padding: 7px 11px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.58);
+
+    border:
+        1px solid rgba(255,255,255,.78);
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.9);
+
+    color: #85858b;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+.safari-dot {
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #34c759;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(52,199,89,.10);
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error {
+
+    text-align: center;
+
+    padding: 30px 10px;
+}
+
+
+.error-icon {
+
+    width: 60px;
+    height: 60px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,59,48,.08);
+
+    color: #ff3b30;
+
+    font-size: 24px;
+
+    font-weight: 700;
+}
+
+
+.error h2 {
+
+    margin: 0;
+
+    color: #1d1d1f;
+
+    font-size: 21px;
+}
+
+
+.error p {
+
+    margin: 9px 0 0;
+
+    color: #86868b;
+
+    font-size: 14px;
 
     line-height: 1.5;
 }
 
-.error {
 
-    display: none;
+/* =========================================================
+   SMALL SCREEN
+========================================================= */
 
-    color: #777;
+@media (max-width: 360px) {
 
-    line-height: 1.5;
+    .card {
+        padding: 29px 18px 24px;
+        border-radius: 28px;
+    }
+
+    .icon-wrapper {
+        width: 92px;
+        height: 92px;
+        border-radius: 24px;
+    }
+
+    .app-icon {
+        border-radius: 20px;
+    }
+
+    .title {
+        font-size: 27px;
+    }
+
 }
 
 </style>
@@ -190,89 +774,138 @@ body {
 
 <body>
 
+<div class="page">
+
 <div class="card" id="card">
 
-    <div class="icon">
-        E
+```
+<!-- ESign Logo -->
+
+<div class="icon-wrapper">
+
+    <img
+        class="app-icon"
+        src="https://vsacheat.com/img/esign.png"
+        alt="ESign">
+
+</div>
+
+
+<!-- App -->
+
+<h1
+    class="title"
+    id="appName">
+
+    ESign
+
+</h1>
+
+
+<!-- Version -->
+
+<div
+    class="version"
+    id="version">
+
+    Version 5.0.2
+
+</div>
+
+
+<!-- Certificate -->
+
+<div class="certificate-box">
+
+    <div class="label">
+
+        CHỨNG CHỈ KÝ
+
     </div>
 
-    <h1 class="title">
-        ESign
-    </h1>
 
     <div
-        class="version"
-        id="version">
+        class="certificate"
+        id="certificate">
+
         Đang tải...
-    </div>
-
-    <div class="certificate-box">
-
-        <div class="label">
-            CHỨNG CHỈ KÝ
-        </div>
-
-        <div
-            class="certificate"
-            id="certificate">
-            Đang tải...
-        </div>
-
-    </div>
-
-    <a
-        id="install"
-        class="install"
-        href="#">
-        Cài đặt ESign
-    </a>
-
-    <div class="note">
-        Mở liên kết bằng Safari trên iPhone/iPad
-        để cài đặt ứng dụng.
-    </div>
-
-    <div
-        id="error"
-        class="error">
-
-        Không tìm thấy thông tin
-        cài đặt cho liên kết này.
 
     </div>
 
 </div>
 
 
+<!-- Install -->
+
+<a
+    id="install"
+    class="install"
+    href="#">
+
+    <span class="download-icon"></span>
+
+    Cài đặt ESign
+
+</a>
+
+
+<!-- Note -->
+
+<div class="note">
+
+    Nhấn nút bên trên để bắt đầu cài đặt ESign.
+
+    <br>
+
+    <span class="safari-note">
+
+        <span class="safari-dot"></span>
+
+        Khuyến nghị sử dụng Safari
+
+    </span>
+
+</div>
+```
+
+</div>
+
+</div>
+
 <script>
+
+/* =========================================================
+   IOSCERT INSTALL LOGIC
+========================================================= */
 
 (function () {
 
+
     /*
-     * Lấy tên thư mục phía sau /install/
+     * Đọc:
      *
-     * Ví dụ:
-     *
-     * /install/esign-hebei-rongkai-network-technology-co-ltd/
-     *
-     * sẽ lấy được:
-     *
-     * esign-hebei-rongkai-network-technology-co-ltd
+     * ?app=esign-hebei-rongkai-network-technology-co-ltd
      */
 
-    const path =
-        window.location.pathname;
-
-    const parts =
-        path.split("/").filter(Boolean);
-
-    const slug =
-        parts[1];
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
 
-    if (!slug) {
+    const app =
+        params.get("app");
 
-        showError();
+
+    /*
+     * Không có app
+     */
+
+    if (!app) {
+
+        showError(
+            "Liên kết cài đặt không hợp lệ."
+        );
 
         return;
 
@@ -280,29 +913,38 @@ body {
 
 
     /*
-     * Manifest tương ứng
+     * Tự động tạo:
      *
-     * KHÔNG cần khai báo link manifest
-     * trong HTML.
-     *
-     * Nó tự lấy theo tên thư mục.
+     * /install/{app}/manifest.plist
      */
 
     const manifestURL =
+
         window.location.origin +
+
         "/install/" +
-        slug +
+
+        encodeURIComponent(app) +
+
         "/manifest.plist";
 
 
     /*
-     * Tạo link cài đặt iOS
+     * Tạo itms-services
      */
 
     const installURL =
-        "itms-services://?action=download-manifest&url=" +
-        encodeURIComponent(manifestURL);
 
+        "itms-services://?action=download-manifest&url=" +
+
+        encodeURIComponent(
+            manifestURL
+        );
+
+
+    /*
+     * Gắn vào nút
+     */
 
     document
         .getElementById("install")
@@ -310,77 +952,114 @@ body {
 
 
     /*
-     * Hiển thị tên chứng chỉ
-     *
-     * Tự chuyển:
-     *
-     * esign-hebei-rongkai-network-technology-co-ltd
-     *
-     * thành:
-     *
-     * Hebei Rongkai Network Technology Co., Ltd
+     * Tên certificate
      */
 
-    let certificateName =
-        slug
-        .replace(/^esign-/, "")
-        .replace(/-/g, " ");
+    const certificateNames = {
 
 
-    certificateName =
-        certificateName
-        .replace(/\b\w/g, function (char) {
-            return char.toUpperCase();
-        });
+        "esign-hebei-rongkai-network-technology-co-ltd":
 
+            "Hebei Rongkai Network Technology Co., Ltd",
+
+
+        "esign-ola-city-global-limited":
+
+            "Ola City Global Limited",
+
+
+        "esign-abc-company":
+
+            "ABC Company"
+
+    };
+
+
+    let certificate =
+        certificateNames[app];
+
+
+    /*
+     * Nếu chưa khai báo:
+     * tự tạo tên từ slug
+     */
+
+    if (!certificate) {
+
+        certificate =
+
+            app
+
+                .replace(
+                    /^esign-/,
+                    ""
+                )
+
+                .replace(
+                    /-/g,
+                    " "
+                )
+
+                .replace(
+                    /\b\w/g,
+                    function (char) {
+
+                        return char.toUpperCase();
+
+                    }
+                );
+
+    }
+
+
+    /*
+     * Hiển thị
+     */
 
     document
         .getElementById("certificate")
         .textContent =
-        certificateName;
+        certificate;
 
 
     /*
-     * Hiện version
+     * Title trình duyệt
      */
 
-    document
-        .getElementById("version")
-        .textContent =
+    document.title =
         "ESign 5.0.2";
 
 
-    function showError() {
+    /*
+     * Error
+     */
+
+    function showError(message) {
 
         document
-            .querySelector(".icon")
-            .style.display = "none";
+            .getElementById("card")
+            .innerHTML = `
 
-        document
-            .querySelector(".title")
-            .style.display = "none";
+                <div class="error">
 
-        document
-            .querySelector(".version")
-            .style.display = "none";
+                    <div class="error-icon">
+                        !
+                    </div>
 
-        document
-            .querySelector(".certificate-box")
-            .style.display = "none";
+                    <h2>
+                        Không thể tải ứng dụng
+                    </h2>
 
-        document
-            .getElementById("install")
-            .style.display = "none";
+                    <p>
+                        ${message}
+                    </p>
 
-        document
-            .querySelector(".note")
-            .style.display = "none";
+                </div>
 
-        document
-            .getElementById("error")
-            .style.display = "block";
+            `;
 
     }
+
 
 })();
 
