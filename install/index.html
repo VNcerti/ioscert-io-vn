@@ -27,7 +27,6 @@
     type="module">
 </script>
 
-
 <style>
 
 /* =========================================================
@@ -49,13 +48,13 @@
         Oxygen,
         Ubuntu,
         sans-serif;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 html {
     min-height: 100%;
-
     background: #f5f5f7;
-
     scroll-behavior: smooth;
 }
 
@@ -274,7 +273,7 @@ body::after {
 
 
 /* =========================================================
-   DESKTOP NAV MENU
+   DESKTOP MENU
 ========================================================= */
 
 .navbar-menu {
@@ -807,7 +806,7 @@ body::after {
 
 
 /* =========================================================
-   INSTALL CONTENT
+   INSTALL PAGE
 ========================================================= */
 
 .install-page {
@@ -822,10 +821,8 @@ body::after {
 
     align-items: center;
 
-    justify-content: center;
-
     padding:
-        70px 16px
+        72px 15px
         45px;
 
     position: relative;
@@ -1258,7 +1255,7 @@ body::after {
 
 
 /* =========================================================
-   NOTE
+   INSTALL NOTE
 ========================================================= */
 
 .install-note {
@@ -1315,12 +1312,304 @@ body::after {
 
 
 /* =========================================================
+   TRUST GUIDE
+========================================================= */
+
+.trust-guide {
+
+    width: 100%;
+
+    max-width: 370px;
+
+    margin-top: 12px;
+
+    padding:
+        15px 15px 14px;
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.60);
+
+    border:
+        1px solid rgba(255,255,255,.88);
+
+    backdrop-filter:
+        blur(24px)
+        saturate(170%);
+
+    -webkit-backdrop-filter:
+        blur(24px)
+        saturate(170%);
+
+    box-shadow:
+
+        0 12px 32px
+        rgba(31,38,135,.045),
+
+        inset 0 1px 0
+        rgba(255,255,255,.95);
+
+    animation:
+        guideIn .65s
+        .08s
+        both
+        cubic-bezier(.22,.8,.22,1);
+}
+
+
+@keyframes guideIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(10px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   CENTERED GUIDE TEXT
+========================================================= */
+
+.guide-description {
+
+    width: 100%;
+
+    margin: 0 auto 13px;
+
+    padding: 0 7px;
+
+    text-align: center;
+
+    color: #8e8e93;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   MOCKUP IMAGE
+========================================================= */
+
+.mockup-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    border-radius: 15px;
+
+    background:
+        #f2f4f8;
+
+    border:
+        1px solid rgba(0,0,0,.035);
+
+    box-shadow:
+        0 6px 18px
+        rgba(0,0,0,.045);
+
+    cursor: zoom-in;
+}
+
+
+.mockup-wrapper::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(255,255,255,.18),
+            transparent 35%
+        );
+}
+
+
+.mockup-image {
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    max-width: 100%;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   GUIDE CAPTION
+========================================================= */
+
+.guide-caption {
+
+    margin-top: 9px;
+
+    text-align: center;
+
+    color: #a1a1a6;
+
+    font-size: 10px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+
+.image-lightbox {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 3000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px;
+
+    background:
+        rgba(245,247,251,.88);
+
+    backdrop-filter:
+        blur(20px)
+        saturate(140%);
+
+    -webkit-backdrop-filter:
+        blur(20px)
+        saturate(140%);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease;
+}
+
+
+.image-lightbox.active {
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+.lightbox-content {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 1000px;
+
+    max-height: 92vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+.lightbox-image {
+
+    display: block;
+
+    max-width: 100%;
+
+    max-height: 88vh;
+
+    width: auto;
+    height: auto;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.18);
+
+    object-fit: contain;
+}
+
+
+.lightbox-close {
+
+    position: fixed;
+
+    top:
+        max(18px, env(safe-area-inset-top));
+
+    right: 18px;
+
+    width: 40px;
+    height: 40px;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(255,255,255,.82);
+
+    color: #1d1d1f;
+
+    font-size: 17px;
+
+    box-shadow:
+        0 6px 20px
+        rgba(0,0,0,.08);
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
    FOOTER
 ========================================================= */
 
 .footer {
 
-    margin-top: 14px;
+    margin-top: 13px;
 
     text-align: center;
 
@@ -1419,9 +1708,7 @@ body::after {
     }
 
     .navbar-container {
-
-        padding:
-            0 16px;
+        padding: 0 16px;
     }
 
     .navbar-logo {
@@ -1437,7 +1724,6 @@ body::after {
     }
 
     .navbar-logo .logo-text {
-
         font-size: 16px;
     }
 
@@ -1446,11 +1732,6 @@ body::after {
         padding:
             68px 15px
             78px;
-    }
-
-    .install-card {
-
-        max-width: 370px;
     }
 
     .navbar-actions {
@@ -1490,18 +1771,30 @@ body::after {
     }
 
     .navbar-logo .logo-text {
-
         font-size: 15px;
     }
 
-    .install-card {
-
+    .install-card,
+    .trust-guide {
         max-width: 365px;
+    }
 
+    .install-card {
         padding:
             24px 18px 19px;
     }
 
+    .guide-description {
+        font-size: 10.8px;
+    }
+}
+
+
+@media screen and (max-width: 350px) {
+
+    .guide-description {
+        padding: 0 2px;
+    }
 }
 
 
@@ -1514,7 +1807,8 @@ body::after {
 .mobile-menu-link:focus,
 .bottom-bar-link:focus,
 .mobile-menu-toggle:focus,
-.mobile-menu-close:focus {
+.mobile-menu-close:focus,
+.lightbox-close:focus {
 
     outline:
         2px solid #007AFF;
@@ -1529,14 +1823,16 @@ body::after {
 
 @media (prefers-reduced-motion: reduce) {
 
-    .install-card {
+    .install-card,
+    .trust-guide {
         animation: none;
     }
 
     .navbar-apple,
     .mobile-menu,
     .install-button,
-    .install-button::before {
+    .install-button::before,
+    .image-lightbox {
         transition: none;
     }
 }
@@ -1550,7 +1846,7 @@ body::after {
 
 
 <!-- =======================================================
-     APPLE NAVBAR
+     NAVBAR
 ======================================================= -->
 
 <nav class="navbar-apple">
@@ -1578,8 +1874,6 @@ body::after {
 
         </a>
 
-
-        <!-- Desktop Menu -->
 
         <ul class="navbar-menu">
 
@@ -1650,8 +1944,6 @@ body::after {
         </ul>
 
 
-        <!-- Actions -->
-
         <div class="navbar-actions">
 
 
@@ -1694,7 +1986,6 @@ body::after {
 </nav>
 
 
-
 <!-- =======================================================
      MOBILE MENU
 ======================================================= -->
@@ -1716,7 +2007,6 @@ body::after {
                 </dotlottie-wc>
 
             </div>
-
 
             <span class="logo-text">
                 CHỨNG CHỈ P12
@@ -1910,7 +2200,6 @@ body::after {
 </div>
 
 
-
 <!-- =======================================================
      OVERLAY
 ======================================================= -->
@@ -1918,18 +2207,89 @@ body::after {
 <div class="overlay"></div>
 
 
+<!-- =======================================================
+     MOBILE BOTTOM BAR
+======================================================= -->
+
+<nav class="mobile-bottom-bar">
+
+    <div class="bottom-bar-links">
+
+
+        <a
+            href="https://chungchip12.com/"
+            class="bottom-bar-link">
+
+            <i class="fas fa-home"></i>
+
+            <span>Trang chủ</span>
+
+        </a>
+
+
+        <a
+            href="https://chungchip12.com/nhan-hang.html"
+            class="bottom-bar-link">
+
+            <i class="fas fa-search"></i>
+
+            <span>Nhận hàng</span>
+
+        </a>
+
+
+        <a
+            href="https://vsacheat.com/appstore/index.html"
+            class="bottom-bar-link">
+
+            <i class="fas fa-box-open"></i>
+
+            <span>Kho app</span>
+
+        </a>
+
+
+        <a
+            href="https://chungchip12.com/bao-hanh"
+            class="bottom-bar-link">
+
+            <i class="fas fa-tools"></i>
+
+            <span>Bảo hành</span>
+
+        </a>
+
+
+        <a
+            href="https://chungchip12.com/api/account"
+            class="bottom-bar-link">
+
+            <i class="fas fa-user-circle"></i>
+
+            <span>Tài khoản</span>
+
+        </a>
+
+    </div>
+
+</nav>
+
 
 <!-- =======================================================
-     INSTALL PAGE
+     INSTALL CONTENT
 ======================================================= -->
 
 <main class="install-page">
 
 
-    <div class="install-card" id="card">
+    <!-- ===================================================
+         ESIGN CARD
+    =================================================== -->
 
+    <div
+        class="install-card"
+        id="card">
 
-        <!-- ESign Logo -->
 
         <div class="icon-wrapper">
 
@@ -1941,21 +2301,15 @@ body::after {
         </div>
 
 
-        <!-- App Name -->
-
         <h1 class="app-title">
             ESign
         </h1>
 
 
-        <!-- Version -->
-
         <div class="app-version">
             Version 5.0.2
         </div>
 
-
-        <!-- Certificate -->
 
         <div class="certificate-box">
 
@@ -1975,8 +2329,6 @@ body::after {
         </div>
 
 
-        <!-- Install -->
-
         <a
             id="install"
             class="install-button"
@@ -1989,14 +2341,11 @@ body::after {
         </a>
 
 
-        <!-- Note -->
-
         <div class="install-note">
 
             Nhấn nút bên trên để bắt đầu cài đặt.
 
             <br>
-
 
             <span class="safari-note">
 
@@ -2011,7 +2360,44 @@ body::after {
     </div>
 
 
-    <!-- Footer -->
+    <!-- ===================================================
+         TRUST GUIDE
+    =================================================== -->
+
+    <section class="trust-guide">
+
+
+        <div class="guide-description">
+
+            Nếu iPhone yêu cầu xác minh nhà phát triển,
+            hãy thực hiện theo hướng dẫn bên dưới.
+
+        </div>
+
+
+        <div
+            class="mockup-wrapper"
+            id="mockupOpen">
+
+            <img
+                class="mockup-image"
+                src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp"
+                alt="Hướng dẫn tin cậy chứng chỉ ESign"
+                loading="lazy">
+
+        </div>
+
+
+        <div class="guide-caption">
+
+            Cài đặt chung → Quản lý VPN & thiết bị
+            → Tin cậy chứng chỉ
+
+        </div>
+
+
+    </section>
+
 
     <footer class="footer">
 
@@ -2023,13 +2409,38 @@ body::after {
 </main>
 
 
-
 <!-- =======================================================
-     JAVASCRIPT
+     IMAGE LIGHTBOX
 ======================================================= -->
 
-<script>
+<div
+    class="image-lightbox"
+    id="imageLightbox">
 
+
+    <button
+        class="lightbox-close"
+        id="lightboxClose"
+        aria-label="Đóng">
+
+        <i class="fas fa-xmark"></i>
+
+    </button>
+
+
+    <div class="lightbox-content">
+
+        <img
+            class="lightbox-image"
+            src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp"
+            alt="Hướng dẫn tin cậy chứng chỉ ESign">
+
+    </div>
+
+</div>
+
+
+<script>
 
 /* =========================================================
    MOBILE MENU
@@ -2040,18 +2451,15 @@ const mobileMenuToggle =
         ".mobile-menu-toggle"
     );
 
-
 const mobileMenu =
     document.querySelector(
         ".mobile-menu"
     );
 
-
 const mobileMenuClose =
     document.querySelector(
         ".mobile-menu-close"
     );
-
 
 const overlay =
     document.querySelector(
@@ -2108,7 +2516,9 @@ overlay.addEventListener(
 
 
 document
-    .querySelectorAll(".mobile-menu-link")
+    .querySelectorAll(
+        ".mobile-menu-link"
+    )
     .forEach(function(link) {
 
         link.addEventListener(
@@ -2117,7 +2527,6 @@ document
         );
 
     });
-
 
 
 /* =========================================================
@@ -2130,7 +2539,6 @@ const navbar =
     document.querySelector(
         ".navbar-apple"
     );
-
 
 const navbarHeight =
     navbar.offsetHeight;
@@ -2173,7 +2581,6 @@ window.addEventListener(
 );
 
 
-
 /* =========================================================
    ACTIVE BOTTOM BAR
 ========================================================= */
@@ -2200,9 +2607,7 @@ function setActiveBottomBarLink() {
             try {
 
                 const linkURL =
-                    new URL(
-                        link.href
-                    );
+                    new URL(link.href);
 
 
                 if (
@@ -2220,12 +2625,97 @@ function setActiveBottomBarLink() {
 
         }
     );
-
 }
 
 
 setActiveBottomBarLink();
 
+
+/* =========================================================
+   IMAGE LIGHTBOX
+========================================================= */
+
+const mockupOpen =
+    document.getElementById(
+        "mockupOpen"
+    );
+
+const imageLightbox =
+    document.getElementById(
+        "imageLightbox"
+    );
+
+const lightboxClose =
+    document.getElementById(
+        "lightboxClose"
+    );
+
+
+function openLightbox() {
+
+    imageLightbox.classList.add(
+        "active"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+}
+
+
+function closeLightbox() {
+
+    imageLightbox.classList.remove(
+        "active"
+    );
+
+    document.body.style.overflow =
+        "";
+}
+
+
+mockupOpen.addEventListener(
+    "click",
+    openLightbox
+);
+
+
+lightboxClose.addEventListener(
+    "click",
+    closeLightbox
+);
+
+
+imageLightbox.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target ===
+            imageLightbox
+        ) {
+
+            closeLightbox();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeLightbox();
+
+        }
+
+    }
+);
 
 
 /* =========================================================
@@ -2236,7 +2726,7 @@ setActiveBottomBarLink();
 
 
     /*
-     * Lấy:
+     * Đọc:
      *
      * ?app=esign-hebei-rongkai-network-technology-co-ltd
      */
@@ -2250,10 +2740,6 @@ setActiveBottomBarLink();
     const app =
         params.get("app");
 
-
-    /*
-     * Không có app
-     */
 
     if (!app) {
 
@@ -2296,10 +2782,6 @@ setActiveBottomBarLink();
         );
 
 
-    /*
-     * Gắn link cài đặt
-     */
-
     document
         .getElementById("install")
         .href =
@@ -2307,7 +2789,7 @@ setActiveBottomBarLink();
 
 
     /*
-     * Certificate names
+     * Tên chứng chỉ
      */
 
     const certificateNames = {
@@ -2335,8 +2817,8 @@ setActiveBottomBarLink();
 
 
     /*
-     * Nếu chưa khai báo:
-     * tự tạo tên từ slug
+     * Nếu chưa khai báo tên:
+     * tự tạo từ slug
      */
 
     if (!certificate) {
@@ -2364,27 +2846,15 @@ setActiveBottomBarLink();
     }
 
 
-    /*
-     * Hiển thị certificate
-     */
-
     document
         .getElementById("certificate")
         .textContent =
         certificate;
 
 
-    /*
-     * Title
-     */
-
     document.title =
         "ESign 5.0.2";
 
-
-    /*
-     * Error
-     */
 
     function showError(message) {
 
