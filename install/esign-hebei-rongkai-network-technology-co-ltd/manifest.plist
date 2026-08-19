@@ -4,22 +4,28 @@
 
 <plist version="1.0">
 <dict>
+
     <key>items</key>
     <array>
+
         <dict>
+
             <key>assets</key>
             <array>
+
                 <dict>
                     <key>kind</key>
                     <string>software-package</string>
 
                     <key>url</key>
-                    <string>https://tight-water-fabbipa-proxy.tlvdzreal.workers.dev/esign</string>
+                    <string>https://raw.githubusercontent.com/VNcerti/ioscert-io-vn/main/install/esign-hebei-rongkai-network-technology-co-ltd/esign-ola.ipa</string>
                 </dict>
+
             </array>
 
             <key>metadata</key>
             <dict>
+
                 <key>bundle-identifier</key>
                 <string>esign.chungchip12.com</string>
 
@@ -30,9 +36,13 @@
                 <string>software</string>
 
                 <key>title</key>
-                <string>ESign 5.0.2</string>
+                <string>ESign 5.0.2 - Signed CHUNGCHIP12.COM</string>
+
             </dict>
+
         </dict>
+
     </array>
+
 </dict>
 </plist>
