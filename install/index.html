@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="vi">
 
 <head>
@@ -7,10 +6,10 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-   content="width=device-width,
-            initial-scale=1,
-            maximum-scale=1,
-            viewport-fit=cover">
+      content="width=device-width,
+               initial-scale=1,
+               maximum-scale=1,
+               viewport-fit=cover">
 
 <meta name="theme-color" content="#f7f9fc">
 
@@ -62,7 +61,7 @@ body {
 
 
 /* =========================================================
-   SOFT APPLE BACKGROUND LIGHT
+   BACKGROUND LIGHT
 ========================================================= */
 
 body::before {
@@ -70,19 +69,19 @@ body::before {
 
     position: fixed;
 
-    width: 430px;
-    height: 430px;
+    width: 400px;
+    height: 400px;
 
-    top: -220px;
-    left: -160px;
+    top: -200px;
+    left: -150px;
 
     border-radius: 50%;
 
     background:
         radial-gradient(
             circle,
-            rgba(0,122,255,.13) 0%,
-            rgba(0,122,255,.05) 38%,
+            rgba(0,122,255,.12) 0%,
+            rgba(0,122,255,.04) 40%,
             transparent 72%
         );
 
@@ -91,14 +90,13 @@ body::before {
     pointer-events: none;
 }
 
-
 body::after {
     content: "";
 
     position: fixed;
 
-    width: 420px;
-    height: 420px;
+    width: 390px;
+    height: 390px;
 
     right: -180px;
     bottom: -180px;
@@ -108,8 +106,8 @@ body::after {
     background:
         radial-gradient(
             circle,
-            rgba(175,82,222,.10) 0%,
-            rgba(88,86,214,.04) 42%,
+            rgba(175,82,222,.09) 0%,
+            rgba(88,86,214,.03) 42%,
             transparent 72%
         );
 
@@ -131,20 +129,22 @@ body::after {
 
     display: flex;
 
+    flex-direction: column;
+
     align-items: center;
 
     justify-content: center;
 
     padding:
-        max(22px, env(safe-area-inset-top))
-        18px
-        max(22px, env(safe-area-inset-bottom))
-        18px;
+        max(18px, env(safe-area-inset-top))
+        16px
+        max(18px, env(safe-area-inset-bottom))
+        16px;
 }
 
 
 /* =========================================================
-   APPLE GLASS CARD
+   CARD — NHỎ HƠN
 ========================================================= */
 
 .card {
@@ -152,18 +152,14 @@ body::after {
     position: relative;
 
     width: 100%;
-    max-width: 430px;
+    max-width: 390px;
 
-    padding: 34px 23px 28px;
+    padding: 27px 20px 22px;
 
-    border-radius: 32px;
-
-    /*
-     * Glass sáng
-     */
+    border-radius: 28px;
 
     background:
-        rgba(255,255,255,.68);
+        rgba(255,255,255,.70);
 
     border:
         1px solid rgba(255,255,255,.90);
@@ -178,10 +174,10 @@ body::after {
 
     box-shadow:
 
-        0 30px 70px
-        rgba(31,38,135,.08),
+        0 25px 55px
+        rgba(31,38,135,.075),
 
-        0 8px 25px
+        0 7px 20px
         rgba(0,0,0,.035),
 
         inset 0 1px 0
@@ -195,21 +191,17 @@ body::after {
 }
 
 
-/*
- * Kính phản sáng phía trên
- */
-
 .card::before {
 
     content: "";
 
     position: absolute;
 
-    top: -90px;
+    top: -80px;
     left: 10%;
 
     width: 80%;
-    height: 150px;
+    height: 130px;
 
     border-radius: 50%;
 
@@ -225,10 +217,6 @@ body::after {
     pointer-events: none;
 }
 
-
-/*
- * Đường highlight rất nhẹ
- */
 
 .card::after {
 
@@ -261,7 +249,7 @@ body::after {
         opacity: 0;
 
         transform:
-            translateY(18px)
+            translateY(15px)
             scale(.985);
     }
 
@@ -276,21 +264,21 @@ body::after {
 
 
 /* =========================================================
-   APP ICON
+   APP ICON — NHỎ HƠN
 ========================================================= */
 
 .icon-wrapper {
 
     position: relative;
 
-    width: 104px;
-    height: 104px;
+    width: 88px;
+    height: 88px;
 
-    margin: 0 auto 22px;
+    margin: 0 auto 17px;
 
-    padding: 5px;
+    padding: 4px;
 
-    border-radius: 27px;
+    border-radius: 23px;
 
     background:
         rgba(255,255,255,.78);
@@ -300,20 +288,16 @@ body::after {
 
     box-shadow:
 
-        0 16px 35px
-        rgba(0,0,0,.10),
+        0 13px 28px
+        rgba(0,0,0,.09),
 
-        0 4px 12px
-        rgba(0,122,255,.06),
+        0 4px 10px
+        rgba(0,122,255,.05),
 
         inset 0 1px 0
         rgba(255,255,255,1);
 }
 
-
-/*
- * Glow xung quanh icon
- */
 
 .icon-wrapper::before {
 
@@ -321,18 +305,18 @@ body::after {
 
     position: absolute;
 
-    inset: -8px;
+    inset: -7px;
 
-    border-radius: 32px;
+    border-radius: 28px;
 
     background:
         radial-gradient(
             circle,
-            rgba(0,122,255,.12),
+            rgba(0,122,255,.10),
             transparent 68%
         );
 
-    filter: blur(12px);
+    filter: blur(10px);
 
     z-index: -1;
 }
@@ -347,7 +331,7 @@ body::after {
 
     object-fit: cover;
 
-    border-radius: 22px;
+    border-radius: 19px;
 
     box-shadow:
         inset 0 0 0 1px
@@ -367,43 +351,41 @@ body::after {
 
     color: #1d1d1f;
 
-    font-size: 30px;
+    font-size: 27px;
 
     line-height: 1.12;
 
     font-weight: 700;
 
-    letter-spacing: -.7px;
+    letter-spacing: -.6px;
 }
 
 
 .version {
 
-    margin-top: 8px;
+    margin-top: 6px;
 
     text-align: center;
 
     color: #86868b;
 
-    font-size: 15px;
+    font-size: 14px;
 
     font-weight: 500;
-
-    letter-spacing: -.1px;
 }
 
 
 /* =========================================================
-   CERTIFICATE GLASS BOX
+   CERTIFICATE
 ========================================================= */
 
 .certificate-box {
 
-    margin-top: 26px;
+    margin-top: 20px;
 
-    padding: 17px 16px;
+    padding: 14px 14px;
 
-    border-radius: 19px;
+    border-radius: 17px;
 
     background:
         rgba(255,255,255,.58);
@@ -416,7 +398,7 @@ body::after {
         inset 0 1px 0
         rgba(255,255,255,.95),
 
-        0 4px 14px
+        0 4px 12px
         rgba(0,0,0,.025);
 
     backdrop-filter:
@@ -431,17 +413,17 @@ body::after {
 
 .label {
 
-    margin-bottom: 7px;
+    margin-bottom: 6px;
 
     text-align: center;
 
     color: #9898a0;
 
-    font-size: 10px;
+    font-size: 9px;
 
     font-weight: 700;
 
-    letter-spacing: 1.15px;
+    letter-spacing: 1.1px;
 }
 
 
@@ -451,9 +433,9 @@ body::after {
 
     color: #2c2c2e;
 
-    font-size: 14px;
+    font-size: 13px;
 
-    line-height: 1.45;
+    line-height: 1.4;
 
     font-weight: 600;
 }
@@ -473,15 +455,15 @@ body::after {
 
     justify-content: center;
 
-    gap: 9px;
+    gap: 8px;
 
     width: 100%;
 
-    margin-top: 21px;
+    margin-top: 17px;
 
-    padding: 16px 20px;
+    padding: 14px 18px;
 
-    border-radius: 16px;
+    border-radius: 14px;
 
     background:
         linear-gradient(
@@ -494,7 +476,7 @@ body::after {
 
     text-decoration: none;
 
-    font-size: 17px;
+    font-size: 16px;
 
     font-weight: 600;
 
@@ -502,8 +484,8 @@ body::after {
 
     box-shadow:
 
-        0 9px 22px
-        rgba(0,122,255,.22),
+        0 8px 18px
+        rgba(0,122,255,.20),
 
         inset 0 1px 0
         rgba(255,255,255,.32);
@@ -515,10 +497,6 @@ body::after {
         box-shadow .15s ease;
 }
 
-
-/*
- * Hiệu ứng kính chạy ngang nút
- */
 
 .install::before {
 
@@ -542,13 +520,11 @@ body::after {
 
     transform: skewX(-20deg);
 
-    transition:
-        left .65s ease;
+    transition: left .65s ease;
 }
 
 
 .install:hover::before {
-
     left: 145%;
 }
 
@@ -558,8 +534,8 @@ body::after {
     transform: scale(.975);
 
     box-shadow:
-        0 5px 14px
-        rgba(0,122,255,.18);
+        0 4px 12px
+        rgba(0,122,255,.16);
 }
 
 
@@ -571,8 +547,8 @@ body::after {
 
     position: relative;
 
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
 
     display: inline-flex;
 
@@ -586,7 +562,7 @@ body::after {
     content: "";
 
     width: 7px;
-    height: 9px;
+    height: 8px;
 
     border-left:
         2px solid white;
@@ -608,7 +584,7 @@ body::after {
 
     bottom: 0;
 
-    width: 14px;
+    width: 13px;
     height: 2px;
 
     border-radius: 2px;
@@ -623,15 +599,15 @@ body::after {
 
 .note {
 
-    margin-top: 17px;
+    margin-top: 14px;
 
     text-align: center;
 
     color: #8e8e93;
 
-    font-size: 12.5px;
+    font-size: 11.5px;
 
-    line-height: 1.55;
+    line-height: 1.5;
 }
 
 
@@ -641,11 +617,11 @@ body::after {
 
     align-items: center;
 
-    gap: 6px;
+    gap: 5px;
 
-    margin-top: 12px;
+    margin-top: 9px;
 
-    padding: 7px 11px;
+    padding: 6px 10px;
 
     border-radius: 999px;
 
@@ -661,7 +637,7 @@ body::after {
 
     color: #85858b;
 
-    font-size: 11px;
+    font-size: 10px;
 
     font-weight: 600;
 }
@@ -669,8 +645,8 @@ body::after {
 
 .safari-dot {
 
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
 
     border-radius: 50%;
 
@@ -678,7 +654,29 @@ body::after {
 
     box-shadow:
         0 0 0 3px
-        rgba(52,199,89,.10);
+        rgba(52,199,89,.09);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    color: #a1a1a6;
+
+    font-size: 10.5px;
+
+    font-weight: 500;
+
+    letter-spacing: .1px;
+
+    opacity: .9;
 }
 
 
@@ -690,30 +688,30 @@ body::after {
 
     text-align: center;
 
-    padding: 30px 10px;
+    padding: 25px 8px;
 }
 
 
 .error-icon {
 
-    width: 60px;
-    height: 60px;
+    width: 54px;
+    height: 54px;
 
-    margin: 0 auto 15px;
+    margin: 0 auto 13px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    border-radius: 18px;
+    border-radius: 16px;
 
     background:
         rgba(255,59,48,.08);
 
     color: #ff3b30;
 
-    font-size: 24px;
+    font-size: 22px;
 
     font-weight: 700;
 }
@@ -725,17 +723,17 @@ body::after {
 
     color: #1d1d1f;
 
-    font-size: 21px;
+    font-size: 20px;
 }
 
 
 .error p {
 
-    margin: 9px 0 0;
+    margin: 8px 0 0;
 
     color: #86868b;
 
-    font-size: 14px;
+    font-size: 13px;
 
     line-height: 1.5;
 }
@@ -747,23 +745,51 @@ body::after {
 
 @media (max-width: 360px) {
 
+    .page {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
     .card {
-        padding: 29px 18px 24px;
-        border-radius: 28px;
+        padding: 24px 17px 20px;
+        border-radius: 25px;
     }
 
     .icon-wrapper {
-        width: 92px;
-        height: 92px;
-        border-radius: 24px;
+        width: 80px;
+        height: 80px;
+        border-radius: 21px;
+        margin-bottom: 15px;
     }
 
     .app-icon {
-        border-radius: 20px;
+        border-radius: 17px;
     }
 
     .title {
-        font-size: 27px;
+        font-size: 25px;
+    }
+
+    .certificate-box {
+        margin-top: 18px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .card {
+        animation: none;
+    }
+
+    .install,
+    .install::before {
+        transition: none;
     }
 
 }
@@ -772,105 +798,122 @@ body::after {
 
 </head>
 
+
 <body>
+
 
 <div class="page">
 
-<div class="card" id="card">
 
-```
-<!-- ESign Logo -->
+    <!-- MAIN CARD -->
 
-<div class="icon-wrapper">
-
-    <img
-        class="app-icon"
-        src="https://vsacheat.com/img/esign.png"
-        alt="ESign">
-
-</div>
+    <div class="card" id="card">
 
 
-<!-- App -->
+        <!-- ESign Logo -->
 
-<h1
-    class="title"
-    id="appName">
+        <div class="icon-wrapper">
 
-    ESign
+            <img
+                class="app-icon"
+                src="https://vsacheat.com/img/esign.png"
+                alt="ESign">
 
-</h1>
-
-
-<!-- Version -->
-
-<div
-    class="version"
-    id="version">
-
-    Version 5.0.2
-
-</div>
+        </div>
 
 
-<!-- Certificate -->
+        <!-- APP NAME -->
 
-<div class="certificate-box">
+        <h1
+            class="title"
+            id="appName">
 
-    <div class="label">
+            ESign
 
-        CHỨNG CHỈ KÝ
+        </h1>
+
+
+        <!-- VERSION -->
+
+        <div
+            class="version"
+            id="version">
+
+            Version 5.0.2
+
+        </div>
+
+
+        <!-- CERTIFICATE -->
+
+        <div class="certificate-box">
+
+            <div class="label">
+
+                CHỨNG CHỈ KÝ
+
+            </div>
+
+
+            <div
+                class="certificate"
+                id="certificate">
+
+                Đang tải...
+
+            </div>
+
+        </div>
+
+
+        <!-- INSTALL BUTTON -->
+
+        <a
+            id="install"
+            class="install"
+            href="#">
+
+            <span class="download-icon"></span>
+
+            Cài đặt ESign
+
+        </a>
+
+
+        <!-- NOTE -->
+
+        <div class="note">
+
+            Nhấn nút bên trên để bắt đầu cài đặt ESign.
+
+            <br>
+
+            <span class="safari-note">
+
+                <span class="safari-dot"></span>
+
+                Khuyến nghị sử dụng Safari
+
+            </span>
+
+        </div>
+
 
     </div>
 
 
-    <div
-        class="certificate"
-        id="certificate">
+    <!-- FOOTER -->
 
-        Đang tải...
+    <div class="footer">
+
+        © 2026 - CHUNGCHIP12.COM
 
     </div>
 
-</div>
-
-
-<!-- Install -->
-
-<a
-    id="install"
-    class="install"
-    href="#">
-
-    <span class="download-icon"></span>
-
-    Cài đặt ESign
-
-</a>
-
-
-<!-- Note -->
-
-<div class="note">
-
-    Nhấn nút bên trên để bắt đầu cài đặt ESign.
-
-    <br>
-
-    <span class="safari-note">
-
-        <span class="safari-dot"></span>
-
-        Khuyến nghị sử dụng Safari
-
-    </span>
-
-</div>
-```
 
 </div>
 
-</div>
+
 
 <script>
 
@@ -882,7 +925,7 @@ body::after {
 
 
     /*
-     * Đọc:
+     * Đọc tham số:
      *
      * ?app=esign-hebei-rongkai-network-technology-co-ltd
      */
@@ -913,7 +956,7 @@ body::after {
 
 
     /*
-     * Tự động tạo:
+     * Tự động tạo đường dẫn:
      *
      * /install/{app}/manifest.plist
      */
@@ -930,7 +973,7 @@ body::after {
 
 
     /*
-     * Tạo itms-services
+     * Tạo link cài đặt iOS
      */
 
     const installURL =
@@ -943,7 +986,7 @@ body::after {
 
 
     /*
-     * Gắn vào nút
+     * Gắn link vào nút cài đặt
      */
 
     document
@@ -952,7 +995,7 @@ body::after {
 
 
     /*
-     * Tên certificate
+     * Tên chứng chỉ
      */
 
     const certificateNames = {
@@ -981,7 +1024,7 @@ body::after {
 
     /*
      * Nếu chưa khai báo:
-     * tự tạo tên từ slug
+     * tự chuyển slug thành tên dễ đọc
      */
 
     if (!certificate) {
@@ -1013,7 +1056,7 @@ body::after {
 
 
     /*
-     * Hiển thị
+     * Hiển thị certificate
      */
 
     document
@@ -1023,7 +1066,7 @@ body::after {
 
 
     /*
-     * Title trình duyệt
+     * Title
      */
 
     document.title =
@@ -1064,6 +1107,7 @@ body::after {
 })();
 
 </script>
+
 
 </body>
 
