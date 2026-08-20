@@ -57,6 +57,7 @@
 html {
     min-height: 100%;
     background: #f5f5f7;
+
     scroll-behavior: smooth;
 }
 
@@ -147,6 +148,7 @@ body::after {
 
 /* =========================================================
    NAVBAR
+   CHỈ CÒN LOGO + MENU
 ========================================================= */
 
 .navbar-apple {
@@ -588,89 +590,48 @@ body::after {
 
 
 /* =========================================================
-   ESIGN CARD - NÂNG CẤP
+   ESIGN CARD
 ========================================================= */
 
 .install-card {
 
     width: 100%;
 
-    max-width: 380px;
+    max-width: 370px;
 
     padding:
-        28px 22px 24px;
+        25px 19px 20px;
 
-    border-radius: 30px;
+    border-radius: 27px;
 
     background:
-        rgba(255,255,255,.75);
+        rgba(255,255,255,.72);
 
     border:
-        1px solid rgba(255,255,255,.95);
+        1px solid rgba(255,255,255,.92);
 
     backdrop-filter:
-        blur(32px)
+        blur(28px)
         saturate(180%);
 
     -webkit-backdrop-filter:
-        blur(32px)
+        blur(28px)
         saturate(180%);
 
     box-shadow:
 
-        0 30px 60px
-        rgba(31,38,135,.08),
+        0 25px 55px
+        rgba(31,38,135,.07),
 
-        0 10px 25px
-        rgba(0,0,0,.04),
+        0 7px 20px
+        rgba(0,0,0,.035),
 
         inset 0 1px 0
-        rgba(255,255,255,.98);
+        rgba(255,255,255,.95);
 
     animation:
-        cardIn .6s
+        cardIn .55s
         cubic-bezier(.22,.8,.22,1);
-
-    position: relative;
-
-    overflow: hidden;
-}
-
-
-/* Hiệu ứng gradient nhẹ ở viền */
-
-.install-card::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: 30px;
-
-    padding: 1px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.8),
-            rgba(255,255,255,.2)
-        );
-
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite: xor;
-
-    mask-composite: exclude;
-
-    pointer-events: none;
 }
 
 
@@ -681,8 +642,8 @@ body::after {
         opacity: 0;
 
         transform:
-            translateY(18px)
-            scale(.98);
+            translateY(15px)
+            scale(.985);
     }
 
     to {
@@ -697,68 +658,34 @@ body::after {
 
 
 /* =========================================================
-   APP ICON - NÂNG CẤP
+   APP ICON
 ========================================================= */
 
 .icon-wrapper {
 
-    width: 92px;
-    height: 92px;
+    width: 84px;
+    height: 84px;
 
     margin:
-        0 auto 18px;
+        0 auto 16px;
 
-    padding: 5px;
+    padding: 4px;
 
-    border-radius: 26px;
+    border-radius: 22px;
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.9),
-            rgba(240,240,245,.6)
-        );
+        rgba(255,255,255,.82);
 
     border:
         1px solid rgba(255,255,255,.95);
 
     box-shadow:
 
-        0 16px 32px
-        rgba(0,0,0,.10),
-
-        0 4px 12px
-        rgba(0,0,0,.04),
+        0 13px 28px
+        rgba(0,0,0,.09),
 
         inset 0 1px 0
         rgba(255,255,255,1);
-
-    position: relative;
-}
-
-
-/* Glow nhẹ sau icon */
-
-.icon-wrapper::after {
-
-    content: "";
-
-    position: absolute;
-
-    inset: -8px;
-
-    border-radius: 34px;
-
-    background:
-        radial-gradient(
-            circle at 50% 30%,
-            rgba(0,122,255,.06),
-            transparent 70%
-        );
-
-    z-index: -1;
-
-    filter: blur(10px);
 }
 
 
@@ -771,16 +698,12 @@ body::after {
 
     object-fit: cover;
 
-    border-radius: 21px;
-
-    box-shadow:
-        0 2px 8px
-        rgba(0,0,0,.06);
+    border-radius: 18px;
 }
 
 
 /* =========================================================
-   APP NAME - NÂNG CẤP
+   APP NAME
 ========================================================= */
 
 .app-title {
@@ -789,29 +712,19 @@ body::after {
 
     color: #1d1d1f;
 
-    font-size: 30px;
+    font-size: 27px;
 
-    line-height: 1.1;
+    line-height: 1.12;
 
     font-weight: 700;
 
-    letter-spacing: -.7px;
-}
-
-
-.app-title .app-title-light {
-
-    font-weight: 400;
-
-    color: #86868b;
-
-    letter-spacing: 0;
+    letter-spacing: -.6px;
 }
 
 
 .app-version {
 
-    margin-top: 4px;
+    margin-top: 6px;
 
     text-align: center;
 
@@ -820,79 +733,40 @@ body::after {
     font-size: 13px;
 
     font-weight: 500;
-
-    letter-spacing: .2px;
-}
-
-
-.app-version i {
-
-    margin-right: 4px;
-
-    font-size: 11px;
-
-    color: #a1a1a6;
 }
 
 
 /* =========================================================
-   CERTIFICATE - NÂNG CẤP
+   CERTIFICATE
 ========================================================= */
 
 .certificate-box {
 
-    margin-top: 22px;
+    margin-top: 19px;
 
     padding:
-        14px 16px;
+        13px;
 
-    border-radius: 19px;
+    border-radius: 17px;
 
     background:
-        rgba(255,255,255,.6);
+        rgba(255,255,255,.58);
 
     border:
-        1px solid rgba(255,255,255,.9);
+        1px solid rgba(255,255,255,.84);
 
     box-shadow:
         inset 0 1px 0
         rgba(255,255,255,.95),
 
-        0 4px 14px
+        0 4px 12px
         rgba(0,0,0,.025);
-
-    position: relative;
-
-    overflow: hidden;
-}
-
-
-/* Badge nhỏ bên cạnh */
-
-.certificate-box::before {
-
-    content: "✓";
-
-    position: absolute;
-
-    right: 14px;
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    color: #34c759;
-
-    font-size: 14px;
-
-    font-weight: 700;
-
-    opacity: .6;
 }
 
 
 .certificate-label {
 
-    margin-bottom: 4px;
+    margin-bottom: 5px;
 
     text-align: center;
 
@@ -902,9 +776,7 @@ body::after {
 
     font-weight: 700;
 
-    letter-spacing: 1.2px;
-
-    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 
@@ -914,48 +786,42 @@ body::after {
 
     color: #2c2c2e;
 
-    font-size: 14px;
+    font-size: 13px;
 
     line-height: 1.4;
 
     font-weight: 600;
-
-    letter-spacing: -.2px;
-
-    padding-right: 20px;
 }
 
 
 /* =========================================================
-   INSTALL BUTTON - NÂNG CẤP
+   INSTALL BUTTON
 ========================================================= */
 
 .install-button {
 
     width: 100%;
 
-    margin-top: 18px;
+    margin-top: 16px;
 
-    padding: 16px 18px;
+    padding: 14px 18px;
 
-    border-radius: 16px;
+    border-radius: 14px;
 
     background:
         linear-gradient(
             180deg,
-            #0a84ff 0%,
-            #0071e3 100%
+            #0a84ff,
+            #007aff
         );
 
     color: #fff;
 
     text-decoration: none;
 
-    font-size: 17px;
+    font-size: 16px;
 
     font-weight: 600;
-
-    letter-spacing: .2px;
 
     display: flex;
 
@@ -963,123 +829,97 @@ body::after {
 
     justify-content: center;
 
-    gap: 10px;
+    gap: 8px;
 
     box-shadow:
-        0 10px 24px
-        rgba(0,122,255,.25),
-
-        0 2px 8px
-        rgba(0,122,255,.15),
+        0 8px 18px
+        rgba(0,122,255,.20),
 
         inset 0 1px 0
-        rgba(255,255,255,.35);
+        rgba(255,255,255,.30);
 
     transition:
         transform .15s ease,
-        box-shadow .25s ease,
-        background .25s ease;
-
-    position: relative;
-
-    overflow: hidden;
-}
-
-
-/* Hiệu ứng shimmer */
-
-.install-button::before {
-
-    content: "";
-
-    position: absolute;
-
-    top: -50%;
-    left: -50%;
-
-    width: 200%;
-    height: 200%;
-
-    background:
-        linear-gradient(
-            45deg,
-            transparent 30%,
-            rgba(255,255,255,.1) 50%,
-            transparent 70%
-        );
-
-    transform: rotate(45deg) translateX(-100%);
-
-    transition: transform .8s ease;
-
-    pointer-events: none;
-}
-
-
-.install-button:hover::before {
-
-    transform: rotate(45deg) translateX(100%);
+        box-shadow .15s ease;
 }
 
 
 .install-button:active {
 
     transform:
-        scale(.97);
-
-    box-shadow:
-        0 4px 12px
-        rgba(0,122,255,.2);
-}
-
-
-/* Icon tải xuống SVG thay vì CSS */
-
-.install-icon {
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    width: 20px;
-    height: 20px;
-}
-
-
-.install-icon svg {
-
-    width: 18px;
-    height: 18px;
-
-    fill: none;
-
-    stroke: #fff;
-
-    stroke-width: 2.2;
-
-    stroke-linecap: round;
-    stroke-linejoin: round;
+        scale(.975);
 }
 
 
 /* =========================================================
-   INSTALL NOTE - NÂNG CẤP
+   DOWNLOAD ICON
+========================================================= */
+
+.download-icon {
+
+    position: relative;
+
+    width: 17px;
+    height: 17px;
+}
+
+
+.download-icon::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 7px;
+    height: 8px;
+
+    top: 1px;
+    left: 4px;
+
+    border-left:
+        2px solid #fff;
+
+    border-bottom:
+        2px solid #fff;
+
+    transform:
+        rotate(-45deg);
+}
+
+
+.download-icon::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 13px;
+    height: 2px;
+
+    bottom: 1px;
+    left: 2px;
+
+    border-radius: 2px;
+
+    background: #fff;
+}
+
+
+/* =========================================================
+   INSTALL NOTE
 ========================================================= */
 
 .install-note {
 
-    margin-top: 16px;
+    margin-top: 13px;
 
     text-align: center;
 
     color: #8e8e93;
 
-    font-size: 12px;
+    font-size: 11.5px;
 
-    line-height: 1.6;
-
-    letter-spacing: .1px;
+    line-height: 1.5;
 }
 
 
@@ -1089,84 +929,62 @@ body::after {
 
     align-items: center;
 
-    gap: 6px;
+    gap: 5px;
 
     margin-top: 8px;
 
     padding:
-        6px 14px;
+        6px 10px;
 
     border-radius: 999px;
 
     background:
-        rgba(255,255,255,.7);
+        rgba(255,255,255,.58);
 
     border:
-        1px solid rgba(255,255,255,.9);
+        1px solid rgba(255,255,255,.78);
 
     color: #85858b;
 
-    font-size: 10.5px;
+    font-size: 10px;
 
     font-weight: 600;
-
-    backdrop-filter: blur(8px);
 }
 
 
 .safari-dot {
 
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
 
     border-radius: 50%;
 
     background: #34c759;
-
-    animation: pulse-dot 2s ease-in-out infinite;
-}
-
-
-@keyframes pulse-dot {
-
-    0%, 100% {
-
-        opacity: 1;
-
-        transform: scale(1);
-    }
-
-    50% {
-
-        opacity: .5;
-
-        transform: scale(.8);
-    }
 }
 
 
 /* =========================================================
-   GUIDE - Giữ nguyên nhưng tinh chỉnh nhẹ
+   GUIDE
 ========================================================= */
 
 .trust-guide {
 
     width: 100%;
 
-    max-width: 380px;
+    max-width: 370px;
 
-    margin-top: 14px;
+    margin-top: 13px;
 
     padding:
-        18px 16px 16px;
+        15px;
 
-    border-radius: 24px;
+    border-radius: 22px;
 
     background:
-        rgba(255,255,255,.62);
+        rgba(255,255,255,.60);
 
     border:
-        1px solid rgba(255,255,255,.9);
+        1px solid rgba(255,255,255,.88);
 
     backdrop-filter:
         blur(24px)
@@ -1178,19 +996,11 @@ body::after {
 
     box-shadow:
 
-        0 12px 36px
+        0 12px 32px
         rgba(31,38,135,.045),
 
         inset 0 1px 0
         rgba(255,255,255,.95);
-
-    transition: transform .2s ease;
-}
-
-
-.trust-guide:hover {
-
-    transform: translateY(-1px);
 }
 
 
@@ -1201,29 +1011,17 @@ body::after {
 .guide-description {
 
     padding:
-        0 4px;
+        0 5px;
 
-    margin-bottom: 14px;
+    margin-bottom: 13px;
 
     text-align: center;
 
     color: #8e8e93;
 
-    font-size: 11.5px;
+    font-size: 11px;
 
     line-height: 1.5;
-
-    font-weight: 400;
-
-    letter-spacing: .1px;
-}
-
-
-.guide-description i {
-
-    color: #007aff;
-
-    margin: 0 3px;
 }
 
 
@@ -1237,33 +1035,19 @@ body::after {
 
     overflow: hidden;
 
-    border-radius: 17px;
+    border-radius: 15px;
 
     background:
         #f2f4f8;
 
     border:
-        1px solid rgba(0,0,0,.04);
+        1px solid rgba(0,0,0,.035);
 
     box-shadow:
-        0 6px 20px
-        rgba(0,0,0,.05);
+        0 6px 18px
+        rgba(0,0,0,.045);
 
     cursor: zoom-in;
-
-    transition:
-        box-shadow .25s ease,
-        transform .2s ease;
-}
-
-
-.mockup-wrapper:hover {
-
-    box-shadow:
-        0 10px 30px
-        rgba(0,0,0,.08);
-
-    transform: scale(1.005);
 }
 
 
@@ -1285,27 +1069,15 @@ body::after {
 
 .guide-caption {
 
-    margin-top: 10px;
+    margin-top: 9px;
 
     text-align: center;
 
     color: #a1a1a6;
 
-    font-size: 10.5px;
+    font-size: 10px;
 
     line-height: 1.4;
-
-    font-weight: 500;
-}
-
-
-.guide-caption i {
-
-    margin: 0 4px;
-
-    font-size: 9px;
-
-    color: #c7c7cc;
 }
 
 
@@ -1329,14 +1101,14 @@ body::after {
     justify-content: center;
 
     background:
-        rgba(245,247,251,.92);
+        rgba(245,247,251,.90);
 
     backdrop-filter:
-        blur(24px)
+        blur(20px)
         saturate(140%);
 
     -webkit-backdrop-filter:
-        blur(24px)
+        blur(20px)
         saturate(140%);
 
     opacity: 0;
@@ -1344,8 +1116,8 @@ body::after {
     visibility: hidden;
 
     transition:
-        opacity .3s ease,
-        visibility .3s ease;
+        opacity .25s ease,
+        visibility .25s ease;
 }
 
 
@@ -1366,31 +1138,11 @@ body::after {
     width: auto;
     height: auto;
 
-    border-radius: 18px;
+    border-radius: 16px;
 
     box-shadow:
-        0 30px 80px
+        0 25px 70px
         rgba(0,0,0,.18);
-
-    animation: zoomIn .35s cubic-bezier(.22,.8,.22,1);
-}
-
-
-@keyframes zoomIn {
-
-    from {
-
-        opacity: 0;
-
-        transform: scale(.92);
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform: scale(1);
-    }
 }
 
 
@@ -1398,52 +1150,28 @@ body::after {
 
     position: fixed;
 
-    top: 20px;
-    right: 20px;
+    top: 18px;
+    right: 18px;
 
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
 
     border: none;
 
     border-radius: 50%;
 
     background:
-        rgba(255,255,255,.9);
+        rgba(255,255,255,.88);
 
     color: #1d1d1f;
 
-    font-size: 18px;
+    font-size: 17px;
 
     cursor: pointer;
 
     box-shadow:
-        0 8px 24px
-        rgba(0,0,0,.10);
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-.lightbox-close:hover {
-
-    transform: scale(1.05);
-
-    box-shadow:
-        0 12px 32px
-        rgba(0,0,0,.14);
-}
-
-
-.lightbox-close:active {
-
-    transform: scale(.92);
+        0 6px 20px
+        rgba(0,0,0,.08);
 }
 
 
@@ -1453,7 +1181,7 @@ body::after {
 
 .footer {
 
-    margin-top: 14px;
+    margin-top: 13px;
 
     text-align: center;
 
@@ -1462,8 +1190,6 @@ body::after {
     font-size: 10.5px;
 
     font-weight: 500;
-
-    letter-spacing: .3px;
 }
 
 
@@ -1556,58 +1282,14 @@ body::after {
     .install-page {
 
         padding:
-            67px 14px
+            67px 15px
             40px;
     }
 
-    .install-card {
-
-        padding:
-            22px 16px 20px;
-
-        max-width: 365px;
-
-        border-radius: 26px;
-    }
-
-    .icon-wrapper {
-
-        width: 80px;
-        height: 80px;
-
-        border-radius: 22px;
-    }
-
-    .app-icon {
-
-        border-radius: 18px;
-    }
-
-    .app-title {
-
-        font-size: 26px;
-    }
-
+    .install-card,
     .trust-guide {
 
         max-width: 365px;
-
-        padding:
-            16px 14px 14px;
-    }
-
-    .mockup-wrapper {
-
-        border-radius: 14px;
-    }
-
-    .lightbox-close {
-
-        top: 14px;
-        right: 14px;
-
-        width: 40px;
-        height: 40px;
     }
 }
 
@@ -1903,12 +1585,10 @@ a:focus {
 
         <h1 class="app-title">
             ESign
-            <span class="app-title-light"></span>
         </h1>
 
 
         <div class="app-version">
-            <i class="fas fa-tag"></i>
             Version 5.0.2
         </div>
 
@@ -1918,7 +1598,6 @@ a:focus {
         <div class="certificate-box">
 
             <div class="certificate-label">
-                <i class="fas fa-shield-alt"></i>
                 CHỨNG CHỈ KÝ
             </div>
 
@@ -1940,12 +1619,7 @@ a:focus {
             class="install-button"
             href="#">
 
-            <span class="install-icon">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 3v12m-4-4l4 4 4-4"/>
-                    <path d="M5 17v2a2 2 0 002 2h10a2 2 0 002-2v-2"/>
-                </svg>
-            </span>
+            <span class="download-icon"></span>
 
             Cài đặt ESign
 
@@ -1983,7 +1657,6 @@ a:focus {
 
         <div class="guide-description">
 
-            <i class="fas fa-info-circle"></i>
             Nếu iPhone yêu cầu xác minh nhà phát triển,
             hãy thực hiện theo hướng dẫn bên dưới.
 
@@ -2005,10 +1678,8 @@ a:focus {
 
         <div class="guide-caption">
 
-            <i class="fas fa-chevron-right"></i>
             Cài đặt chung → Quản lý VPN & thiết bị
             → Tin cậy chứng chỉ
-            <i class="fas fa-chevron-left"></i>
 
         </div>
 
@@ -2419,7 +2090,7 @@ document.addEventListener(
                 <div class="error">
 
                     <div class="error-icon">
-                        <i class="fas fa-exclamation"></i>
+                        !
                     </div>
 
                     <h2>
@@ -2440,6 +2111,8 @@ document.addEventListener(
 
 </script>
 
+
 </body>
 
 </html>
+
