@@ -1,1240 +1,804 @@
- <!DOCTYPE html>
- <html lang="vi">
- <head>
- <meta charset="UTF-8">
- <meta name="viewport"
-       content="width=device-width,
-                initial-scale=1,
-                maximum-scale=1,
-                viewport-fit=cover">
- <meta name="theme-color" content="#f5f5f7">
- <title>ESign 5.0.2 - CHỨNG CHỈ P12</title>
- <link rel="icon"
-       href="https://i.imgur.com/BIbDCrO.png"
-       type="image/x-icon">
- <link rel="stylesheet"
-       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
- <script
-     src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js"
-     type="module">
- </script>
- <style>
- /* =========================================================
-    RESET
- ========================================================= */
- * {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
-     font-family:
-         -apple-system,
-         BlinkMacSystemFont,
-         "SF Pro Display",
-         "SF Pro Text",
-         "Segoe UI",
-         Roboto,
-         Oxygen,
-         Ubuntu,
-         sans-serif;
-     -webkit-tap-highlight-color: transparent;
- }
- html {
-     min-height: 100%;
-     background: #f5f5f7;
-     scroll-behavior: smooth;
- }
- body {
-     min-height: 100vh;
-     color: #1d1d1f;
-     background:
-         linear-gradient(
-             145deg,
-             #fafbff 0%,
-             #f5f7fb 50%,
-             #fafafd 100%
-         );
-     -webkit-font-smoothing: antialiased;
-     overflow-x: hidden;
- }
- /* =========================================================
-    BACKGROUND LIGHT
- ========================================================= */
- body::before {
-     content: "";
-     position: fixed;
-     width: 430px;
-     height: 430px;
-     top: -220px;
-     left: -170px;
-     border-radius: 50%;
-     background:
-         radial-gradient(
-             circle,
-             rgba(0,122,255,.10),
-             rgba(0,122,255,.035) 42%,
-             transparent 72%
-         );
-     filter: blur(25px);
-     pointer-events: none;
-     z-index: -1;
- }
- body::after {
-     content: "";
-     position: fixed;
-     width: 420px;
-     height: 420px;
-     right: -190px;
-     bottom: -190px;
-     border-radius: 50%;
-     background:
-         radial-gradient(
-             circle,
-             rgba(175,82,222,.08),
-             rgba(88,86,214,.025) 45%,
-             transparent 72%
-         );
-     filter: blur(28px);
-     pointer-events: none;
-     z-index: -1;
- }
- /* =========================================================
-    NAVBAR
-    CHỈ CÒN LOGO + MENU
- ========================================================= */
- .navbar-apple {
-     position: fixed;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 48px;
-     z-index: 1000;
-     background:
-         rgba(255,255,255,.82);
-     backdrop-filter:
-         saturate(180%)
-         blur(20px);
-     -webkit-backdrop-filter:
-         saturate(180%)
-         blur(20px);
-     border-bottom:
-         1px solid rgba(0,0,0,.055);
-     box-shadow:
-         0 1px 0 rgba(0,0,0,.035);
-     transition:
-         transform .4s
-         cubic-bezier(.4,0,.2,1);
- }
- .navbar-apple.hidden {
-     transform:
-         translateY(-100%);
- }
- .navbar-container {
-     width: 100%;
-     max-width: 1024px;
-     height: 48px;
-     margin: 0 auto;
-     padding: 0 22px;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
- }
- /* =========================================================
-    LOGO
- ========================================================= */
- .navbar-logo {
-     display: flex;
-     align-items: center;
-     text-decoration: none;
-     color: #1d1d1f;
-     font-size: 18px;
-     font-weight: 600;
-     letter-spacing: -.2px;
- }
- .logo-lottie {
-     width: 32px;
-     height: 32px;
-     margin-right: 8px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     overflow: hidden;
-     position: relative;
-     top: -3px;
- }
- .logo-lottie dotlottie-wc {
-     width: 100%;
-     height: 100%;
-     transform: scale(1.6);
- }
- .logo-text {
-     position: relative;
-     top: -1px;
- }
- /* =========================================================
-    MENU BUTTON
- ========================================================= */
- .mobile-menu-toggle {
-     width: 38px;
-     height: 38px;
-     border: none;
-     border-radius: 10px;
-     background:
-         transparent;
-     color: #1d1d1f;
-     font-size: 19px;
-     cursor: pointer;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     transition:
-         background .2s ease,
-         transform .2s ease;
- }
- .mobile-menu-toggle:hover {
-     background:
-         rgba(0,0,0,.055);
- }
- .mobile-menu-toggle:active {
-     transform:
-         scale(.92);
- }
- /* =========================================================
-    MOBILE / FULLSCREEN MENU
- ========================================================= */
- .mobile-menu {
-     position: fixed;
-     inset: 0;
-     width: 100%;
-     height: 100%;
-     z-index: 2000;
-     background:
-         rgba(250,250,252,.94);
-     backdrop-filter:
-         blur(28px)
-         saturate(180%);
-     -webkit-backdrop-filter:
-         blur(28px)
-         saturate(180%);
-     display: flex;
-     flex-direction: column;
-     padding:
-         max(18px, env(safe-area-inset-top))
-         0
-         35px;
-     transform:
-         translateY(-100%);
-     opacity: 0;
-     visibility: hidden;
-     transition:
-         all .4s
-         cubic-bezier(.4,0,.2,1);
-     overflow-y: auto;
- }
- .mobile-menu.active {
-     transform:
-         translateY(0);
-     opacity: 1;
-     visibility: visible;
- }
- /* =========================================================
-    MENU HEADER
- ========================================================= */
- .mobile-menu-header {
-     height: 52px;
-     padding:
-         0 22px 10px;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     border-bottom:
-         1px solid rgba(0,0,0,.055);
- }
- .mobile-menu-logo {
-     display: flex;
-     align-items: center;
-     color: #1d1d1f;
-     font-size: 19px;
-     font-weight: 600;
- }
- .mobile-menu-logo .logo-lottie {
-     width: 32px;
-     height: 32px;
-     margin-right: 8px;
- }
- .mobile-menu-close {
-     width: 40px;
-     height: 40px;
-     border: none;
-     border-radius: 50%;
-     background:
-         rgba(0,0,0,.055);
-     color: #1d1d1f;
-     font-size: 18px;
-     cursor: pointer;
-     display: flex;
-     align-items: center;
-     justify-content: center;
- }
- /* =========================================================
-    MENU CONTENT
- ========================================================= */
- .mobile-menu-section {
-     padding:
-         0 22px;
-     margin-top: 28px;
- }
- .mobile-menu-title {
-     margin-bottom: 10px;
-     color: #86868b;
-     font-size: 11px;
-     font-weight: 600;
-     text-transform: uppercase;
-     letter-spacing: .7px;
- }
- .mobile-menu-links {
-     display: flex;
-     flex-direction: column;
- }
- .mobile-menu-link {
-     min-height: 50px;
-     padding:
-         12px 2px;
-     border-bottom:
-         1px solid rgba(0,0,0,.055);
-     color: #1d1d1f;
-     text-decoration: none;
-     font-size: 17px;
-     font-weight: 400;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     transition:
-         color .2s ease,
-         padding-left .2s ease;
- }
- .mobile-menu-link:last-child {
-     border-bottom: none;
- }
- .mobile-menu-link:hover {
-     color: #007aff;
-     padding-left: 3px;
- }
- .mobile-menu-link i {
-     color: #a1a1a6;
-     font-size: 12px;
- }
- /* =========================================================
-    OVERLAY
- ========================================================= */
- .overlay {
-     position: fixed;
-     inset: 0;
-     z-index: 1500;
-     background:
-         rgba(0,0,0,.28);
-     display: none;
- }
- .overlay.active {
-     display: block;
- }
- /* =========================================================
-    MAIN INSTALL AREA
- ========================================================= */
- .install-page {
-     width: 100%;
-     min-height: 100vh;
-     padding:
-         70px 15px
-         42px;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     justify-content: flex-start;
- }
- /* =========================================================
-    ESIGN CARD
- ========================================================= */
- .install-card {
-     width: 100%;
-     max-width: 370px;
-     padding:
-         25px 19px 20px;
-     border-radius: 27px;
-     background:
-         rgba(255,255,255,.72);
-     border:
-         1px solid rgba(255,255,255,.92);
-     backdrop-filter:
-         blur(28px)
-         saturate(180%);
-     -webkit-backdrop-filter:
-         blur(28px)
-         saturate(180%);
-     box-shadow:
-         0 25px 55px
-         rgba(31,38,135,.07),
-         0 7px 20px
-         rgba(0,0,0,.035),
-         inset 0 1px 0
-         rgba(255,255,255,.95);
-     animation:
-         cardIn .55s
-         cubic-bezier(.22,.8,.22,1);
- }
- @keyframes cardIn {
-     from {
-         opacity: 0;
-         transform:
-             translateY(15px)
-             scale(.985);
-     }
-     to {
-         opacity: 1;
-         transform:
-             translateY(0)
-             scale(1);
-     }
- }
- /* =========================================================
-    APP ICON
- ========================================================= */
- .icon-wrapper {
-     width: 84px;
-     height: 84px;
-     margin:
-         0 auto 16px;
-     padding: 4px;
-     border-radius: 22px;
-     background:
-         rgba(255,255,255,.82);
-     border:
-         1px solid rgba(255,255,255,.95);
-     box-shadow:
-         0 13px 28px
-         rgba(0,0,0,.09),
-         inset 0 1px 0
-         rgba(255,255,255,1);
- }
- .app-icon {
-     display: block;
-     width: 100%;
-     height: 100%;
-     object-fit: cover;
-     border-radius: 18px;
- }
- /* =========================================================
-    APP NAME
- ========================================================= */
- .app-title {
-     text-align: center;
-     color: #1d1d1f;
-     font-size: 27px;
-     line-height: 1.12;
-     font-weight: 700;
-     letter-spacing: -.6px;
- }
- .app-version {
-     margin-top: 6px;
-     text-align: center;
-     color: #86868b;
-     font-size: 13px;
-     font-weight: 500;
- }
- /* =========================================================
-    CERTIFICATE
- ========================================================= */
- .certificate-box {
-     margin-top: 19px;
-     padding:
-         13px;
-     border-radius: 17px;
-     background:
-         rgba(255,255,255,.58);
-     border:
-         1px solid rgba(255,255,255,.84);
-     box-shadow:
-         inset 0 1px 0
-         rgba(255,255,255,.95),
-         0 4px 12px
-         rgba(0,0,0,.025);
- }
- .certificate-label {
-     margin-bottom: 5px;
-     text-align: center;
-     color: #9898a0;
-     font-size: 9px;
-     font-weight: 700;
-     letter-spacing: 1px;
- }
- .certificate {
-     text-align: center;
-     color: #2c2c2e;
-     font-size: 13px;
-     line-height: 1.4;
-     font-weight: 600;
- }
- /* =========================================================
-    INSTALL BUTTON
- ========================================================= */
- .install-button {
-     width: 100%;
-     margin-top: 16px;
-     padding: 14px 18px;
-     border-radius: 14px;
-     background:
-         linear-gradient(
-             180deg,
-             #0a84ff,
-             #007aff
-         );
-     color: #fff;
-     text-decoration: none;
-     font-size: 16px;
-     font-weight: 600;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     gap: 8px;
-     box-shadow:
-         0 8px 18px
-         rgba(0,122,255,.20),
-         inset 0 1px 0
-         rgba(255,255,255,.30);
-     transition:
-         transform .15s ease,
-         box-shadow .15s ease;
- }
- .install-button:active {
-     transform:
-         scale(.975);
- }
- /* =========================================================
-    INSTALL NOTE
- ========================================================= */
- .install-note {
-     margin-top: 13px;
-     text-align: center;
-     color: #8e8e93;
-     font-size: 11.5px;
-     line-height: 1.5;
- }
- .safari-note {
-     display: inline-flex;
-     align-items: center;
-     gap: 5px;
-     margin-top: 8px;
-     padding:
-         6px 10px;
-     border-radius: 999px;
-     background:
-         rgba(255,255,255,.58);
-     border:
-         1px solid rgba(255,255,255,.78);
-     color: #85858b;
-     font-size: 10px;
-     font-weight: 600;
- }
- .safari-dot {
-     width: 5px;
-     height: 5px;
-     border-radius: 50%;
-     background: #34c759;
- }
- /* =========================================================
-    GUIDE
- ========================================================= */
- .trust-guide {
-     width: 100%;
-     max-width: 370px;
-     margin-top: 13px;
-     padding:
-         15px;
-     border-radius: 22px;
-     background:
-         rgba(255,255,255,.60);
-     border:
-         1px solid rgba(255,255,255,.88);
-     backdrop-filter:
-         blur(24px)
-         saturate(170%);
-     -webkit-backdrop-filter:
-         blur(24px)
-         saturate(170%);
-     box-shadow:
-         0 12px 32px
-         rgba(31,38,135,.045),
-         inset 0 1px 0
-         rgba(255,255,255,.95);
- }
- /* =========================================================
-    GUIDE TEXT
- ========================================================= */
- .guide-description {
-     padding:
-         0 5px;
-     margin-bottom: 13px;
-     text-align: center;
-     color: #8e8e93;
-     font-size: 11px;
-     line-height: 1.5;
- }
- /* =========================================================
-    MOCKUP
- ========================================================= */
- .mockup-wrapper {
-     width: 100%;
-     overflow: hidden;
-     border-radius: 15px;
-     background:
-         #f2f4f8;
-     border:
-         1px solid rgba(0,0,0,.035);
-     box-shadow:
-         0 6px 18px
-         rgba(0,0,0,.045);
-     cursor: zoom-in;
- }
- .mockup-image {
-     display: block;
-     width: 100%;
-     height: auto;
-     max-width: 100%;
- }
- /* =========================================================
-    GUIDE CAPTION
- ========================================================= */
- .guide-caption {
-     margin-top: 9px;
-     text-align: center;
-     color: #a1a1a6;
-     font-size: 10px;
-     line-height: 1.4;
- }
- /* =========================================================
-    LIGHTBOX
- ========================================================= */
- .image-lightbox {
-     position: fixed;
-     inset: 0;
-     z-index: 3000;
-     padding: 18px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     background:
-         rgba(245,247,251,.90);
-     backdrop-filter:
-         blur(20px)
-         saturate(140%);
-     -webkit-backdrop-filter:
-         blur(20px)
-         saturate(140%);
-     opacity: 0;
-     visibility: hidden;
-     transition:
-         opacity .25s ease,
-         visibility .25s ease;
- }
- .image-lightbox.active {
-     opacity: 1;
-     visibility: visible;
- }
- .lightbox-image {
-     max-width: 100%;
-     max-height: 88vh;
-     width: auto;
-     height: auto;
-     border-radius: 16px;
-     box-shadow:
-         0 25px 70px
-         rgba(0,0,0,.18);
- }
- .lightbox-close {
-     position: fixed;
-     top: 18px;
-     right: 18px;
-     width: 40px;
-     height: 40px;
-     border: none;
-     border-radius: 50%;
-     background:
-         rgba(255,255,255,.88);
-     color: #1d1d1f;
-     font-size: 17px;
-     cursor: pointer;
-     box-shadow:
-         0 6px 20px
-         rgba(0,0,0,.08);
- }
- /* =========================================================
-    FOOTER
- ========================================================= */
- .footer {
-     margin-top: 13px;
-     text-align: center;
-     color: #a1a1a6;
-     font-size: 10.5px;
-     font-weight: 500;
- }
- /* =========================================================
-    ERROR
- ========================================================= */
- .error {
-     text-align: center;
-     padding: 25px 8px;
- }
- .error-icon {
-     width: 54px;
-     height: 54px;
-     margin:
-         0 auto 13px;
-     border-radius: 16px;
-     background:
-         rgba(255,59,48,.08);
-     color: #ff3b30;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     font-size: 22px;
- }
- .error h2 {
-     color: #1d1d1f;
-     font-size: 20px;
- }
- .error p {
-     margin-top: 8px;
-     color: #86868b;
-     font-size: 13px;
-     line-height: 1.5;
- }
- /* =========================================================
-    MOBILE
- ========================================================= */
- @media screen and (max-width: 480px) {
-     .navbar-container {
-         padding:
-             0 16px;
-     }
-     .navbar-logo {
-         font-size: 16px;
-     }
-     .logo-lottie {
-         width: 27px;
-         height: 27px;
-         margin-right: 6px;
-     }
-     .mobile-menu-link {
-         font-size: 17px;
-     }
-     .install-page {
-         padding:
-             67px 15px
-             40px;
-     }
-     .install-card,
-     .trust-guide {
-         max-width: 365px;
-     }
- }
- /* =========================================================
-    ACCESSIBILITY
- ========================================================= */
- button:focus,
- a:focus {
-     outline:
-         2px solid #007aff;
-     outline-offset: 2px;
- }
- </style>
- </head>
- <body>
- <!-- =======================================================
-      NAVBAR
- ======================================================= -->
- <nav class="navbar-apple">
-     <div class="navbar-container">
-         <!-- LOGO -->
-         <a
-             href="https://chungchip12.com/"
-             class="navbar-logo">
-             <div class="logo-lottie">
-                 <dotlottie-wc
-                     src="https://lottie.host/847eb397-d9de-462d-a031-29be39d1120e/vtO7zCJWPs.lottie"
-                     autoplay
-                     loop>
-                 </dotlottie-wc>
-             </div>
-             <span class="logo-text">
-                 CHỨNG CHỈ P12
-             </span>
-         </a>
-         <!-- MENU BUTTON -->
-         <button
-             class="mobile-menu-toggle"
-             aria-label="Mở menu">
-             <i class="fas fa-bars"></i>
-         </button>
-     </div>
- </nav>
- <!-- =======================================================
-      MOBILE MENU
- ======================================================= -->
- <div class="mobile-menu">
-     <!-- HEADER -->
-     <div class="mobile-menu-header">
-         <div class="mobile-menu-logo">
-             <div class="logo-lottie">
-                 <dotlottie-wc
-                     src="https://lottie.host/847eb397-d9de-462d-a031-29be39d1120e/vtO7zCJWPs.lottie"
-                     autoplay
-                     loop>
-                 </dotlottie-wc>
-             </div>
-             <span>
-                 CHỨNG CHỈ P12
-             </span>
-         </div>
-         <button
-             class="mobile-menu-close"
-             aria-label="Đóng menu">
-             <i class="fas fa-times"></i>
-         </button>
-     </div>
-     <!-- ===================================================
-          MUA CHỨNG CHỈ
-     ==================================================== -->
-     <div class="mobile-menu-section">
-         <div class="mobile-menu-links">
-             <a
-                 href="https://chungchip12.com/"
-                 class="mobile-menu-link">
-                 <span>
-                     Mua chứng chỉ tự động
-                 </span>
-                 <i class="fas fa-chevron-right"></i>
-             </a>
-         </div>
-     </div>
-     <!-- ===================================================
-          DỊCH VỤ BỔ SUNG
-     ==================================================== -->
-     <div class="mobile-menu-section">
-         <h3 class="mobile-menu-title">
-             Dịch vụ bổ sung
-         </h3>
-         <div class="mobile-menu-links">
-             <a
-                 href="https://sign.chungchip12.com/"
-                 class="mobile-menu-link">
-                 <span>
-                     Ký ứng dụng trực tuyến
-                 </span>
-                 <i class="fas fa-chevron-right"></i>
-             </a>
-             <a
-                 href="https://check.chungchip12.com/"
-                 class="mobile-menu-link">
-                 <span>
-                     Kiểm tra chứng chỉ
-                 </span>
-                 <i class="fas fa-chevron-right"></i>
-             </a>
-             <a
-                 href="https://vsacheat.com/appstore/"
-                 class="mobile-menu-link">
-                 <span>
-                     Kho tiện ích mở rộng
-                 </span>
-                 <i class="fas fa-chevron-right"></i>
-             </a>
-         </div>
-     </div>
-     <!-- ===================================================
-          CỘNG ĐỒNG
-     ==================================================== -->
-     <div class="mobile-menu-section">
-         <h3 class="mobile-menu-title">
-             Cộng đồng & Hỗ trợ
-         </h3>
-         <div class="mobile-menu-links">
-             <a
-                 href="https://t.me/m/7gQci19fZmU9"
-                 class="mobile-menu-link">
-                 <span>
-                     Liên hệ hỗ trợ
-                 </span>
-                 <i class="fas fa-chevron-right"></i>
-             </a>
-             <a
-                 href="https://t.me/m/7gQci19fZmU9"
-                 class="mobile-menu-link">
-                 <span>
-                     Tạo website riêng
-                 </span>
-                 <i class="fas fa-chevron-right"></i>
-             </a>
-             <a
-                 href="https://t.me/vietnamcert"
-                 class="mobile-menu-link">
-                 <span>
-                     Kênh thông báo chính thức
-                 </span>
-                 <i class="fas fa-chevron-right"></i>
-             </a>
-         </div>
-     </div>
- </div>
- <!-- =======================================================
-      OVERLAY
- ======================================================= -->
- <div class="overlay"></div>
- <!-- =======================================================
-      MAIN
- ======================================================= -->
- <main class="install-page">
-     <!-- ===================================================
-          ESIGN
-     ==================================================== -->
-     <div
-         class="install-card"
-         id="card">
-         <!-- APP ICON -->
-         <div class="icon-wrapper">
-             <img
-                 class="app-icon"
-                 src="https://vsacheat.com/img/esign.png"
-                 alt="ESign">
-         </div>
-         <!-- APP NAME -->
-         <h1 class="app-title">
-             ESign
-         </h1>
-         <div class="app-version">
-             Version 5.0.2
-         </div>
-         <!-- CERTIFICATE -->
-         <div class="certificate-box">
-             <div class="certificate-label">
-                 CHỨNG CHỈ KÝ
-             </div>
-             <div
-                 class="certificate"
-                 id="certificate">
-                 Đang tải...
-             </div>
-         </div>
-         <!-- INSTALL -->
-         <a
-             id="install"
-             class="install-button"
-             href="https://ioscert.io.vn/install/?app=esign-hebei-rongkai-network-technology-co-ltd/#">
-              Cài đặt ESign
-         </a>
-        <div class="install-note">
-<span class="safari-note">
-                 <span class="safari-dot"></span>
-                 Khuyến nghị sử dụng Safari
-             </span>
-         </div>
-     </div>
-     <!-- ===================================================
-          HƯỚNG DẪN
-     ==================================================== -->
-     <section class="trust-guide">
-         <div class="guide-description">
-             Nếu iPhone yêu cầu xác minh nhà phát triển,
-             hãy thực hiện theo hướng dẫn bên dưới.
-         </div>
-         <div
-             class="mockup-wrapper"
-             id="mockupOpen">
-             <img
-                 class="mockup-image"
-                 src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp"
-                 alt="Hướng dẫn xác minh ESign"
-                 loading="lazy">
-         </div>
-         <div class="guide-caption">
-             Cài đặt chung → Quản lý VPN & thiết bị
-             → Tin cậy chứng chỉ
-         </div>
-     </section>
-     <!-- FOOTER -->
-     <footer class="footer">
-         © 2026 - CHUNGCHIP12.COM
-     </footer>
- </main>
- <!-- =======================================================
-      LIGHTBOX
- ======================================================= -->
- <div
-     class="image-lightbox"
-     id="imageLightbox">
-     <button
-         class="lightbox-close"
-         id="lightboxClose"
-         aria-label="Đóng">
-         <i class="fas fa-xmark"></i>
-     </button>
-     <img
-         class="lightbox-image"
-         src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp"
-         alt="Hướng dẫn xác minh ESign">
- </div>
- <script>
- /* =========================================================
-    MOBILE MENU
- ========================================================= */
- const mobileMenuToggle =
-     document.querySelector(
-         ".mobile-menu-toggle"
-     );
- const mobileMenu =
-     document.querySelector(
-         ".mobile-menu"
-     );
- const mobileMenuClose =
-     document.querySelector(
-         ".mobile-menu-close"
-     );
- const overlay =
-     document.querySelector(
-         ".overlay"
-     );
- function openMobileMenu() {
-     mobileMenu.classList.add(
-         "active"
-     );
-     overlay.classList.add(
-         "active"
-     );
-     document.body.style.overflow =
-         "hidden";
- }
- function closeMobileMenu() {
-     mobileMenu.classList.remove(
-         "active"
-     );
-     overlay.classList.remove(
-         "active"
-     );
-     document.body.style.overflow =
-         "";
- }
- mobileMenuToggle.addEventListener(
-     "click",
-     openMobileMenu
- );
- mobileMenuClose.addEventListener(
-     "click",
-     closeMobileMenu
- );
- overlay.addEventListener(
-     "click",
-     closeMobileMenu
- );
- /* Đóng menu khi chọn mục */
- document
-     .querySelectorAll(
-         ".mobile-menu-link"
-     )
-     .forEach(function(link) {
-         link.addEventListener(
-             "click",
-             closeMobileMenu
-         );
-     });
- /* =========================================================
-    NAVBAR ẨN KHI CUỘN XUỐNG
- ========================================================= */
- let lastScrollTop = 0;
- const navbar =
-     document.querySelector(
-         ".navbar-apple"
-     );
- window.addEventListener(
-     "scroll",
-     function() {
-         const scrollTop =
-             window.pageYOffset ||
-             document.documentElement.scrollTop;
-         if (
-             scrollTop > lastScrollTop &&
-             scrollTop > navbar.offsetHeight
-         ) {
-             navbar.classList.add(
-                 "hidden"
-             );
-         } else {
-             navbar.classList.remove(
-                 "hidden"
-             );
-         }
-         lastScrollTop =
-             scrollTop <= 0
-                 ? 0
-                 : scrollTop;
-     },
-     { passive: true }
- );
- /* =========================================================
-    LIGHTBOX MOCKUP
- ========================================================= */
- const mockupOpen =
-     document.getElementById(
-         "mockupOpen"
-     );
- const imageLightbox =
-     document.getElementById(
-         "imageLightbox"
-     );
- const lightboxClose =
-     document.getElementById(
-         "lightboxClose"
-     );
- function openLightbox() {
-     imageLightbox.classList.add(
-         "active"
-     );
-     document.body.style.overflow =
-         "hidden";
- }
- function closeLightbox() {
-     imageLightbox.classList.remove(
-         "active"
-     );
-     document.body.style.overflow =
-         "";
- }
- mockupOpen.addEventListener(
-     "click",
-     openLightbox
- );
- lightboxClose.addEventListener(
-     "click",
-     closeLightbox
- );
- imageLightbox.addEventListener(
-     "click",
-     function(event) {
-         if (
-             event.target ===
-             imageLightbox
-         ) {
-             closeLightbox();
-         }
-     }
- );
- document.addEventListener(
-     "keydown",
-     function(event) {
-         if (
-             event.key === "Escape"
-         ) {
-             closeLightbox();
-         }
-     }
- );
- /* =========================================================
-    INSTALL SYSTEM
- ========================================================= */
- (function() {
-     /*
-      * URL:
-      *
-      * /install/?app=esign-hebei-rongkai-network-technology-co-ltd
-      */
-     const params =
-         new URLSearchParams(
-             window.location.search
-         );
-     const app =
-         params.get("app");
-     if (!app) {
-         showError(
-             "Liên kết cài đặt không hợp lệ."
-         );
-         return;
-     }
-     /*
-      * Manifest:
-      *
-      * /install/{app}/manifest.plist
-      */
-     const manifestURL =
-         window.location.origin +
-         "/install/" +
-         encodeURIComponent(app) +
-         "/manifest.plist";
-     /*
-      * ITMS INSTALL
-      */
-     const installURL =
-         "itms-services://?action=download-manifest&url=" +
-         encodeURIComponent(
-             manifestURL
-         );
-     document
-         .getElementById("install")
-         .href =
-         installURL;
-     /*
-      * TÊN CHỨNG CHỈ
-      */
-     const certificateNames = {
-         "esign-hebei-rongkai-network-technology-co-ltd":
-             "Hebei Rongkai Network Technology Co., Ltd",
-         "esign-ola-city-global-limited":
-             "Ola City Global Limited",
-         "esign-apple-distribution":
-             "Apple Distribution"
-     };
-     let certificate =
-         certificateNames[app];
-     /*
-      * Nếu chưa có trong danh sách
-      * thì tự chuyển slug thành tên
-      */
-     if (!certificate) {
-         certificate =
-             app
-                 .replace(
-                     /^esign-/,
-                     ""
-                 )
-                 .replace(
-                     /-/g,
-                     " "
-                 )
-                 .replace(
-                     /\b\w/g,
-                     function(char) {
-                         return char.toUpperCase();
-                     }
-                 );
-     }
-     document
-         .getElementById("certificate")
-         .textContent =
-         certificate;
-     function showError(message) {
-         document
-             .getElementById("card")
-             .innerHTML = `
-                 <div class="error">
-                     <div class="error-icon">
-                         !
-                     </div>
-                     <h2>
-                         Không thể tải ứng dụng
-                     </h2>
-                     <p>
-                         ${message}
-                     </p>
-                 </div>
-             `;
-     }
- })();
- </script>
- </body>
- </html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f5f5f7">
+    <title>ESign 5.0.2 · CHỨNG CHỈ P12</title>
+    <link rel="icon" href="https://i.imgur.com/BIbDCrO.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js" type="module">
+    </script>
+    <style>
+        /* ========== RESET ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html {
+            min-height: 100%;
+            background: #f5f5f7;
+            scroll-behavior: smooth;
+        }
+        body {
+            min-height: 100vh;
+            color: #1d1d1f;
+            background: linear-gradient(145deg, #fafbff 0%, #f5f7fb 50%, #fafafd 100%);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        /* ========== SOFT GLOW ========== */
+        body::before {
+            content: "";
+            position: fixed;
+            width: 340px;
+            height: 340px;
+            top: -140px;
+            left: -120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 122, 255, .10), rgba(0, 122, 255, .025) 42%, transparent 72%);
+            filter: blur(25px);
+            pointer-events: none;
+            z-index: -1;
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            width: 340px;
+            height: 340px;
+            right: -140px;
+            bottom: -140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(175, 82, 222, .08), rgba(88, 86, 214, .025) 45%, transparent 72%);
+            filter: blur(28px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ========== NAVBAR (gọn) ========== */
+        .navbar-apple {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 44px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, .82);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, .045);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, .025);
+            transition: transform .35s cubic-bezier(.4, 0, .2, 1);
+        }
+        .navbar-apple.hidden {
+            transform: translateY(-100%);
+        }
+        .navbar-container {
+            max-width: 1024px;
+            height: 44px;
+            margin: 0 auto;
+            padding: 0 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #1d1d1f;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -.2px;
+        }
+        .logo-lottie {
+            width: 28px;
+            height: 28px;
+            margin-right: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .logo-lottie dotlottie-wc {
+            width: 100%;
+            height: 100%;
+            transform: scale(1.5);
+        }
+        .logo-text {
+            position: relative;
+            top: -1px;
+        }
+        .mobile-menu-toggle {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: #1d1d1f;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s ease, transform .15s ease;
+        }
+        .mobile-menu-toggle:hover {
+            background: rgba(0, 0, 0, .045);
+        }
+        .mobile-menu-toggle:active {
+            transform: scale(.92);
+        }
+
+        /* ========== MOBILE MENU (giữ nguyên) ========== */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(250, 250, 252, .94);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            display: flex;
+            flex-direction: column;
+            padding: max(16px, env(safe-area-inset-top)) 0 30px;
+            transform: translateY(-100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all .4s cubic-bezier(.4, 0, .2, 1);
+            overflow-y: auto;
+        }
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        .mobile-menu-header {
+            height: 48px;
+            padding: 0 20px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0, 0, 0, .045);
+        }
+        .mobile-menu-logo {
+            display: flex;
+            align-items: center;
+            color: #1d1d1f;
+            font-size: 17px;
+            font-weight: 600;
+        }
+        .mobile-menu-logo .logo-lottie {
+            width: 28px;
+            height: 28px;
+            margin-right: 6px;
+        }
+        .mobile-menu-close {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .045);
+            color: #1d1d1f;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .mobile-menu-section {
+            padding: 0 20px;
+            margin-top: 20px;
+        }
+        .mobile-menu-title {
+            margin-bottom: 6px;
+            color: #86868b;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+        }
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+        }
+        .mobile-menu-link {
+            min-height: 44px;
+            padding: 10px 2px;
+            border-bottom: 1px solid rgba(0, 0, 0, .045);
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: color .2s ease, padding-left .2s ease;
+        }
+        .mobile-menu-link:last-child {
+            border-bottom: none;
+        }
+        .mobile-menu-link:hover {
+            color: #007aff;
+            padding-left: 3px;
+        }
+        .mobile-menu-link i {
+            color: #a1a1a6;
+            font-size: 11px;
+        }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1500;
+            background: rgba(0, 0, 0, .28);
+            display: none;
+        }
+        .overlay.active {
+            display: block;
+        }
+
+        /* ========== MAIN – thu gọn, gọn gàng ========== */
+        .install-page {
+            width: 100%;
+            min-height: 100vh;
+            padding: 60px 14px 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* ===== CARD ESIGN – compact, nổi bật ===== */
+        .install-card {
+            width: 100%;
+            max-width: 340px;
+            padding: 18px 14px 14px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, .78);
+            border: 1px solid rgba(255, 255, 255, .92);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            box-shadow: 0 18px 40px rgba(31, 38, 135, .06), 0 6px 14px rgba(0, 0, 0, .025), inset 0 1px 0 rgba(255, 255, 255, .95);
+            animation: cardIn .5s cubic-bezier(.22, .8, .22, 1);
+            transition: box-shadow .2s;
+        }
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* icon – nhỏ hơn */
+        .icon-wrapper {
+            width: 68px;
+            height: 68px;
+            margin: 0 auto 10px;
+            padding: 4px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, .85);
+            border: 1px solid rgba(255, 255, 255, .95);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, .06), inset 0 1px 0 #fff;
+        }
+        .app-icon {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        /* app title – nhỏ gọn */
+        .app-title {
+            text-align: center;
+            color: #1d1d1f;
+            font-size: 23px;
+            font-weight: 700;
+            letter-spacing: -.4px;
+            line-height: 1.1;
+        }
+        .app-version {
+            text-align: center;
+            color: #86868b;
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 1px;
+            letter-spacing: .2px;
+        }
+
+        /* certificate – highlight nổi bật */
+        .certificate-box {
+            margin-top: 12px;
+            padding: 8px 8px 6px;
+            border-radius: 14px;
+            background: rgba(0, 122, 255, .035);
+            border: 1px solid rgba(0, 122, 255, .12);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 2px 6px rgba(0, 122, 255, .03);
+        }
+        .certificate-label {
+            text-align: center;
+            color: #6b6b72;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+        }
+        .certificate {
+            text-align: center;
+            color: #1d1d1f;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: -.2px;
+            background: linear-gradient(135deg, #1d1d1f 0%, #2c2c2e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* install button – nhấn mạnh */
+        .install-button {
+            width: 100%;
+            margin-top: 12px;
+            padding: 13px 12px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #0a84ff, #007aff);
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            box-shadow: 0 6px 16px rgba(0, 122, 255, .22), inset 0 1px 0 rgba(255, 255, 255, .30);
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+        .install-button:active {
+            transform: scale(.97);
+        }
+
+        .install-note {
+            margin-top: 6px;
+            text-align: center;
+            color: #8e8e93;
+            font-size: 10px;
+            line-height: 1.4;
+        }
+        .safari-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .6);
+            border: 1px solid rgba(255, 255, 255, .8);
+            color: #7a7a80;
+            font-size: 9.5px;
+            font-weight: 600;
+        }
+        .safari-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #34c759;
+        }
+
+        /* ===== GUIDE – gọn hơn ===== */
+        .trust-guide {
+            width: 100%;
+            max-width: 340px;
+            margin-top: 10px;
+            padding: 12px 12px 10px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, .65);
+            border: 1px solid rgba(255, 255, 255, .88);
+            backdrop-filter: blur(24px) saturate(170%);
+            -webkit-backdrop-filter: blur(24px) saturate(170%);
+            box-shadow: 0 8px 22px rgba(31, 38, 135, .04), inset 0 1px 0 rgba(255, 255, 255, .95);
+        }
+        .guide-description {
+            padding: 0 2px;
+            margin-bottom: 8px;
+            text-align: center;
+            color: #7a7a80;
+            font-size: 10.5px;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+        .mockup-wrapper {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 14px;
+            background: #f0f2f6;
+            border: 1px solid rgba(0, 0, 0, .03);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .03);
+            cursor: zoom-in;
+            transition: transform .15s ease;
+        }
+        .mockup-wrapper:active {
+            transform: scale(.99);
+        }
+        .mockup-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        .guide-caption {
+            margin-top: 6px;
+            text-align: center;
+            color: #8e8e93;
+            font-size: 9.5px;
+            line-height: 1.3;
+            font-weight: 500;
+            letter-spacing: .1px;
+        }
+
+        /* ===== LIGHTBOX ===== */
+        .image-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(245, 247, 251, .92);
+            backdrop-filter: blur(20px) saturate(140%);
+            -webkit-backdrop-filter: blur(20px) saturate(140%);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .25s ease, visibility .25s ease;
+        }
+        .image-lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 84vh;
+            width: auto;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .15);
+        }
+        .lightbox-close {
+            position: fixed;
+            top: 14px;
+            right: 14px;
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .9);
+            color: #1d1d1f;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .06);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            margin-top: 10px;
+            text-align: center;
+            color: #a8a8ae;
+            font-size: 9.5px;
+            font-weight: 500;
+            letter-spacing: .2px;
+        }
+
+        /* ===== ERROR (giữ nguyên) ===== */
+        .error {
+            text-align: center;
+            padding: 18px 6px;
+        }
+        .error-icon {
+            width: 44px;
+            height: 44px;
+            margin: 0 auto 8px;
+            border-radius: 14px;
+            background: rgba(255, 59, 48, .08);
+            color: #ff3b30;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .error h2 {
+            color: #1d1d1f;
+            font-size: 18px;
+        }
+        .error p {
+            margin-top: 4px;
+            color: #86868b;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media screen and (max-width: 480px) {
+            .navbar-container {
+                padding: 0 14px;
+            }
+            .navbar-logo {
+                font-size: 15px;
+            }
+            .logo-lottie {
+                width: 24px;
+                height: 24px;
+            }
+            .install-page {
+                padding: 56px 12px 24px;
+            }
+            .install-card,
+            .trust-guide {
+                max-width: 100%;
+            }
+            .install-card {
+                padding: 16px 12px 12px;
+            }
+            .icon-wrapper {
+                width: 62px;
+                height: 62px;
+                margin-bottom: 8px;
+            }
+            .app-title {
+                font-size: 21px;
+            }
+            .certificate {
+                font-size: 13px;
+            }
+            .mobile-menu-link {
+                font-size: 15px;
+            }
+        }
+
+        /* ========== ACCESSIBILITY ========== */
+        button:focus,
+        a:focus {
+            outline: 2px solid #007aff;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar-apple">
+        <div class="navbar-container">
+            <a href="https://chungchip12.com/" class="navbar-logo">
+                <div class="logo-lottie">
+                    <dotlottie-wc src="https://lottie.host/847eb397-d9de-462d-a031-29be39d1120e/vtO7zCJWPs.lottie" autoplay loop>
+                    </dotlottie-wc>
+                </div>
+                <span class="logo-text">CHỨNG CHỈ P12</span>
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Mở menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-logo">
+                <div class="logo-lottie">
+                    <dotlottie-wc src="https://lottie.host/847eb397-d9de-462d-a031-29be39d1120e/vtO7zCJWPs.lottie" autoplay loop>
+                    </dotlottie-wc>
+                </div>
+                <span>CHỨNG CHỈ P12</span>
+            </div>
+            <button class="mobile-menu-close" aria-label="Đóng menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-menu-section">
+            <div class="mobile-menu-links">
+                <a href="https://chungchip12.com/" class="mobile-menu-link">
+                    <span>Mua chứng chỉ tự động</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="mobile-menu-section">
+            <h3 class="mobile-menu-title">Dịch vụ bổ sung</h3>
+            <div class="mobile-menu-links">
+                <a href="https://sign.chungchip12.com/" class="mobile-menu-link">
+                    <span>Ký ứng dụng trực tuyến</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="https://check.chungchip12.com/" class="mobile-menu-link">
+                    <span>Kiểm tra chứng chỉ</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="https://vsacheat.com/appstore/" class="mobile-menu-link">
+                    <span>Kho tiện ích mở rộng</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="mobile-menu-section">
+            <h3 class="mobile-menu-title">Cộng đồng & Hỗ trợ</h3>
+            <div class="mobile-menu-links">
+                <a href="https://t.me/m/7gQci19fZmU9" class="mobile-menu-link">
+                    <span>Liên hệ hỗ trợ</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="https://t.me/m/7gQci19fZmU9" class="mobile-menu-link">
+                    <span>Tạo website riêng</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="https://t.me/vietnamcert" class="mobile-menu-link">
+                    <span>Kênh thông báo chính thức</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+
+    <!-- MAIN -->
+    <main class="install-page">
+        <!-- CARD ESIGN -->
+        <div class="install-card" id="card">
+            <div class="icon-wrapper">
+                <img class="app-icon" src="https://vsacheat.com/img/esign.png" alt="ESign">
+            </div>
+            <h1 class="app-title">ESign</h1>
+            <div class="app-version">Version 5.0.2</div>
+            <div class="certificate-box">
+                <div class="certificate-label">CHỨNG CHỈ KÝ</div>
+                <div class="certificate" id="certificate">Đang tải...</div>
+            </div>
+            <a id="install" class="install-button" href="#">
+                <i class="fas fa-download" style="font-size:14px;"></i> Cài đặt ESign
+            </a>
+            <div class="install-note">
+                <span class="safari-note">
+                    <span class="safari-dot"></span> Khuyến nghị Safari
+                </span>
+            </div>
+        </div>
+
+        <!-- GUIDE -->
+        <section class="trust-guide">
+            <div class="guide-description">
+                Nếu iPhone yêu cầu xác minh nhà phát triển, hãy làm theo hướng dẫn bên dưới.
+            </div>
+            <div class="mockup-wrapper" id="mockupOpen">
+                <img class="mockup-image" src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp" alt="Hướng dẫn xác minh ESign" loading="lazy">
+            </div>
+            <div class="guide-caption">
+                Cài đặt chung → Quản lý VPN & thiết bị → Tin cậy chứng chỉ
+            </div>
+        </section>
+
+        <footer class="footer">© 2026 - CHUNGCHIP12.COM</footer>
+    </main>
+
+    <!-- LIGHTBOX -->
+    <div class="image-lightbox" id="imageLightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Đóng">
+            <i class="fas fa-xmark"></i>
+        </button>
+        <img class="lightbox-image" src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp" alt="Hướng dẫn xác minh ESign">
+    </div>
+
+    <script>
+        /* =========================================================
+           MOBILE MENU
+        ========================================================= */
+        const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+        const mobileMenu = document.querySelector(".mobile-menu");
+        const mobileMenuClose = document.querySelector(".mobile-menu-close");
+        const overlay = document.querySelector(".overlay");
+
+        function openMobileMenu() {
+            mobileMenu.classList.add("active");
+            overlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove("active");
+            overlay.classList.remove("active");
+            document.body.style.overflow = "";
+        }
+
+        mobileMenuToggle.addEventListener("click", openMobileMenu);
+        mobileMenuClose.addEventListener("click", closeMobileMenu);
+        overlay.addEventListener("click", closeMobileMenu);
+        document.querySelectorAll(".mobile-menu-link").forEach(function(link) {
+            link.addEventListener("click", closeMobileMenu);
+        });
+
+        /* =========================================================
+           NAVBAR HIDE ON SCROLL
+        ========================================================= */
+        let lastScrollTop = 0;
+        const navbar = document.querySelector(".navbar-apple");
+        window.addEventListener("scroll", function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight) {
+                navbar.classList.add("hidden");
+            } else {
+                navbar.classList.remove("hidden");
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, { passive: true });
+
+        /* =========================================================
+           LIGHTBOX
+        ========================================================= */
+        const mockupOpen = document.getElementById("mockupOpen");
+        const imageLightbox = document.getElementById("imageLightbox");
+        const lightboxClose = document.getElementById("lightboxClose");
+
+        function openLightbox() {
+            imageLightbox.classList.add("active");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeLightbox() {
+            imageLightbox.classList.remove("active");
+            document.body.style.overflow = "";
+        }
+
+        mockupOpen.addEventListener("click", openLightbox);
+        lightboxClose.addEventListener("click", closeLightbox);
+        imageLightbox.addEventListener("click", function(event) {
+            if (event.target === imageLightbox) closeLightbox();
+        });
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") closeLightbox();
+        });
+
+        /* =========================================================
+           INSTALL SYSTEM (giữ nguyên logic)
+        ========================================================= */
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const app = params.get("app");
+            if (!app) {
+                showError("Liên kết cài đặt không hợp lệ.");
+                return;
+            }
+
+            const manifestURL = window.location.origin + "/install/" + encodeURIComponent(app) + "/manifest.plist";
+            const installURL = "itms-services://?action=download-manifest&url=" + encodeURIComponent(manifestURL);
+            document.getElementById("install").href = installURL;
+
+            const certificateNames = {
+                "esign-hebei-rongkai-network-technology-co-ltd": "Hebei Rongkai Network Technology Co., Ltd",
+                "esign-ola-city-global-limited": "Ola City Global Limited",
+                "esign-apple-distribution": "Apple Distribution"
+            };
+            let certificate = certificateNames[app];
+            if (!certificate) {
+                certificate = app
+                    .replace(/^esign-/, "")
+                    .replace(/-/g, " ")
+                    .replace(/\b\w/g, function(char) { return char.toUpperCase(); });
+            }
+            document.getElementById("certificate").textContent = certificate;
+
+            function showError(message) {
+                document.getElementById("card").innerHTML = `
+                    <div class="error">
+                        <div class="error-icon">!</div>
+                        <h2>Không thể tải ứng dụng</h2>
+                        <p>${message}</p>
+                    </div>
+                `;
+            }
+        })();
+    </script>
+</body>
+</html>
