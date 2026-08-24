@@ -754,47 +754,155 @@
         });
 
         /* =========================================================
-           INSTALL SYSTEM – URL mới:
-           https://ioscert.io.vn/install/app-signed/esign-hebei-...
+           INSTALL SYSTEM
+           Hỗ trợ URL mới:
+           /install/app-signed/TEN_APP/
+
+           Đồng thời hỗ trợ fallback từ 404.html:
+           /install/?app=TEN_APP
         ========================================================= */
         (function() {
-            // Lấy app từ đường dẫn: /install/app-signed/APP_NAME
-            var path = window.location.pathname;
-            var parts = path.split('/').filter(function(p) { return p.length > 0; });
-            // mong đợi: ['install', 'app-signed', 'APP_NAME']
+
             var app = null;
-            if (parts.length >= 3 && parts[0] === 'install' && parts[1] === 'app-signed') {
-                app = parts[2];
+            var path = window.location.pathname;
+
+            /*
+             * URL chính:
+             * /install/app-signed/esign-hebei-rongkai-network-technology-co-ltd/
+             */
+            var parts = path.split('/').filter(function(p) {
+                return p.length > 0;
+            });
+
+            if (
+                parts.length >= 3 &&
+                parts[0] === 'install' &&
+                parts[1] === 'app-signed'
+            ) {
+                app = decodeURIComponent(parts[2]);
             }
 
+            /*
+             * Fallback cho 404.html.
+             *
+             * 404.html load:
+             * /install/?app=TEN_APP
+             *
+             * nên HTML vẫn lấy được tên app từ query.
+             */
+            if (!app && path === '/install/') {
+                var params = new URLSearchParams(window.location.search);
+                var queryApp = params.get('app');
+
+                if (queryApp) {
+                    app = decodeURIComponent(queryApp);
+                }
+            }
+
+            /*
+             * Không tìm thấy tên app
+             */
             if (!app) {
                 showError("Liên kết cài đặt không hợp lệ.");
                 return;
             }
 
-            // Tạo manifest URL: /install/app-signed/APP_NAME/manifest.plist
-            var manifestURL = window.location.origin + '/install/app-signed/' + encodeURIComponent(app) + '/manifest.plist';
-            var installURL = 'itms-services://?action=download-manifest&url=' + encodeURIComponent(manifestURL);
+            /*
+             * Bảo vệ tên thư mục
+             */
+            if (
+                app.indexOf('/') !== -1 ||
+                app.indexOf('\\') !== -1 ||
+                app.indexOf('..') !== -1
+            ) {
+                showError("Liên kết cài đặt không hợp lệ.");
+                return;
+            }
 
-            document.getElementById('install').href = installURL;
+            /*
+             * Manifest tương ứng:
+             *
+             * /install/app-signed/APP_NAME/manifest.plist
+             */
+            var manifestURL =
+                window.location.origin +
+                '/install/app-signed/' +
+                encodeURIComponent(app) +
+                '/manifest.plist';
 
-            // Tên chứng chỉ
+            /*
+             * Link cài đặt iOS
+             */
+            var installURL =
+                'itms-services://?action=download-manifest&url=' +
+                encodeURIComponent(manifestURL);
+
+            /*
+             * Gắn link vào nút Cài đặt ESign
+             */
+            var installButton =
+                document.getElementById('install');
+
+            if (installButton) {
+                installButton.href = installURL;
+            }
+
+            /*
+             * Tên chứng chỉ
+             */
             var certificateNames = {
-                'esign-hebei-rongkai-network-technology-co-ltd': 'Hebei Rongkai Network Technology Co., Ltd',
-                'esign-ola-city-global-limited': 'Ola City Global Limited',
-                'esign-apple-distribution': 'Apple Distribution'
+
+                'esign-hebei-rongkai-network-technology-co-ltd':
+                    'Hebei Rongkai Network Technology Co., Ltd',
+
+                'esign-ola-city-global-limited':
+                    'Ola City Global Limited',
+
+                'esign-apple-distribution':
+                    'Apple Distribution',
+
+                'esign-hsbc-bank-plc':
+                    'HSBC Bank plc'
+
             };
-            var certificate = certificateNames[app];
+
+            var certificate =
+                certificateNames[app];
+
+            /*
+             * Nếu chưa khai báo:
+             * esign-company-name
+             * -> Company Name
+             */
             if (!certificate) {
+
                 certificate = app
                     .replace(/^esign-/, '')
                     .replace(/-/g, ' ')
-                    .replace(/\b\w/g, function(char) { return char.toUpperCase(); });
-            }
-            document.getElementById('certificate').textContent = certificate;
+                    .replace(/\b\w/g, function(char) {
+                        return char.toUpperCase();
+                    });
 
+            }
+
+            var certificateElement =
+                document.getElementById('certificate');
+
+            if (certificateElement) {
+                certificateElement.textContent = certificate;
+            }
+
+            /*
+             * Hàm hiển thị lỗi
+             */
             function showError(message) {
-                document.getElementById('card').innerHTML = `
+
+                var card =
+                    document.getElementById('card');
+
+                if (!card) return;
+
+                card.innerHTML = `
                     <div class="error">
                         <div class="error-icon">!</div>
                         <h2>Không thể tải ứng dụng</h2>
@@ -802,6 +910,7 @@
                     </div>
                 `;
             }
+
         })();
     </script>
 </body>
