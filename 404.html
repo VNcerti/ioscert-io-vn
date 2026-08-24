@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ESign · CHỨNG CHỈ P12</title>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #f5f5f7;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+<script>
+
+(function () {
+
+    const path = window.location.pathname;
+
+    /*
+     * Chỉ xử lý URL:
+     *
+     * /install/app-signed/TEN_APP/
+     */
+    const match = path.match(
+        /^\/install\/app-signed\/([^\/]+)\/?$/
+    );
+
+    if (!match) {
+
+        document.body.innerHTML = `
+            <div style="
+                font-family:-apple-system,BlinkMacSystemFont,
+                'Segoe UI',sans-serif;
+                text-align:center;
+                padding:80px 20px;
+                color:#1d1d1f;
+            ">
+                <h2>404</h2>
+                <p>Không tìm thấy trang.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    /*
+     * Load HTML chung
+     */
+    const iframe = document.createElement("iframe");
+
+    /*
+     * Truyền app qua query để HTML chung
+     * có thể đọc được.
+     */
+    iframe.src =
+        "/install/?app=" +
+        encodeURIComponent(match[1]);
+
+    document.body.innerHTML = "";
+
+    document.body.appendChild(iframe);
+
+})();
+
+</script>
+
+</body>
+</html>
