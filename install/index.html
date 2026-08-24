@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#f5f5f7">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f5f5f7" />
     <title>ESign 5.0.2 · CHỨNG CHỈ P12</title>
-    <link rel="icon" href="https://i.imgur.com/BIbDCrO.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="https://i.imgur.com/BIbDCrO.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js" type="module">
     </script>
     <style>
@@ -134,7 +133,7 @@
             transform: scale(.92);
         }
 
-        /* ========== MOBILE MENU (giữ nguyên) ========== */
+        /* ========== MOBILE MENU ========== */
         .mobile-menu {
             position: fixed;
             inset: 0;
@@ -276,7 +275,6 @@
             }
         }
 
-        /* icon – nhỏ hơn */
         .icon-wrapper {
             width: 68px;
             height: 68px;
@@ -295,7 +293,6 @@
             border-radius: 16px;
         }
 
-        /* app title – nhỏ gọn */
         .app-title {
             text-align: center;
             color: #1d1d1f;
@@ -313,7 +310,6 @@
             letter-spacing: .2px;
         }
 
-        /* certificate – highlight nổi bật */
         .certificate-box {
             margin-top: 12px;
             padding: 8px 8px 6px;
@@ -342,7 +338,6 @@
             background-clip: text;
         }
 
-        /* install button – nhấn mạnh */
         .install-button {
             width: 100%;
             margin-top: 12px;
@@ -390,7 +385,7 @@
             background: #34c759;
         }
 
-        /* ===== GUIDE – gọn hơn ===== */
+        /* ===== GUIDE ===== */
         .trust-guide {
             width: 100%;
             max-width: 340px;
@@ -484,7 +479,6 @@
             box-shadow: 0 4px 14px rgba(0, 0, 0, .06);
         }
 
-        /* ===== FOOTER ===== */
         .footer {
             margin-top: 10px;
             text-align: center;
@@ -494,7 +488,7 @@
             letter-spacing: .2px;
         }
 
-        /* ===== ERROR (giữ nguyên) ===== */
+        /* ===== ERROR ===== */
         .error {
             text-align: center;
             padding: 18px 6px;
@@ -560,7 +554,6 @@
             }
         }
 
-        /* ========== ACCESSIBILITY ========== */
         button:focus,
         a:focus {
             outline: 2px solid #007aff;
@@ -649,7 +642,7 @@
         <!-- CARD ESIGN -->
         <div class="install-card" id="card">
             <div class="icon-wrapper">
-                <img class="app-icon" src="https://vsacheat.com/img/esign.png" alt="ESign">
+                <img class="app-icon" src="https://vsacheat.com/img/esign.png" alt="ESign" />
             </div>
             <h1 class="app-title">ESign</h1>
             <div class="app-version">Version 5.0.2</div>
@@ -673,7 +666,7 @@
                 Nếu iPhone yêu cầu xác minh nhà phát triển, hãy làm theo hướng dẫn bên dưới.
             </div>
             <div class="mockup-wrapper" id="mockupOpen">
-                <img class="mockup-image" src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp" alt="Hướng dẫn xác minh ESign" loading="lazy">
+                <img class="mockup-image" src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp" alt="Hướng dẫn xác minh ESign" loading="lazy" />
             </div>
             <div class="guide-caption">
                 Cài đặt chung → Quản lý VPN & thiết bị → Tin cậy chứng chỉ
@@ -688,7 +681,7 @@
         <button class="lightbox-close" id="lightboxClose" aria-label="Đóng">
             <i class="fas fa-xmark"></i>
         </button>
-        <img class="lightbox-image" src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp" alt="Hướng dẫn xác minh ESign">
+        <img class="lightbox-image" src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp" alt="Hướng dẫn xác minh ESign" />
     </div>
 
     <script>
@@ -761,36 +754,47 @@
         });
 
         /* =========================================================
-           INSTALL SYSTEM (giữ nguyên logic)
+           INSTALL SYSTEM – URL mới:
+           https://ioscert.io.vn/install/app-signed/esign-hebei-...
         ========================================================= */
         (function() {
-            const params = new URLSearchParams(window.location.search);
-            const app = params.get("app");
+            // Lấy app từ đường dẫn: /install/app-signed/APP_NAME
+            var path = window.location.pathname;
+            var parts = path.split('/').filter(function(p) { return p.length > 0; });
+            // mong đợi: ['install', 'app-signed', 'APP_NAME']
+            var app = null;
+            if (parts.length >= 3 && parts[0] === 'install' && parts[1] === 'app-signed') {
+                app = parts[2];
+            }
+
             if (!app) {
                 showError("Liên kết cài đặt không hợp lệ.");
                 return;
             }
 
-            const manifestURL = window.location.origin + "/install/" + encodeURIComponent(app) + "/manifest.plist";
-            const installURL = "itms-services://?action=download-manifest&url=" + encodeURIComponent(manifestURL);
-            document.getElementById("install").href = installURL;
+            // Tạo manifest URL: /install/app-signed/APP_NAME/manifest.plist
+            var manifestURL = window.location.origin + '/install/app-signed/' + encodeURIComponent(app) + '/manifest.plist';
+            var installURL = 'itms-services://?action=download-manifest&url=' + encodeURIComponent(manifestURL);
 
-            const certificateNames = {
-                "esign-hebei-rongkai-network-technology-co-ltd": "Hebei Rongkai Network Technology Co., Ltd",
-                "esign-ola-city-global-limited": "Ola City Global Limited",
-                "esign-apple-distribution": "Apple Distribution"
+            document.getElementById('install').href = installURL;
+
+            // Tên chứng chỉ
+            var certificateNames = {
+                'esign-hebei-rongkai-network-technology-co-ltd': 'Hebei Rongkai Network Technology Co., Ltd',
+                'esign-ola-city-global-limited': 'Ola City Global Limited',
+                'esign-apple-distribution': 'Apple Distribution'
             };
-            let certificate = certificateNames[app];
+            var certificate = certificateNames[app];
             if (!certificate) {
                 certificate = app
-                    .replace(/^esign-/, "")
-                    .replace(/-/g, " ")
+                    .replace(/^esign-/, '')
+                    .replace(/-/g, ' ')
                     .replace(/\b\w/g, function(char) { return char.toUpperCase(); });
             }
-            document.getElementById("certificate").textContent = certificate;
+            document.getElementById('certificate').textContent = certificate;
 
             function showError(message) {
-                document.getElementById("card").innerHTML = `
+                document.getElementById('card').innerHTML = `
                     <div class="error">
                         <div class="error-icon">!</div>
                         <h2>Không thể tải ứng dụng</h2>
