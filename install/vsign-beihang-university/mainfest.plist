@@ -27,7 +27,7 @@
             <dict>
 
                 <key>bundle-identifier</key>
-                <string>ioscert.site</string>
+                <string>com.vsign</string>
 
                 <key>bundle-version</key>
                 <string>5.0.2</string>
