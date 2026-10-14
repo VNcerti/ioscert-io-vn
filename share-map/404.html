@@ -1,8 +1,23 @@
-<!doctype html>
-<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đang mở Share Map…</title></head>
-<body style="margin:0;background:#0b0d12;color:#f4f6fb;font:16px -apple-system,BlinkMacSystemFont,sans-serif;display:grid;min-height:100vh;place-items:center">
-<p>Đang mở trang chia sẻ…</p>
-<script>
-  location.replace("/?sharePath=" + encodeURIComponent(location.pathname));
-</script>
-</body></html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đang mở Share MAP...</title>
+</head>
+<body>
+  <p>Đang chuyển tới phiên chia sẻ...</p>
+  <script>
+    const parts = location.pathname.split("/").filter(Boolean);
+    const code = parts.length > 1 && parts[0] === "share-map"
+      ? parts[1]
+      : "";
+
+    if (/^[A-Za-z0-9]{6}$/.test(code)) {
+      location.replace("/share-map/?code=" + encodeURIComponent(code));
+    } else {
+      location.replace("/share-map/");
+    }
+  </script>
+</body>
+</html>
