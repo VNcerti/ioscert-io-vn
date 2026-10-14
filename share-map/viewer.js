@@ -1,34 +1,60 @@
 
-/* Share MAP viewer
-   Kiểm tra phiên chia sẻ qua API.
-   Luồng video trực tiếp cần tích hợp WebRTC riêng.
-*/
+/*
+ * Share MAP Viewer
+ * - Hỗ trợ link ?code=ABC123 và /share-map/ABC123
+ * - Giữ nguyên chữ hoa/chữ thường của mã phiên
+ * - Kiểm tra phiên qua Share MAP API
+ * - Tự cập nhật trạng thái định kỳ
+ * - Hỗ trợ nút toàn màn hình
+ *
+ * Lưu ý: Chưa tích hợp luồng video WebRTC.
+ */
+
 (() => {
+  "use strict";
+
   const API_BASE = "https://share-api.ioscert.io.vn";
+  const REFRESH_INTERVAL = 10000;
 
   const params = new URLSearchParams(window.location.search);
   const pathParts = window.location.pathname
     .split("/")
     .filter(Boolean);
 
+  // Hỗ trợ:
+  // /share-map/?code=ABC123
+  // /share-map/ABC123
   const routeCode =
     pathParts[0] === "share-map" && pathParts.length >= 2
       ? pathParts[1]
       : "";
 
+  // Giữ nguyên chữ hoa/chữ thường vì mã có thể phân biệt chữ.
   const code = (
     params.get("code") || routeCode || ""
-  ).trim().toUpperCase();
+  ).trim();
 
-  const video = document.getElementById("remoteVideo");
-  const placeholder = document.getElementById("placeholder");
-  const title = document.getElementById("title");
-  const status = document.getElementById("status");
-  const roomCode = document.getElementById("roomCode");
-  const placeholderTitle =
-    document.getElementById("placeholderTitle");
-  const placeholderText =
-    document.getElementById("placeholderText");
+  const elements = {
+    video: document.getElementById("remoteVideo"),
+    placeholder: document.getElementById("placeholder"),
+    title: document.getElementById("title"),
+    status: document.getElementById("status"),
+    roomCode: document.getElementById("roomCode"),
+    placeholderTitle: document.getElementById("placeholderTitle"),
+    placeholderText: document.getElementById("placeholderText"),
+    fullscreenButton: document.getElementById("fullscreenButton")
+  };
+
+  const {
+    video,
+    placeholder,
+    title,
+    status,
+    roomCode,
+    placeholderTitle,
+    placeholderText,
+    fullscreenButton
+  } = elements;
 
   if (
     !placeholder ||
@@ -38,11 +64,17 @@
     !placeholderTitle ||
     !placeholderText
   ) {
-    console.error("Share MAP: Không tìm thấy các phần tử giao diện.");
+    console.error(
+      "[Share MAP] Không tìm thấy phần tử giao diện cần thiết."
+    );
     return;
   }
 
   roomCode.textContent = code || "—";
+
+  let refreshTimer = null;
+  let requestInProgress = false;
+  let stopped = false;
 
   function setState(label, heading, message) {
     status.textContent = label;
@@ -51,17 +83,36 @@
     placeholder.hidden = false;
   }
 
+  function scheduleRefresh() {
+    if (stopped) return;
+
+    if (refreshTimer !== null) {
+      clearTimeout(refreshTimer);
+    }
+
+    refreshTimer = setTimeout(() => {
+      loadSession();
+    }, REFRESH_INTERVAL);
+  }
+
   async function loadSession() {
-    if (!/^[A-Z0-9]{6}$/.test(code)) {
+    if (requestInProgress || stopped) return;
+
+    // Mã gồm đúng 6 ký tự chữ hoặc số, có phân biệt hoa/thường.
+    if (!/^[A-Za-z0-9]{6}$/.test(code)) {
       title.textContent = "Liên kết không hợp lệ";
+
       setState(
         "Không hợp lệ",
         "Mã chia sẻ không đúng",
-        "Đường dẫn cần có mã chia sẻ gồm 6 ký tự."
+        "Đường dẫn cần có mã chia sẻ gồm 6 ký tự chữ hoặc số."
       );
+
+      stopped = true;
       return;
     }
 
+    requestInProgress = true;
     title.textContent = "Phiên " + code;
 
     setState(
@@ -88,9 +139,23 @@
         const detail =
           typeof data.detail === "string"
             ? data.detail
-            : "Không tìm thấy phiên chia sẻ.";
+            : "";
 
-        throw new Error(detail);
+        if (response.status === 404) {
+          throw new Error(
+            "Không tìm thấy phiên này. Hãy kiểm tra mã hoặc tạo phiên mới."
+          );
+        }
+
+        if (response.status === 410) {
+          throw new Error(
+            "Phiên chia sẻ đã hết hạn. Hãy yêu cầu người phát tạo phiên mới."
+          );
+        }
+
+        throw new Error(
+          detail || `Máy chủ trả về lỗi HTTP ${response.status}.`
+        );
       }
 
       const state = String(
@@ -107,52 +172,94 @@
           "Phiên chia sẻ đã kết thúc",
           "Hãy yêu cầu người phát tạo một phiên mới."
         );
+
+        stopped = true;
         return;
       }
 
       if (
         state === "waiting_for_stream" ||
         state === "waiting" ||
-        state === "created" ||
-        state === "unknown"
+        state === "created"
       ) {
         setState(
           "Đang chờ",
           "Đã tìm thấy phiên chia sẻ",
-          "Phiên đã được tạo, nhưng luồng video trực tiếp chưa được kết nối."
+          "Phiên đã được tạo thành công. Đang chờ thiết bị phát màn hình kết nối."
         );
+
+        scheduleRefresh();
         return;
       }
 
+      if (state === "unknown") {
+        setState(
+          "Đã nhận phản hồi",
+          "Chưa xác định được trạng thái phiên",
+          "API đã phản hồi nhưng chưa trả về trạng thái phiên nhận diện được."
+        );
+
+        scheduleRefresh();
+        return;
+      }
+
+      // Phiên tồn tại không đồng nghĩa video đã phát.
       setState(
-        "Đã kết nối API",
-        "Đã tìm thấy phiên chia sẻ",
-        "API xác nhận phiên tồn tại. Phần nhận video WebRTC chưa được tích hợp."
+        "Đã tìm thấy phiên",
+        "Phiên chia sẻ đã sẵn sàng",
+        "API đã xác nhận phiên tồn tại. Luồng video trực tiếp cần được kết nối riêng."
       );
+
+      scheduleRefresh();
+
     } catch (error) {
-      console.error("Share MAP API error:", error);
+      console.error("[Share MAP API]", error);
 
       setState(
         "Không kết nối được",
         "Không thể tải phiên chia sẻ",
-        error.message || "Vui lòng thử lại sau."
+        error.message ||
+          "Không thể kết nối máy chủ. Vui lòng thử lại."
       );
+
+      // Thử lại khi lỗi mạng tạm thời.
+      scheduleRefresh();
+
+    } finally {
+      requestInProgress = false;
     }
   }
 
-  document
-    .getElementById("fullscreenButton")
-    ?.addEventListener("click", async () => {
-      try {
-        if (video?.requestFullscreen) {
-          await video.requestFullscreen();
-        } else if (video?.webkitEnterFullscreen) {
-          video.webkitEnterFullscreen();
+  // Nút toàn màn hình.
+  fullscreenButton?.addEventListener("click", async () => {
+    try {
+      if (video?.requestFullscreen) {
+        await video.requestFullscreen();
+      } else if (video?.webkitEnterFullscreen) {
+        video.webkitEnterFullscreen();
+      } else {
+        const player = video?.parentElement;
+
+        if (player?.requestFullscreen) {
+          await player.requestFullscreen();
         }
-      } catch (error) {
-        console.warn("Không thể bật toàn màn hình:", error);
       }
-    });
+    } catch (error) {
+      console.warn(
+        "[Share MAP] Không thể bật toàn màn hình:",
+        error
+      );
+    }
+  });
+
+  // Dọn bộ hẹn giờ khi người dùng rời trang.
+  window.addEventListener("pagehide", () => {
+    stopped = true;
+
+    if (refreshTimer !== null) {
+      clearTimeout(refreshTimer);
+    }
+  });
 
   loadSession();
 })();
