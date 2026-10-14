@@ -1,88 +1,29 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>ESign · CHỨNG CHỈ P12</title>
-
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background: #f5f5f7;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-            display: block;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đang mở Share MAP...</title>
 </head>
-
 <body>
+  <p>Đang mở trang chia sẻ...</p>
+  <script>
+    const parts = location.pathname.split("/").filter(Boolean);
 
-<script>
+    if (parts[0] === "share-map" && parts.length === 2) {
+      const code = parts[1];
 
-(function () {
-
-    const path = window.location.pathname;
-
-    /*
-     * Chỉ xử lý URL:
-     *
-     * /install/app-signed/TEN_APP/
-     */
-    const match = path.match(
-        /^\/install\/app-signed\/([^\/]+)\/?$/
-    );
-
-    if (!match) {
-
-        document.body.innerHTML = `
-            <div style="
-                font-family:-apple-system,BlinkMacSystemFont,
-                'Segoe UI',sans-serif;
-                text-align:center;
-                padding:80px 20px;
-                color:#1d1d1f;
-            ">
-                <h2>404</h2>
-                <p>Không tìm thấy trang.</p>
-            </div>
-        `;
-
-        return;
+      if (/^[A-Za-z0-9]{6}$/.test(code)) {
+        location.replace(
+          "/share-map/?code=" + encodeURIComponent(code)
+        );
+      } else {
+        location.replace("/share-map/");
+      }
+    } else {
+      document.body.innerHTML = "<h1>404 - Không tìm thấy trang</h1>";
     }
-
-    /*
-     * Load HTML chung
-     */
-    const iframe = document.createElement("iframe");
-
-    /*
-     * Truyền app qua query để HTML chung
-     * có thể đọc được.
-     */
-    iframe.src =
-        "/install/?app=" +
-        encodeURIComponent(match[1]);
-
-    document.body.innerHTML = "";
-
-    document.body.appendChild(iframe);
-
-})();
-
-</script>
-
+  </script>
 </body>
 </html>
