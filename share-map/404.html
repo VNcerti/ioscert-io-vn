@@ -1,22 +1,28 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Đang mở Share MAP...</title>
 </head>
 <body>
-  <p>Đang chuyển tới phiên chia sẻ...</p>
+  <p>Đang mở trang chia sẻ...</p>
   <script>
     const parts = location.pathname.split("/").filter(Boolean);
-    const code = parts.length > 1 && parts[0] === "share-map"
-      ? parts[1]
-      : "";
 
-    if (/^[A-Za-z0-9]{6}$/.test(code)) {
-      location.replace("/share-map/?code=" + encodeURIComponent(code));
+    if (parts[0] === "share-map" && parts.length === 2) {
+      const code = parts[1];
+
+      if (/^[A-Za-z0-9]{6}$/.test(code)) {
+        location.replace(
+          "/share-map/?code=" + encodeURIComponent(code)
+        );
+      } else {
+        location.replace("/share-map/");
+      }
     } else {
-      location.replace("/share-map/");
+      document.body.innerHTML = "<h1>404 - Không tìm thấy trang</h1>";
     }
   </script>
 </body>
