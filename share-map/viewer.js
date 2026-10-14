@@ -1,356 +1,158 @@
-/*
- * iOSCert Share Map Viewer
- *
- * Hỗ trợ URL:
- *   https://ioscert.io.vn/share-map/wWYi2H
- *   https://ioscert.io.vn/share-map/?code=wWYi2H
- *
- * Backend hiện tại:
- * - Có API tạo và quản lý share session.
- * - Chưa có WebRTC viewer-token.
- * - Chưa có luồng video trực tiếp.
- *
- * Trước khi sử dụng API công khai:
- * Thay API_BASE bằng domain HTTPS của Share Map API.
- */
 
+/* Share MAP viewer
+   Kiểm tra phiên chia sẻ qua API.
+   Luồng video trực tiếp cần tích hợp WebRTC riêng.
+*/
 (() => {
-  "use strict";
-
-  // =========================================================
-  // 1. CẤU HÌNH API
-  // =========================================================
-
-  const API_BASE =
-    "https://REPLACE-WITH-PUBLIC-SHARE-API-DOMAIN";
-
-  const API_CONFIGURED =
-    API_BASE.startsWith("https://") &&
-    !API_BASE.includes("REPLACE-WITH-PUBLIC-SHARE-API-DOMAIN");
-
-  // =========================================================
-  // 2. LẤY MÃ CHIA SẺ TỪ URL
-  // =========================================================
+  const API_BASE = "https://share-api.ioscert.io.vn";
 
   const params = new URLSearchParams(window.location.search);
   const pathParts = window.location.pathname
     .split("/")
     .filter(Boolean);
 
-  // Dạng /share-map/wWYi2H
   const routeCode =
-    pathParts[0] === "share-map" && pathParts.length > 1
+    pathParts[0] === "share-map" && pathParts.length >= 2
       ? pathParts[1]
       : "";
 
-  // Dạng /share-map/?code=wWYi2H
-  // Hỗ trợ thêm sharePath để tương thích fallback cũ.
-  const sharePath = params.get("sharePath") || "";
-  const fallbackParts = sharePath.split("/").filter(Boolean);
+  const code = (
+    params.get("code") || routeCode || ""
+  ).trim().toUpperCase();
 
-  const fallbackCode =
-    fallbackParts[0] === "share-map" && fallbackParts.length > 1
-      ? fallbackParts[1]
-      : "";
+  const video = document.getElementById("remoteVideo");
+  const placeholder = document.getElementById("placeholder");
+  const title = document.getElementById("title");
+  const status = document.getElementById("status");
+  const roomCode = document.getElementById("roomCode");
+  const placeholderTitle =
+    document.getElementById("placeholderTitle");
+  const placeholderText =
+    document.getElementById("placeholderText");
 
-  const rawCode = params.get("code") || routeCode || fallbackCode;
-
-  let code = rawCode;
-
-  try {
-    code = decodeURIComponent(rawCode);
-  } catch (_) {
-    code = "";
-  }
-
-  code = code.trim().toUpperCase();
-
-  // =========================================================
-  // 3. LẤY PHẦN TỬ GIAO DIỆN
-  // =========================================================
-
-  const $ = (id) => document.getElementById(id);
-
-  const video = $("remoteVideo");
-  const placeholder = $("placeholder");
-  const title = $("title");
-  const status = $("status");
-  const codeNode = $("roomCode");
-  const placeholderTitle = $("placeholderTitle");
-  const placeholderText = $("placeholderText");
-  const fullscreenButton = $("fullscreenButton");
-
-  // Kiểm tra các phần tử bắt buộc để tránh lỗi JS âm thầm.
   if (
-    !video ||
     !placeholder ||
     !title ||
     !status ||
-    !codeNode ||
+    !roomCode ||
     !placeholderTitle ||
     !placeholderText
   ) {
-    console.error(
-      "[Share Map] Không tìm thấy phần tử giao diện cần thiết. " +
-      "Kiểm tra index.html và ID của các phần tử."
-    );
+    console.error("Share MAP: Không tìm thấy các phần tử giao diện.");
     return;
   }
 
-  // =========================================================
-  // 4. TẠO NÚT KIỂM TRA LẠI
-  // =========================================================
+  roomCode.textContent = code || "—";
 
-  let refreshButton = $("refreshSessionButton");
-
-  if (!refreshButton) {
-    refreshButton = document.createElement("button");
-    refreshButton.type = "button";
-    refreshButton.id = "refreshSessionButton";
-    refreshButton.textContent = "Kiểm tra lại";
-    refreshButton.style.marginTop = "14px";
-    refreshButton.setAttribute("aria-label", "Kiểm tra lại phiên chia sẻ");
-
-    placeholder.appendChild(refreshButton);
-  }
-
-  // =========================================================
-  // 5. HÀM CẬP NHẬT GIAO DIỆN
-  // =========================================================
-
-  function setState(label, heading, message, options = {}) {
-    const { error = false, showPlaceholder = true } = options;
-
+  function setState(label, heading, message) {
     status.textContent = label;
-    status.style.color = error ? "#ff9aaa" : "";
-
     placeholderTitle.textContent = heading;
     placeholderText.textContent = message;
-
-    placeholder.hidden = !showPlaceholder;
-
-    if (showPlaceholder) {
-      video.style.display = "none";
-    }
+    placeholder.hidden = false;
   }
 
-  function setLoading(isLoading) {
-    refreshButton.disabled = isLoading;
-    refreshButton.textContent = isLoading
-      ? "Đang kiểm tra..."
-      : "Kiểm tra lại";
-  }
-
-  function formatDate(timestamp) {
-    const date = new Date(Number(timestamp) * 1000);
-
-    if (Number.isNaN(date.getTime())) {
-      return "";
-    }
-
-    return date.toLocaleString("vi-VN");
-  }
-
-  function updateExpiry(data) {
-    const expiresAt = data && data.expiresAt;
-
-    if (!expiresAt) {
-      return;
-    }
-
-    const expiry = formatDate(expiresAt);
-
-    if (expiry) {
-      placeholderText.textContent +=
-        "\nHạn phiên dự kiến: " + expiry + ".";
-    }
-  }
-
-  // =========================================================
-  // 6. KHỞI TẠO MÃ PHIÊN
-  // =========================================================
-
-  codeNode.textContent = code || "—";
-
-  // =========================================================
-  // 7. KIỂM TRA PHIÊN CHIA SẺ
-  // =========================================================
-
-  async function checkSession() {
-    // Kiểm tra định dạng mã gồm đúng 6 ký tự.
+  async function loadSession() {
     if (!/^[A-Z0-9]{6}$/.test(code)) {
       title.textContent = "Liên kết không hợp lệ";
-
       setState(
         "Không hợp lệ",
         "Mã chia sẻ không đúng",
-        "Đường dẫn cần có mã gồm 6 ký tự, ví dụ /share-map/wWYi2H.",
-        { error: true }
+        "Đường dẫn cần có mã chia sẻ gồm 6 ký tự."
       );
-
-      setLoading(false);
       return;
     }
 
     title.textContent = "Phiên " + code;
 
-    // API chưa được cấu hình.
-    if (!API_CONFIGURED) {
-      setState(
-        "Chưa cấu hình",
-        "Chưa kết nối máy chủ",
-        "Giao diện đã sẵn sàng, nhưng cần cấu hình domain HTTPS công khai của Share Map API."
-      );
-
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-
     setState(
       "Đang kiểm tra",
-      "Đang kiểm tra phiên",
-      "Đang liên hệ máy chủ chia sẻ..."
+      "Đang kiểm tra phiên chia sẻ",
+      "Đang kết nối tới Share MAP API..."
     );
-
-    const controller = new AbortController();
-
-    // Tránh yêu cầu bị treo quá lâu.
-    const timeoutId = setTimeout(() => {
-      controller.abort();
-    }, 10000);
 
     try {
       const response = await fetch(
-        `${API_BASE.replace(/\/+$/, "")}/v1/share-sessions/${encodeURIComponent(code)}`,
+        `${API_BASE}/v1/share-sessions/${encodeURIComponent(code)}`,
         {
           method: "GET",
           headers: {
             Accept: "application/json"
           },
-          cache: "no-store",
-          signal: controller.signal
+          cache: "no-store"
         }
       );
 
       const data = await response.json().catch(() => ({}));
 
-      // API không tìm thấy phiên.
-      if (response.status === 404) {
-        setState(
-          "Không tìm thấy",
-          "Phiên không tồn tại",
-          "Mã có thể không chính xác, đã hết hạn hoặc phiên không còn được lưu.",
-          { error: true }
-        );
-
-        return;
-      }
-
       if (!response.ok) {
-        throw new Error(
-          data.message ||
-          `Máy chủ trả về HTTP ${response.status}`
-        );
+        const detail =
+          typeof data.detail === "string"
+            ? data.detail
+            : "Không tìm thấy phiên chia sẻ.";
+
+        throw new Error(detail);
       }
 
-      const sessionStatus = String(
-        data.status || "unknown"
+      const state = String(
+        data.status || data.state || "unknown"
       ).toLowerCase();
 
-      // Phiên đang hoạt động hoặc chờ thiết bị phát.
       if (
-        ["active", "waiting_for_stream", "waiting"].includes(
-          sessionStatus
-        )
+        state === "stopped" ||
+        state === "ended" ||
+        state === "expired"
       ) {
-        const message =
-          sessionStatus === "active"
-            ? "Phiên đã được tạo. Tuy nhiên, luồng video WebRTC chưa được tích hợp."
-            : "Mã phiên hợp lệ. Đang chờ thiết bị phát; hệ thống hiện chưa có luồng video WebRTC.";
-
         setState(
-          sessionStatus === "active"
-            ? "Phiên đang hoạt động"
-            : "Đang chờ video",
-          "Đang chờ luồng video",
-          message
+          "Đã kết thúc",
+          "Phiên chia sẻ đã kết thúc",
+          "Hãy yêu cầu người phát tạo một phiên mới."
         );
-
-        updateExpiry(data);
-
-        // Không hiển thị video giả khi chưa có media stream.
         return;
       }
 
-      // Những trạng thái còn lại được xem là không hoạt động.
-      setState(
-        "Phiên không hoạt động",
-        "Phiên đã kết thúc",
-        "Hãy yêu cầu người chia sẻ tạo một phiên mới.",
-        { error: true }
-      );
-    } catch (error) {
-      let message;
-
-      if (error.name === "AbortError") {
-        message = "Máy chủ phản hồi quá chậm. Hãy thử lại sau.";
-      } else {
-        message =
-          error.message ||
-          "Không thể kết nối máy chủ chia sẻ.";
+      if (
+        state === "waiting_for_stream" ||
+        state === "waiting" ||
+        state === "created" ||
+        state === "unknown"
+      ) {
+        setState(
+          "Đang chờ",
+          "Đã tìm thấy phiên chia sẻ",
+          "Phiên đã được tạo, nhưng luồng video trực tiếp chưa được kết nối."
+        );
+        return;
       }
 
       setState(
-        "Lỗi kết nối",
-        "Không thể kiểm tra phiên",
-        message +
-          " Kiểm tra domain HTTPS, trạng thái API và cấu hình CORS.",
-        { error: true }
+        "Đã kết nối API",
+        "Đã tìm thấy phiên chia sẻ",
+        "API xác nhận phiên tồn tại. Phần nhận video WebRTC chưa được tích hợp."
       );
+    } catch (error) {
+      console.error("Share MAP API error:", error);
 
-      console.error("[Share Map] Lỗi kiểm tra phiên:", error);
-    } finally {
-      clearTimeout(timeoutId);
-      setLoading(false);
+      setState(
+        "Không kết nối được",
+        "Không thể tải phiên chia sẻ",
+        error.message || "Vui lòng thử lại sau."
+      );
     }
   }
 
-  // =========================================================
-  // 8. SỰ KIỆN NÚT KIỂM TRA LẠI
-  // =========================================================
-
-  refreshButton.addEventListener("click", checkSession);
-
-  // =========================================================
-  // 9. NÚT TOÀN MÀN HÌNH
-  // =========================================================
-
-  if (fullscreenButton) {
-    fullscreenButton.addEventListener("click", async () => {
+  document
+    .getElementById("fullscreenButton")
+    ?.addEventListener("click", async () => {
       try {
-        if (video.requestFullscreen) {
+        if (video?.requestFullscreen) {
           await video.requestFullscreen();
-        } else if (video.webkitEnterFullscreen) {
+        } else if (video?.webkitEnterFullscreen) {
           video.webkitEnterFullscreen();
-        } else {
-          console.warn(
-            "[Share Map] Trình duyệt không hỗ trợ toàn màn hình video."
-          );
         }
       } catch (error) {
-        console.warn(
-          "[Share Map] Không thể bật toàn màn hình:",
-          error
-        );
+        console.warn("Không thể bật toàn màn hình:", error);
       }
     });
-  }
 
-  // =========================================================
-  // 10. CHẠY LẦN ĐẦU
-  // =========================================================
-
-  checkSession();
+  loadSession();
 })();
