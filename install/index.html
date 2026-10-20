@@ -134,7 +134,7 @@
             transform: scale(.92);
         }
 
-        /* ========== MOBILE MENU (giữ nguyên) ========== */
+        /* ========== MOBILE MENU ========== */
         .mobile-menu {
             position: fixed;
             inset: 0;
@@ -240,7 +240,7 @@
             display: block;
         }
 
-        /* ========== MAIN – thu gọn, gọn gàng ========== */
+        /* ========== MAIN ========== */
         .install-page {
             width: 100%;
             min-height: 100vh;
@@ -251,7 +251,7 @@
             justify-content: flex-start;
         }
 
-        /* ===== CARD ESIGN – compact, nổi bật ===== */
+        /* ===== CARD ===== */
         .install-card {
             width: 100%;
             max-width: 340px;
@@ -276,7 +276,7 @@
             }
         }
 
-        /* icon – nhỏ hơn */
+        /* icon */
         .icon-wrapper {
             width: 68px;
             height: 68px;
@@ -286,6 +286,7 @@
             background: rgba(255, 255, 255, .85);
             border: 1px solid rgba(255, 255, 255, .95);
             box-shadow: 0 8px 18px rgba(0, 0, 0, .06), inset 0 1px 0 #fff;
+            transition: transform .2s ease;
         }
         .app-icon {
             display: block;
@@ -295,7 +296,7 @@
             border-radius: 16px;
         }
 
-        /* app title – nhỏ gọn */
+        /* title */
         .app-title {
             text-align: center;
             color: #1d1d1f;
@@ -313,7 +314,7 @@
             letter-spacing: .2px;
         }
 
-        /* certificate – highlight nổi bật */
+        /* certificate */
         .certificate-box {
             margin-top: 12px;
             padding: 8px 8px 6px;
@@ -340,9 +341,10 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            word-break: break-word;
         }
 
-        /* install button – nhấn mạnh */
+        /* install button */
         .install-button {
             width: 100%;
             margin-top: 12px;
@@ -362,6 +364,22 @@
         }
         .install-button:active {
             transform: scale(.97);
+        }
+
+        /* VSign theme overrides */
+        .install-card.vsign-theme {
+            background: rgba(252, 250, 255, .82);
+            border-color: rgba(255, 255, 255, .95);
+            box-shadow: 0 18px 40px rgba(88, 86, 214, .08), 0 6px 14px rgba(0, 0, 0, .025), inset 0 1px 0 rgba(255, 255, 255, .95);
+        }
+        .install-card.vsign-theme .certificate-box {
+            background: rgba(175, 82, 222, .045);
+            border-color: rgba(175, 82, 222, .14);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 2px 6px rgba(175, 82, 222, .04);
+        }
+        .install-card.vsign-theme .install-button {
+            background: linear-gradient(180deg, #af52de, #8e44d9);
+            box-shadow: 0 6px 16px rgba(175, 82, 222, .24), inset 0 1px 0 rgba(255, 255, 255, .30);
         }
 
         .install-note {
@@ -390,7 +408,7 @@
             background: #34c759;
         }
 
-        /* ===== GUIDE – gọn hơn ===== */
+        /* ===== GUIDE ===== */
         .trust-guide {
             width: 100%;
             max-width: 340px;
@@ -494,7 +512,7 @@
             letter-spacing: .2px;
         }
 
-        /* ===== ERROR (giữ nguyên) ===== */
+        /* ===== ERROR ===== */
         .error {
             text-align: center;
             padding: 18px 6px;
@@ -646,19 +664,19 @@
 
     <!-- MAIN -->
     <main class="install-page">
-        <!-- CARD ESIGN -->
+        <!-- CARD -->
         <div class="install-card" id="card">
             <div class="icon-wrapper">
-                <img class="app-icon" src="https://vsacheat.com/img/esign.png" alt="ESign">
+                <img class="app-icon" id="appIcon" src="https://vsacheat.com/img/esign.png" alt="App Icon">
             </div>
-            <h1 class="app-title">ESign</h1>
-            <div class="app-version">Version 5.0.2</div>
+            <h1 class="app-title" id="appTitle">ESign</h1>
+            <div class="app-version" id="appVersion">Version 5.0.2</div>
             <div class="certificate-box">
                 <div class="certificate-label">CHỨNG CHỈ KÝ</div>
                 <div class="certificate" id="certificate">Đang tải...</div>
             </div>
             <a id="install" class="install-button" href="#">
-                <i class="fas fa-download" style="font-size:14px;"></i> Cài đặt ESign
+                <i class="fas fa-download" style="font-size:14px;"></i> <span id="installText">Cài đặt ESign</span>
             </a>
             <div class="install-note">
                 <span class="safari-note">
@@ -670,10 +688,10 @@
         <!-- GUIDE -->
         <section class="trust-guide">
             <div class="guide-description">
-                Nếu iPhone yêu cầu xác minh nhà phát triển, hãy làm theo hướng dẫn bên dưới.
+                Nếu thiết bị yêu cầu tin cậy xác minh doanh nghiệp, hãy làm theo hướng dẫn bên dưới.
             </div>
             <div class="mockup-wrapper" id="mockupOpen">
-                <img class="mockup-image" src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp" alt="Hướng dẫn xác minh ESign" loading="lazy">
+                <img class="mockup-image" src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp" alt="Hướng dẫn xác minh" loading="lazy">
             </div>
             <div class="guide-caption">
                 Cài đặt chung → Quản lý VPN & thiết bị → Tin cậy chứng chỉ
@@ -688,7 +706,7 @@
         <button class="lightbox-close" id="lightboxClose" aria-label="Đóng">
             <i class="fas fa-xmark"></i>
         </button>
-        <img class="lightbox-image" src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp" alt="Hướng dẫn xác minh ESign">
+        <img class="lightbox-image" src="https://ioscert.io.vn/img/mockup-tin-cay-esign.webp" alt="Hướng dẫn xác minh">
     </div>
 
     <script>
@@ -761,7 +779,7 @@
         });
 
         /* =========================================================
-           INSTALL SYSTEM (giữ nguyên logic)
+           INSTALL SYSTEM
         ========================================================= */
         (function() {
             const params = new URLSearchParams(window.location.search);
@@ -775,20 +793,66 @@
             const installURL = "itms-services://?action=download-manifest&url=" + encodeURIComponent(manifestURL);
             document.getElementById("install").href = installURL;
 
+            /* ---------------------------------------------------
+               PHÂN LOẠI APP (ESign / VSign)
+            --------------------------------------------------- */
+            const appLower = app.toLowerCase();
+            const isVSign = appLower.startsWith("vsign-");
+
+            /* ------------------- CẤU HÌNH HIỂN THỊ ------------------- */
+            const appIconEl = document.getElementById("appIcon");
+            const appTitleEl = document.getElementById("appTitle");
+            const appVersionEl = document.getElementById("appVersion");
+            const installTextEl = document.getElementById("installText");
+            const cardEl = document.getElementById("card");
+
+            if (isVSign) {
+                // VSign
+                appIconEl.src = "https://i.imgur.com/qGuaX3J.png";
+                appIconEl.alt = "VSign";
+                appTitleEl.textContent = "VSign";
+                appVersionEl.textContent = "Version 1.2";
+                installTextEl.textContent = "Cài đặt VSign";
+                cardEl.classList.add("vsign-theme");
+                document.title = "VSign 1.2 · CHỨNG CHỈ P12";
+            } else {
+                // ESign (mặc định)
+                appIconEl.src = "https://vsacheat.com/img/esign.png";
+                appIconEl.alt = "ESign";
+                appTitleEl.textContent = "ESign";
+                appVersionEl.textContent = "Version 5.0.2";
+                installTextEl.textContent = "Cài đặt ESign";
+                document.title = "ESign 5.0.2 · CHỨNG CHỈ P12";
+            }
+
+            /* ---------------------------------------------------
+               TÊN CHỨNG CHỈ
+               - Bỏ tiền tố "Esign-" / "Vsign-"
+               - Thay "-" thành " "
+               - Viết hoa chữ cái đầu (giữ nguyên chữ hoa giữa)
+            --------------------------------------------------- */
             const certificateNames = {
                 "esign-hebei-rongkai-network-technology-co-ltd": "Hebei Rongkai Network Technology Co., Ltd",
                 "esign-ola-city-global-limited": "Ola City Global Limited",
                 "esign-apple-distribution": "Apple Distribution"
             };
-            let certificate = certificateNames[app];
+
+            let certificate = certificateNames[appLower];
+
             if (!certificate) {
                 certificate = app
-                    .replace(/^esign-/, "")
-                    .replace(/-/g, " ")
+                    .replace(/^(esign|vsign)-/i, "")   // bỏ tiền tố esign-/vsign-
+                    .replace(/-/g, " ")                 // - thành khoảng trắng
+                    .replace(/\s+/g, " ")               // gộp khoảng trắng
+                    .trim()
                     .replace(/\b\w/g, function(char) { return char.toUpperCase(); });
             }
+
             document.getElementById("certificate").textContent = certificate;
 
+            /* ---------------------------------------------------
+               ERROR
+            --------------------------------------------------- */
             function showError(message) {
                 document.getElementById("card").innerHTML = `
                     <div class="error">
